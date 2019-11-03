@@ -1,0 +1,7 @@
+/build
+
+/external/cpputest/*
+!/external/cpputest/CMakeLists.txt
+
+/.cquery
+/.cquery_cached_index

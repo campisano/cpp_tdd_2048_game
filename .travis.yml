@@ -1,0 +1,19 @@
+language: cpp
+compiler: gcc
+os: linux
+dist: trusty
+addons:
+    apt:
+        sources:
+            - ubuntu-toolchain-r-test
+        packages:
+            - gcc
+            - g++-6
+            - make
+            - cmake
+            - libssl-dev
+            - libcurl4-openssl-dev
+script:
+    - export CXX="g++-6"
+    - make -e
+    - ./run.sh debug test
