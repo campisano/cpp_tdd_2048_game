@@ -10,4 +10,6 @@ There are numbers in a board. The position of the number appears to be a importa
 
 # Test Specs
 
-1) there is a board, board is divided in 16 squares, (four-by-four)
+1) there is a board
+    - board is divided in 16 squares (four-by-four)
+0) there are numbers, a number has a value
