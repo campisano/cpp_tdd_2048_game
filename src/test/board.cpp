@@ -1,11 +1,10 @@
-#include "CppUTest/TestHarness.h"
-#include <array>
 #include <cstdint>
+#include "CppUTest/TestHarness.h"
+#include "../2048/domain/board.hpp"
 
 namespace
 {
-const uint8_t BOARD_SIZE = 16;
-using Board = std::array<void *, BOARD_SIZE>;
+const uint8_t EXPECTED_BOARD_SIZE = 16;
 }
 
 TEST_GROUP(BoardTest)
@@ -25,5 +24,5 @@ TEST_GROUP(BoardTest)
 TEST(BoardTest, Creation)
 {
     CHECK(NULL != m_board);
-    CHECK_EQUAL(BOARD_SIZE, m_board->size());
+    CHECK_EQUAL(EXPECTED_BOARD_SIZE, m_board->size());
 }
