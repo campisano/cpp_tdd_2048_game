@@ -1,4 +1,4 @@
-#include "CppUTest/TestHarness.h"
+#include "testutils.hpp"
 #include "../2048/domain/number.hpp"
 
 namespace
@@ -24,4 +24,10 @@ TEST(NumberTest, Creation)
 {
     CHECK(NULL != m_number);
     CHECK_EQUAL(ARBITRARY_VALUE, m_number->value());
+}
+
+TEST(NumberTest, CreationWithValueLessThanTwo)
+{
+    CHECK_THROWS_STDEXCEPT(
+        std::runtime_error, Number(1), "value cannot be less than 2");
 }
