@@ -2,11 +2,24 @@
 
 #include <stdexcept>
 
+namespace
+{
+bool isPowerOfTwo(uint32_t _num)
+{
+    return (_num > 0) && ((_num & (_num - 1)) == 0);
+}
+}
+
 Number::Number(uint32_t _value)
 {
     if(_value < 2)
     {
         throw std::runtime_error("value cannot be less than 2");
+    }
+
+    if(! isPowerOfTwo(_value))
+    {
+        throw std::runtime_error("value must be power of 2");
     }
 
     m_value = _value;

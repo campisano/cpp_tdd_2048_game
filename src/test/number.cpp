@@ -31,3 +31,15 @@ TEST(NumberTest, CreationWithValueLessThanTwo)
     CHECK_THROWS_STDEXCEPT(
         std::runtime_error, Number(1), "value cannot be less than 2");
 }
+
+TEST(NumberTest, CreationWithValue3NotPowerOf2)
+{
+    CHECK_THROWS_STDEXCEPT(
+        std::runtime_error, Number(3), "value must be power of 2");
+}
+
+TEST(NumberTest, CreationWithValue6NotPowerOf2)
+{
+    CHECK_THROWS_STDEXCEPT(
+        std::runtime_error, Number(6), "value must be power of 2");
+}
