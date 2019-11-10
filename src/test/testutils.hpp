@@ -6,7 +6,7 @@
 #include "CppUTest/TestHarness.h"
 
 #if CPPUTEST_USE_STD_CPP_LIB
-#define CHECK_THROWS_STDEXCEPT(expected, expression, message) \
+#define CHECK_THROWS_STDEXCEPT(expected, message, expression) \
     { \
     SimpleString failure_msg("expected to throw "#expected "\nbut threw nothing"); \
     bool caught_expected = false; \

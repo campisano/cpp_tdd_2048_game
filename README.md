@@ -14,5 +14,5 @@ There are numbers in a board. The position of the number appears to be a importa
     - board is divided in 16 squares (four-by-four)
 0) there are numbers
     - number has a value
-    - value that must be greater than or equal to 2
+    - value must be greater than or equal to 2
     - value must be power of two
