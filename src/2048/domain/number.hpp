@@ -3,10 +3,12 @@
 
 #include <cstdint>
 
+using Position = void*;
+
 class Number
 {
 public:
-    explicit Number(uint32_t _value);
+    explicit Number(uint32_t _value, Position _position);
     Number(const Number &) = delete;
     Number(Number &&) = default;
     virtual ~Number();
@@ -16,9 +18,11 @@ public:
 
 public:
     uint32_t value();
+    Position position();
 
 private:
     uint32_t m_value;
+    Position m_position;
 };
 
 #endif
