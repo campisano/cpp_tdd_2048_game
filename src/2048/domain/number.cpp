@@ -10,7 +10,8 @@ bool isPowerOfTwo(uint32_t _num)
 }
 }
 
-Number::Number(uint32_t _value, Position _position) : m_position(_position)
+Number::Number(uint32_t _value, const Position & _position)
+    : m_position(_position)
 {
     if(_value < 2)
     {
@@ -34,7 +35,7 @@ uint32_t Number::value()
     return m_value;
 }
 
-Position Number::position()
+const Position & Number::position()
 {
     return m_position;
 }

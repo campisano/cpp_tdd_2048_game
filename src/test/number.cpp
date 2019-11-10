@@ -4,7 +4,7 @@
 namespace
 {
 const uint32_t ARBITRARY_VALUE = 8;
-const Position ARBITRARY_POSITION = 0;
+const Position ARBITRARY_POSITION;
 }
 
 TEST_GROUP(NumberTest) {};
@@ -13,7 +13,7 @@ TEST(NumberTest, Creation)
 {
     Number number(ARBITRARY_VALUE, ARBITRARY_POSITION);
     CHECK_EQUAL(ARBITRARY_VALUE, number.value());
-    CHECK_EQUAL(ARBITRARY_POSITION, number.position());
+    CHECK_EQUAL(&ARBITRARY_POSITION, &number.position());
 }
 
 TEST(NumberTest, CreationWithValueLessThanTwo)
