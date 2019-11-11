@@ -18,3 +18,4 @@ There are numbers in a board. The position of the number appears to be a importa
     - value must be power of two
 0) there are positions
     - position can have a number placed on itself
+    - position can have adiacent positions {left,right,up,down}

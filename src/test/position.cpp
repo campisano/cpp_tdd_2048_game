@@ -34,3 +34,11 @@ TEST(PositionTest, PlacingNumberTwiceThrowsException)
     CHECK_THROWS_STDEXCEPT(
         std::runtime_error, "position already contain a number", pos.place(n2));
 }
+
+TEST(PositionTest, HasLeft)
+{
+    Position p;
+    Position left;
+    p.left(left);
+    CHECK_EQUAL(&left, &p.left());
+}

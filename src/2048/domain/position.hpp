@@ -19,8 +19,13 @@ public:
     const Number::Movable & number();
     void place(Number::Movable & _number);
 
+    bool hasLeft() const;
+    Position & left() const;
+    void left(Position & _position);
+
 private:
     Number::Movable m_number;
+    Position * m_left;
 };
 
 #endif
