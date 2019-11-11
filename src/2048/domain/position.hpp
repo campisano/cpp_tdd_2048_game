@@ -1,6 +1,9 @@
 #ifndef POSITION__HPP__
 #define POSITION__HPP__
 
+#include <memory>
+#include "number.hpp"
+
 class Position
 {
 public:
@@ -13,8 +16,10 @@ public:
     Position & operator=(Position &&) = default;
 
 public:
+    const std::unique_ptr<Number> & number();
 
 private:
+    std::unique_ptr<Number> m_number;
 };
 
 #endif

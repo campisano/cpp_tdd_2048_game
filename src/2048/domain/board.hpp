@@ -3,6 +3,7 @@
 
 #include <array>
 #include <cstdint>
+#include "position.hpp"
 
 class Board
 {
@@ -20,7 +21,7 @@ public:
 
 private:
     static const uint8_t BOARD_SIZE = 16;
-    std::array<void *, BOARD_SIZE> m_array;
+    std::array<Position, BOARD_SIZE> m_array;
 };
 
 #endif

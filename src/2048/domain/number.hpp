@@ -2,12 +2,11 @@
 #define NUMBER__HPP__
 
 #include <cstdint>
-#include "position.hpp"
 
 class Number
 {
 public:
-    explicit Number(uint32_t _value, const Position & _position);
+    explicit Number(uint32_t _value);
     Number(const Number &) = delete;
     Number(Number &&) = default;
     virtual ~Number();
@@ -17,11 +16,9 @@ public:
 
 public:
     uint32_t value();
-    const Position & position();
 
 private:
     uint32_t m_value;
-    const Position & m_position;
 };
 
 #endif
