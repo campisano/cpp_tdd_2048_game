@@ -17,6 +17,7 @@ public:
 
 public:
     const std::unique_ptr<Number> & number();
+    void place(std::unique_ptr<Number> & _number);
 
 private:
     std::unique_ptr<Number> m_number;
