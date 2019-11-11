@@ -22,7 +22,7 @@ public:
     static Movable make(Value _value);
 
 public:
-    Value value();
+    Value value() const;
 
 private:
     Value m_value;

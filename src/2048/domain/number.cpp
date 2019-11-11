@@ -34,7 +34,7 @@ Number::Movable Number::make(Value _value)
     return Movable(new Number(_value));
 }
 
-Number::Value Number::value()
+Number::Value Number::value() const
 {
     return m_value;
 }
