@@ -29,12 +29,12 @@ Number::~Number()
 {
 }
 
+MovableNum Number::make(Value _value)
+{
+    return MovableNum(new Number(_value));
+}
+
 Value Number::value()
 {
     return m_value;
-}
-
-MovableNum Number::create(Value _value)
-{
-    return MovableNum(new Number(_value));
 }

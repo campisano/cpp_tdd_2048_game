@@ -16,7 +16,7 @@ TEST(PositionTest, Creation)
 
 TEST(PositionTest, PlacingNumber)
 {
-    auto number = Number::create(ARBITRARY_VALUE);
+    auto number = Number::make(ARBITRARY_VALUE);
     Number * num_ptr = number.get();
     Position position;
     position.place(number);
@@ -27,8 +27,8 @@ TEST(PositionTest, PlacingNumber)
 
 TEST(PositionTest, PlacingNumberTwiceThrowsException)
 {
-    auto n1 = Number::create(ARBITRARY_VALUE);
-    auto n2 = Number::create(ARBITRARY_VALUE);
+    auto n1 = Number::make(ARBITRARY_VALUE);
+    auto n2 = Number::make(ARBITRARY_VALUE);
     Position pos;
     pos.place(n1);
     CHECK_THROWS_STDEXCEPT(

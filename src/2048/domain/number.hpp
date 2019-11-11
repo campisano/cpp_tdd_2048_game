@@ -19,9 +19,10 @@ public:
     Number & operator=(const Number &) = delete;
     Number & operator=(Number &&) = default;
 
+    static MovableNum make(Value _value);
+
 public:
     Value value();
-    static MovableNum create(Value _value);
 
 private:
     Value m_value;
