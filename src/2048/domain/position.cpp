@@ -10,12 +10,12 @@ Position::~Position()
 {
 }
 
-const std::unique_ptr<Number> & Position::number()
+const MovableNum & Position::number()
 {
     return m_number;
 }
 
-void Position::place(std::unique_ptr<Number> & _number)
+void Position::place(MovableNum & _number)
 {
     if(m_number)
     {

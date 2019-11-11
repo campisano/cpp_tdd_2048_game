@@ -2,11 +2,16 @@
 #define NUMBER__HPP__
 
 #include <cstdint>
+#include <memory>
+
+class Number;
+using MovableNum = std::unique_ptr<Number>;
+using Value = uint32_t;
 
 class Number
 {
 public:
-    explicit Number(uint32_t _value);
+    explicit Number(Value _value);
     Number(const Number &) = delete;
     Number(Number &&) = default;
     virtual ~Number();
@@ -15,10 +20,11 @@ public:
     Number & operator=(Number &&) = default;
 
 public:
-    uint32_t value();
+    Value value();
+    static MovableNum create(Value _value);
 
 private:
-    uint32_t m_value;
+    Value m_value;
 };
 
 #endif

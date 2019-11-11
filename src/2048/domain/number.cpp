@@ -4,13 +4,13 @@
 
 namespace
 {
-bool isPowerOfTwo(uint32_t _num)
+bool isPowerOfTwo(Value _num)
 {
     return (_num > 0) && ((_num & (_num - 1)) == 0);
 }
 }
 
-Number::Number(uint32_t _value)
+Number::Number(Value _value)
 {
     if(_value < 2)
     {
@@ -29,7 +29,12 @@ Number::~Number()
 {
 }
 
-uint32_t Number::value()
+Value Number::value()
 {
     return m_value;
+}
+
+MovableNum Number::create(Value _value)
+{
+    return MovableNum(new Number(_value));
 }

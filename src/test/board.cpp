@@ -4,7 +4,7 @@
 
 namespace
 {
-const uint8_t EXPECTED_BOARD_SIZE = 16;
+const std::size_t EXPECTED_BOARD_SIZE = 16;
 }
 
 TEST_GROUP(BoardTest)

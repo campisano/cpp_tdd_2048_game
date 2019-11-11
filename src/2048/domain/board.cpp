@@ -8,7 +8,7 @@ Board::~Board()
 {
 }
 
-uint32_t Board::size()
+std::size_t Board::size()
 {
     return m_array.size();
 }

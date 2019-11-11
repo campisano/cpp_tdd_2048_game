@@ -16,11 +16,11 @@ public:
     Position & operator=(Position &&) = default;
 
 public:
-    const std::unique_ptr<Number> & number();
-    void place(std::unique_ptr<Number> & _number);
+    const MovableNum & number();
+    void place(MovableNum & _number);
 
 private:
-    std::unique_ptr<Number> m_number;
+    MovableNum m_number;
 };
 
 #endif

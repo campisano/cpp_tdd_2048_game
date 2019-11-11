@@ -3,7 +3,7 @@
 
 namespace
 {
-const uint32_t ARBITRARY_VALUE = 8;
+const Value ARBITRARY_VALUE = 8;
 }
 
 TEST_GROUP(PositionTest) {};
@@ -16,7 +16,7 @@ TEST(PositionTest, Creation)
 
 TEST(PositionTest, PlacingNumber)
 {
-    std::unique_ptr<Number> number(new Number(ARBITRARY_VALUE));
+    auto number = Number::create(ARBITRARY_VALUE);
     Number * num_ptr = number.get();
     Position position;
     position.place(number);
@@ -27,8 +27,8 @@ TEST(PositionTest, PlacingNumber)
 
 TEST(PositionTest, PlacingNumberTwiceThrowsException)
 {
-    std::unique_ptr<Number> n1(new Number(ARBITRARY_VALUE));
-    std::unique_ptr<Number> n2(new Number(ARBITRARY_VALUE));
+    auto n1 = Number::create(ARBITRARY_VALUE);
+    auto n2 = Number::create(ARBITRARY_VALUE);
     Position pos;
     pos.place(n1);
     CHECK_THROWS_STDEXCEPT(

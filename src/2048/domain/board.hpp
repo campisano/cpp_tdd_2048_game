@@ -17,7 +17,7 @@ public:
     Board & operator=(Board &&) = default;
 
 public:
-    uint32_t size();
+    std::size_t size();
 
 private:
     static const uint8_t BOARD_SIZE = 16;

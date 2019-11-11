@@ -3,7 +3,7 @@
 
 namespace
 {
-const uint32_t ARBITRARY_VALUE = 8;
+const Value ARBITRARY_VALUE = 8;
 }
 
 TEST_GROUP(NumberTest) {};
