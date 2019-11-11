@@ -4,12 +4,12 @@
 #include <cstdint>
 #include <memory>
 
-class Number;
-using MovableNum = std::unique_ptr<Number>;
-using Value = uint32_t;
-
 class Number
 {
+public:
+    using Movable = std::unique_ptr<Number>;
+    using Value = uint32_t;
+
 public:
     explicit Number(Value _value);
     Number(const Number &) = delete;
@@ -19,7 +19,7 @@ public:
     Number & operator=(const Number &) = delete;
     Number & operator=(Number &&) = default;
 
-    static MovableNum make(Value _value);
+    static Movable make(Value _value);
 
 public:
     Value value();

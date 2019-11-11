@@ -16,11 +16,11 @@ public:
     Position & operator=(Position &&) = default;
 
 public:
-    const MovableNum & number();
-    void place(MovableNum & _number);
+    const Number::Movable & number();
+    void place(Number::Movable & _number);
 
 private:
-    MovableNum m_number;
+    Number::Movable m_number;
 };
 
 #endif

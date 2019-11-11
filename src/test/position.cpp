@@ -3,7 +3,7 @@
 
 namespace
 {
-const Value ARBITRARY_VALUE = 8;
+const Number::Value ARBITRARY_VALUE = 8;
 }
 
 TEST_GROUP(PositionTest) {};

@@ -4,7 +4,7 @@
 
 namespace
 {
-bool isPowerOfTwo(Value _num)
+bool isPowerOfTwo(Number::Value _num)
 {
     return (_num > 0) && ((_num & (_num - 1)) == 0);
 }
@@ -29,12 +29,12 @@ Number::~Number()
 {
 }
 
-MovableNum Number::make(Value _value)
+Number::Movable Number::make(Value _value)
 {
-    return MovableNum(new Number(_value));
+    return Movable(new Number(_value));
 }
 
-Value Number::value()
+Number::Value Number::value()
 {
     return m_value;
 }

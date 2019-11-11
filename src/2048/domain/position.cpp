@@ -10,12 +10,12 @@ Position::~Position()
 {
 }
 
-const MovableNum & Position::number()
+const Number::Movable & Position::number()
 {
     return m_number;
 }
 
-void Position::place(MovableNum & _number)
+void Position::place(Number::Movable & _number)
 {
     if(m_number)
     {
