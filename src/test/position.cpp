@@ -29,16 +29,24 @@ TEST(PositionTest, ThrowsOnPlacingNumberTwice)
 {
     auto n1 = Number::make(ARBITRARY_VALUE);
     auto n2 = Number::make(ARBITRARY_VALUE);
-    Position pos;
-    pos.place(n1);
+    Position position;
+    position.place(n1);
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "position already contain a number", pos.place(n2));
+        std::runtime_error, "position already contain a number",
+        position.place(n2));
 }
 
 TEST(PositionTest, HasLeft)
 {
-    Position p;
-    Position left;
-    p.left(left);
-    CHECK_EQUAL(&left, &p.left());
+    Position position;
+    Position p_left;
+    position.left(p_left);
+    CHECK_EQUAL(&p_left, &position.left());
+}
+
+TEST(PositionTest, ThrowsOnGetEmptyLeft)
+{
+    Position position;
+    CHECK_THROWS_STDEXCEPT(
+        std::runtime_error, "there is no left position", position.left());
 }
