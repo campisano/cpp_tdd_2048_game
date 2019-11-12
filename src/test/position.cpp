@@ -25,7 +25,7 @@ TEST(PositionTest, PlacingNumber)
     CHECK_EQUAL(num_ptr, position.number().get());
 }
 
-TEST(PositionTest, PlacingNumberTwiceThrowsException)
+TEST(PositionTest, ThrowsOnPlacingNumberTwice)
 {
     auto n1 = Number::make(ARBITRARY_VALUE);
     auto n2 = Number::make(ARBITRARY_VALUE);
