@@ -14,6 +14,13 @@ TEST(NumberTest, Creation)
     CHECK_EQUAL(ARBITRARY_VALUE, number.value());
 }
 
+TEST(NumberTest, CreationByMake)
+{
+    auto number = Number::make(ARBITRARY_VALUE);
+    CHECK_TRUE(number);
+    CHECK_EQUAL(ARBITRARY_VALUE, number->value());
+}
+
 TEST(NumberTest, ThrowsOnCreationWithValueLessThanTwo)
 {
     CHECK_THROWS_STDEXCEPT(
