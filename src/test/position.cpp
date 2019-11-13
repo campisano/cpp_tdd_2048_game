@@ -12,6 +12,10 @@ TEST(PositionTest, Creation)
 {
     Position position;
     CHECK_FALSE(position.number());
+    CHECK_FALSE(position.hasLeft());
+    CHECK_FALSE(position.hasRight());
+    CHECK_FALSE(position.hasUp());
+    CHECK_FALSE(position.hasDown());
 }
 
 TEST(PositionTest, PlacingNumber)
@@ -39,9 +43,10 @@ TEST(PositionTest, ThrowsOnPlacingNumberTwice)
 TEST(PositionTest, HasLeft)
 {
     Position position;
-    Position p_left;
-    position.left(p_left);
-    CHECK_EQUAL(&p_left, &position.left());
+    Position left;
+    position.adjacents(& left, NULL, NULL, NULL);
+    CHECK_TRUE(position.hasLeft());
+    CHECK_EQUAL(&left, &position.left());
 }
 
 TEST(PositionTest, ThrowsOnGetEmptyLeft)
@@ -49,4 +54,52 @@ TEST(PositionTest, ThrowsOnGetEmptyLeft)
     Position position;
     CHECK_THROWS_STDEXCEPT(
         std::runtime_error, "there is no left position", position.left());
+}
+
+TEST(PositionTest, HasRight)
+{
+    Position position;
+    Position right;
+    position.adjacents(NULL, & right, NULL, NULL);
+    CHECK_TRUE(position.hasRight());
+    CHECK_EQUAL(&right, &position.right());
+}
+
+TEST(PositionTest, ThrowsOnGetEmptyRight)
+{
+    Position position;
+    CHECK_THROWS_STDEXCEPT(
+        std::runtime_error, "there is no right position", position.right());
+}
+
+TEST(PositionTest, HasUp)
+{
+    Position position;
+    Position up;
+    position.adjacents(NULL, NULL, & up, NULL);
+    CHECK_TRUE(position.hasUp());
+    CHECK_EQUAL(&up, &position.up());
+}
+
+TEST(PositionTest, ThrowsOnGetEmptyUp)
+{
+    Position position;
+    CHECK_THROWS_STDEXCEPT(
+        std::runtime_error, "there is no up position", position.up());
+}
+
+TEST(PositionTest, HasDown)
+{
+    Position position;
+    Position down;
+    position.adjacents(NULL, NULL, NULL, & down);
+    CHECK_TRUE(position.hasDown());
+    CHECK_EQUAL(&down, &position.down());
+}
+
+TEST(PositionTest, ThrowsOnGetEmptyDown)
+{
+    Position position;
+    CHECK_THROWS_STDEXCEPT(
+        std::runtime_error, "there is no down position", position.down());
 }
