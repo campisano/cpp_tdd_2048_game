@@ -2,31 +2,12 @@
 
 #include <stdexcept>
 
-namespace
+Position::Position() : m_left(NULL), m_right(NULL), m_up(NULL), m_down(NULL)
 {
-const unsigned int LEFT  = 0;
-const unsigned int RIGHT = 1;
-const unsigned int UP    = 2;
-const unsigned int DOWN  = 3;
-}
-
-Position::Position()
-{
-    adjacents(NULL, NULL, NULL, NULL);
 }
 
 Position::~Position()
 {
-}
-
-void Position::adjacents(
-    Position * _left, Position * _right,
-    Position * _up, Position * _down)
-{
-    m_adjacents[LEFT]  = _left;
-    m_adjacents[RIGHT] = _right;
-    m_adjacents[UP]    = _up;
-    m_adjacents[DOWN]  = _down;
 }
 
 const Number::Movable & Position::number()
@@ -46,7 +27,7 @@ void Position::place(Number::Movable & _number)
 
 bool Position::hasLeft() const
 {
-    return m_adjacents[LEFT] != NULL;
+    return m_left != NULL;
 }
 
 Position & Position::left() const
@@ -56,12 +37,17 @@ Position & Position::left() const
         throw std::runtime_error("there is no left position");
     }
 
-    return * m_adjacents[LEFT];
+    return * m_left;
+}
+
+void Position::left(Position & _left)
+{
+    m_left = & _left;
 }
 
 bool Position::hasRight() const
 {
-    return m_adjacents[RIGHT] != NULL;
+    return m_right != NULL;
 }
 
 Position & Position::right() const
@@ -71,12 +57,17 @@ Position & Position::right() const
         throw std::runtime_error("there is no right position");
     }
 
-    return * m_adjacents[RIGHT];
+    return * m_right;
+}
+
+void Position::right(Position & _right)
+{
+    m_right = & _right;
 }
 
 bool Position::hasUp() const
 {
-    return m_adjacents[UP] != NULL;
+    return m_up != NULL;
 }
 
 Position & Position::up() const
@@ -86,12 +77,17 @@ Position & Position::up() const
         throw std::runtime_error("there is no up position");
     }
 
-    return * m_adjacents[UP];
+    return * m_up;
+}
+
+void Position::up(Position & _up)
+{
+    m_up = & _up;
 }
 
 bool Position::hasDown() const
 {
-    return m_adjacents[DOWN] != NULL;
+    return m_down != NULL;
 }
 
 Position & Position::down() const
@@ -101,5 +97,10 @@ Position & Position::down() const
         throw std::runtime_error("there is no down position");
     }
 
-    return * m_adjacents[DOWN];
+    return * m_down;
+}
+
+void Position::down(Position & _down)
+{
+    m_down = & _down;
 }

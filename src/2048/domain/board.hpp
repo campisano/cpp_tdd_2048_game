@@ -1,7 +1,6 @@
 #ifndef BOARD__HPP__
 #define BOARD__HPP__
 
-#include <array>
 #include <cstdint>
 #include "position.hpp"
 
@@ -18,10 +17,11 @@ public:
 
 public:
     std::size_t size() const;
+    Position & at(uint8_t _row, uint8_t _col);
 
 private:
-    static const uint8_t BOARD_SIZE = 16;
-    std::array<Position, BOARD_SIZE> m_array;
+    static const uint8_t EDGE_SIZE = 4;
+    Position m_positions[EDGE_SIZE][EDGE_SIZE];
 };
 
 #endif

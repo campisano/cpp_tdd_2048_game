@@ -44,7 +44,7 @@ TEST(PositionTest, HasLeft)
 {
     Position position;
     Position left;
-    position.adjacents(& left, NULL, NULL, NULL);
+    position.left(left);
     CHECK_TRUE(position.hasLeft());
     CHECK_EQUAL(&left, &position.left());
 }
@@ -60,7 +60,7 @@ TEST(PositionTest, HasRight)
 {
     Position position;
     Position right;
-    position.adjacents(NULL, & right, NULL, NULL);
+    position.right(right);
     CHECK_TRUE(position.hasRight());
     CHECK_EQUAL(&right, &position.right());
 }
@@ -76,7 +76,7 @@ TEST(PositionTest, HasUp)
 {
     Position position;
     Position up;
-    position.adjacents(NULL, NULL, & up, NULL);
+    position.up(up);
     CHECK_TRUE(position.hasUp());
     CHECK_EQUAL(&up, &position.up());
 }
@@ -92,7 +92,7 @@ TEST(PositionTest, HasDown)
 {
     Position position;
     Position down;
-    position.adjacents(NULL, NULL, NULL, & down);
+    position.down(down);
     CHECK_TRUE(position.hasDown());
     CHECK_EQUAL(&down, &position.down());
 }

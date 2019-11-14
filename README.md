@@ -12,6 +12,7 @@ There are numbers in a board. The position of the number appears to be a importa
 
 1) there is a board
     - board is divided in 16 positions (four-by-four)
+    - board positions are arranged inside its borders
 0) there are numbers
     - number has a value
     - value must be greater than or equal to 2

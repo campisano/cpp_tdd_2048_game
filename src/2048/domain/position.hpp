@@ -1,7 +1,6 @@
 #ifndef POSITION__HPP__
 #define POSITION__HPP__
 
-#include <array>
 #include <memory>
 #include "number.hpp"
 
@@ -20,22 +19,25 @@ public:
     const Number::Movable & number();
     void place(Number::Movable & _number);
 
-    void adjacents(
-        Position * _left, Position * _right,
-        Position * _up, Position * _down);
-
     bool hasLeft() const;
     Position & left() const;
+    void left(Position & _position);
     bool hasRight() const;
     Position & right() const;
+    void right(Position & _position);
     bool hasUp() const;
     Position & up() const;
+    void up(Position & _position);
     bool hasDown() const;
     Position & down() const;
+    void down(Position & _position);
 
 private:
     Number::Movable m_number;
-    std::array<Position *, 4> m_adjacents;
+    Position * m_left;
+    Position * m_right;
+    Position * m_up;
+    Position * m_down;
 };
 
 #endif
