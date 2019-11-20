@@ -24,7 +24,7 @@ jobs:
         - export PROJECT_VERSION=$(./ci/get_project_version.sh)
         - export RELEASE_TAG="${PROJECT_NAME}-${PROJECT_VERSION}"
         # grant docker login
-        - docker login --username "${DOCKER_USERNAME}" --password "${DOCKER_PASSWORD}" || travis_terminate 1
+        - echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin || travis_terminate 1
         # push new tag, locking version and grant git write access
         - git config user.name "${GIT_USERNAME}"
         - git config user.email "${GIT_USEREMAIL}"
