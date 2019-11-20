@@ -16,7 +16,8 @@ public:
     Position & operator=(Position &&) = default;
 
 public:
-    const Number::Movable & number();
+    bool hasNumber() const;
+    const Number::Movable & number() const;
     void place(Number::Movable & _number);
 
     bool hasLeft() const;

@@ -10,7 +10,17 @@ Position::~Position()
 {
 }
 
-const Number::Movable & Position::number()
+bool Position::hasNumber() const
+{
+    if(m_number)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+const Number::Movable & Position::number() const
 {
     return m_number;
 }

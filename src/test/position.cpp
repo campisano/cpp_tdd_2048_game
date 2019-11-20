@@ -11,7 +11,7 @@ TEST_GROUP(PositionTest) {};
 TEST(PositionTest, Creation)
 {
     Position position;
-    CHECK_FALSE(position.number());
+    CHECK_FALSE(position.hasNumber());
     CHECK_FALSE(position.hasLeft());
     CHECK_FALSE(position.hasRight());
     CHECK_FALSE(position.hasUp());
@@ -25,7 +25,7 @@ TEST(PositionTest, PlacingNumber)
     Position position;
     position.place(number);
     CHECK_FALSE(number);
-    CHECK_TRUE(position.number());
+    CHECK_TRUE(position.hasNumber());
     CHECK_EQUAL(num_ptr, position.number().get());
 }
 
