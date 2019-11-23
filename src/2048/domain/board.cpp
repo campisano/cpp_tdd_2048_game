@@ -46,3 +46,17 @@ Position & Board::at(uint8_t _row, uint8_t _col)
 
     return m_positions[_row][_col];
 }
+
+void Board::slideLeft()
+{
+    for(auto row = 0; row < EDGE_SIZE; ++row)
+    {
+        for(auto col = 1; col < EDGE_SIZE; ++col)
+        {
+            if(m_positions[row][col].hasNumber())
+            {
+                m_positions[row][col].slideLeft();
+            }
+        }
+    }
+}

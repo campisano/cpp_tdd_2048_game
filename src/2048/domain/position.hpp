@@ -33,6 +33,8 @@ public:
     Position & down() const;
     void down(Position & _position);
 
+    void slideLeft();
+
 private:
     Number::Movable m_number;
     Position * m_left;

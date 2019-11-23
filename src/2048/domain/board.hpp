@@ -18,6 +18,7 @@ public:
 public:
     std::size_t size() const;
     Position & at(uint8_t _row, uint8_t _col);
+    void slideLeft();
 
 private:
     static const uint8_t EDGE_SIZE = 4;

@@ -114,3 +114,15 @@ void Position::down(Position & _down)
 {
     m_down = & _down;
 }
+
+void Position::slideLeft()
+{
+    auto left = & this->left();
+
+    while(left->hasLeft() && (! left->left().hasNumber()))
+    {
+        left = & left->left();
+    }
+
+    left->place(m_number);
+}

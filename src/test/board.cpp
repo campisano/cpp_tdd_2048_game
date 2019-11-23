@@ -5,6 +5,7 @@
 namespace
 {
 const std::size_t EXPECTED_BOARD_SIZE = 16;
+const Number::Value ARBITRARY_VALUE = 8;
 }
 
 TEST_GROUP(BoardTest) {};
@@ -84,4 +85,36 @@ TEST(BoardTest, BorderDownRight)
     CHECK_FALSE(board.at(3, 3).hasDown());
     CHECK_TRUE(board.at(3, 3).hasLeft());
     CHECK_FALSE(board.at(3, 3).hasRight());
+}
+
+TEST(BoardTest, BorderSlideLeft)
+{
+    Board board;
+    auto number = Number::make(ARBITRARY_VALUE);
+    Number * num_ptr = number.get();
+    board.at(2, 2).place(number);
+    board.slideLeft();
+    CHECK_FALSE(board.at(2, 2).hasNumber());
+    CHECK_TRUE(board.at(2, 0).hasNumber());
+    CHECK_EQUAL(num_ptr, board.at(2, 0).number().get());
+}
+
+TEST(BoardTest, BorderSlideLeftIsAppliedToAllNumbers)
+{
+    Board board;
+    auto num_1_1 = Number::make(ARBITRARY_VALUE);
+    auto num_2_2 = Number::make(ARBITRARY_VALUE);
+    auto num_3_3 = Number::make(ARBITRARY_VALUE);
+    board.at(1, 1).place(num_1_1);
+    board.at(2, 2).place(num_2_2);
+    board.at(3, 3).place(num_3_3);
+
+    board.slideLeft();
+
+    CHECK_FALSE(board.at(1, 1).hasNumber());
+    CHECK_FALSE(board.at(2, 2).hasNumber());
+    CHECK_FALSE(board.at(3, 3).hasNumber());
+    CHECK_TRUE(board.at(1, 0).hasNumber());
+    CHECK_TRUE(board.at(2, 0).hasNumber());
+    CHECK_TRUE(board.at(3, 0).hasNumber());
 }
