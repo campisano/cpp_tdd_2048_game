@@ -2,6 +2,21 @@
 
 #include <stdexcept>
 
+namespace
+{
+void slideLeftFrom(Position & _position)
+{
+    auto left = & _position.left();
+
+    while(left->hasLeft() && (! left->left().hasNumber()))
+    {
+        left = & left->left();
+    }
+
+    _position.transferTo(*left);
+}
+}
+
 Board::Board()
 {
     for(auto row = 0; row < EDGE_SIZE; ++row)
@@ -37,14 +52,14 @@ std::size_t Board::size() const
     return EDGE_SIZE * EDGE_SIZE;
 }
 
-Position & Board::at(uint8_t _row, uint8_t _col)
+Position & Board::at(uint8_t _row, uint8_t _column)
 {
-    if(_row >= EDGE_SIZE || _col >= EDGE_SIZE)
+    if(_row >= EDGE_SIZE || _column >= EDGE_SIZE)
     {
         throw std::runtime_error("out of board boundaries");
     }
 
-    return m_positions[_row][_col];
+    return m_positions[_row][_column];
 }
 
 void Board::slideLeft()
@@ -59,16 +74,4 @@ void Board::slideLeft()
             }
         }
     }
-}
-
-void Board::slideLeftFrom(Position & _position)
-{
-    auto left = & _position.left();
-
-    while(left->hasLeft() && (! left->left().hasNumber()))
-    {
-        left = & left->left();
-    }
-
-    _position.transferTo(*left);
 }

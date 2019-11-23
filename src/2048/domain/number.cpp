@@ -4,9 +4,9 @@
 
 namespace
 {
-bool isPowerOfTwo(Number::Value _num)
+bool isPowerOfTwo(Number::Value _number)
 {
-    return (_num > 0) && ((_num & (_num - 1)) == 0);
+    return (_number > 0) && ((_number & (_number - 1)) == 0);
 }
 }
 
