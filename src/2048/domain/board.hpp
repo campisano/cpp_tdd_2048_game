@@ -21,6 +21,7 @@ public:
     void slideLeft();
 
 private:
+    void slideLeftFrom(Position & _position);
     static const uint8_t EDGE_SIZE = 4;
     Position m_positions[EDGE_SIZE][EDGE_SIZE];
 };

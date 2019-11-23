@@ -55,8 +55,20 @@ void Board::slideLeft()
         {
             if(m_positions[row][col].hasNumber())
             {
-                m_positions[row][col].slideLeft();
+                slideLeftFrom(m_positions[row][col]);
             }
         }
     }
+}
+
+void Board::slideLeftFrom(Position & _position)
+{
+    auto left = & _position.left();
+
+    while(left->hasLeft() && (! left->left().hasNumber()))
+    {
+        left = & left->left();
+    }
+
+    _position.transferTo(*left);
 }
