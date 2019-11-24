@@ -4,16 +4,20 @@
 
 namespace
 {
-void slideLeftFrom(Position & _position)
+void slideFrom(
+    Position & _position,
+    bool (Position::*_has_direction)() const,
+    Position & (Position::*_direction)() const
+)
 {
-    auto left = & _position.left();
+    auto dest = & (_position.*_direction)();
 
-    while(left->hasLeft() && (! left->left().hasNumber()))
+    while(((dest->*_has_direction)()) && (!(dest->*_direction)().hasNumber()))
     {
-        left = & left->left();
+        dest = & (dest->*_direction)();
     }
 
-    _position.transferTo(*left);
+    _position.transferTo(*dest);
 }
 }
 
@@ -70,7 +74,10 @@ void Board::slideLeft()
         {
             if(m_positions[row][col].hasNumber())
             {
-                slideLeftFrom(m_positions[row][col]);
+                slideFrom(
+                    m_positions[row][col],
+                    &Position::hasLeft,
+                    &Position::left);
             }
         }
     }
