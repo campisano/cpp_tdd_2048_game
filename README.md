@@ -17,6 +17,7 @@ There are numbers in a board. The position of the number appears to be a importa
         - the slide is applied at all the number in the board, starting from the nearest to the destination of the slide
         - a sliding number will stop when encounter a board border or a number that can not be merged
         - if a sliding number encounter a number that can be merged, it will be merged in the number and will be removed from the board
+        - if a sliding number encounter a number that was already merged, it must stop
 0) there are numbers
     - number has a value
     - value must be greater than or equal to 2

@@ -9,7 +9,7 @@ bool isPowerOfTwo(Number::Value _number)
 }
 }
 
-Number::Number(Value _value)
+Number::Number(Value _value) : m_value(false)
 {
     if(_value < 2)
     {
@@ -40,16 +40,19 @@ Number::Value Number::value() const
 
 bool Number::canMerge(const Number & _number) const
 {
-    return _number.value() == m_value;
+    return !m_merged && !_number.m_merged && _number.value() == m_value;
 }
 
 void Number::merge(Movable & _number)
 {
     if(! canMerge(* _number))
     {
-        throw std::runtime_error("merging numbers must have the same value");
+        throw std::runtime_error(
+            "merging numbers must have the same value"
+            " and must have not been merged");
     }
 
     m_value += _number->value();
     auto merging = std::move(_number);
+    m_merged = true;
 }

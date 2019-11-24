@@ -120,3 +120,34 @@ TEST(PositionTest, ThrowsOnGetEmptyDown)
     CHECK_THROWS_STDEXCEPT(
         std::runtime_error, "there is no down position", position.down());
 }
+
+TEST(PositionTest, TransferToEmptyImplyPlaceThere)
+{
+    auto     number  = Number::make(ARBITRARY_VALUE);
+    Number * num_ptr = number.get();
+    Position pos_start;
+    pos_start.place(number);
+    Position pos_end;
+
+    pos_start.transferTo(pos_end);
+
+    CHECK_FALSE(pos_start.hasNumber());
+    CHECK_TRUE(pos_end.hasNumber());
+    CHECK_EQUAL(num_ptr, pos_end.number().get());
+}
+
+TEST(PositionTest, TransferToNotEmptyImplyMergeThere)
+{
+    auto     num_start  = Number::make(ARBITRARY_VALUE);
+    auto     num_end    = Number::make(ARBITRARY_VALUE);
+    Position pos_start;
+    pos_start.place(num_start);
+    Position pos_end;
+    pos_end.place(num_end);
+
+    pos_start.transferTo(pos_end);
+
+    CHECK_FALSE(pos_start.hasNumber());
+    CHECK_TRUE(pos_end.hasNumber());
+    CHECK_EQUAL(2 * ARBITRARY_VALUE, pos_end.number()->value());
+}

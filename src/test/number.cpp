@@ -67,6 +67,8 @@ TEST(NumberTest, MergeBadValues)
     Number::Movable number_2(new Number(2 * ARBITRARY_VALUE));
 
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "merging numbers must have the same value",
+        std::runtime_error,
+        "merging numbers must have the same value"
+        " and must have not been merged",
         number_1.merge(number_2));
 }

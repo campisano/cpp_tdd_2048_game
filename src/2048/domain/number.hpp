@@ -28,6 +28,7 @@ public:
 
 private:
     Value m_value;
+    bool m_merged;
 };
 
 #endif
