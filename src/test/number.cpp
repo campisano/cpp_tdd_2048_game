@@ -61,7 +61,7 @@ TEST(NumberTest, MergeRemoveNumber)
     CHECK_FALSE(number_2);
 }
 
-TEST(NumberTest, MergeBadValues)
+TEST(NumberTest, ThrowsOnMergeBadValues)
 {
     Number          number_1(ARBITRARY_VALUE);
     Number::Movable number_2(new Number(2 * ARBITRARY_VALUE));
@@ -71,4 +71,18 @@ TEST(NumberTest, MergeBadValues)
         "merging numbers must have the same value"
         " and must have not been merged",
         number_1.merge(number_2));
+}
+
+TEST(NumberTest, ThrowsOnMergeAlreadyMerged)
+{
+    Number          number_1(ARBITRARY_VALUE);
+    Number::Movable number_2(new Number(ARBITRARY_VALUE));
+    Number::Movable number_3(new Number(2 * ARBITRARY_VALUE));
+    number_1.merge(number_2);
+
+    CHECK_THROWS_STDEXCEPT(
+        std::runtime_error,
+        "merging numbers must have the same value"
+        " and must have not been merged",
+        number_1.merge(number_3));
 }

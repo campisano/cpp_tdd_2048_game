@@ -57,7 +57,7 @@ TEST(BoardTest, ThrowsOnAtRightOutside)
         std::runtime_error, "out of board boundaries", board.at(0, 4));
 }
 
-TEST(BoardTest, BorderUpLeft)
+TEST(BoardTest, AtEdgeUpLeft)
 {
     Board board;
 
@@ -67,7 +67,7 @@ TEST(BoardTest, BorderUpLeft)
     CHECK_TRUE(board.at(0, 0).hasRight());
 }
 
-TEST(BoardTest, BorderUpRight)
+TEST(BoardTest, AtEdgeUpRight)
 {
     Board board;
 
@@ -77,7 +77,7 @@ TEST(BoardTest, BorderUpRight)
     CHECK_FALSE(board.at(0, 3).hasRight());
 }
 
-TEST(BoardTest, BorderDownLeft)
+TEST(BoardTest, AtEdgeDownLeft)
 {
     Board board;
 
@@ -87,7 +87,7 @@ TEST(BoardTest, BorderDownLeft)
     CHECK_TRUE(board.at(3, 0).hasRight());
 }
 
-TEST(BoardTest, BorderDownRight)
+TEST(BoardTest, AtEdgeDownRight)
 {
     Board board;
 
@@ -97,7 +97,7 @@ TEST(BoardTest, BorderDownRight)
     CHECK_FALSE(board.at(3, 3).hasRight());
 }
 
-TEST(BoardTest, BoardSlideLeft)
+TEST(BoardTest, SlideLeft)
 {
     Board    board;
     auto     number  = Number::make(ARBITRARY_VALUE);
@@ -111,7 +111,7 @@ TEST(BoardTest, BoardSlideLeft)
     CHECK_EQUAL(num_ptr, board.at(2, 0).number().get());
 }
 
-TEST(BoardTest, BoardSlideRight)
+TEST(BoardTest, SlideRight)
 {
     Board    board;
     auto     number  = Number::make(ARBITRARY_VALUE);
@@ -125,7 +125,7 @@ TEST(BoardTest, BoardSlideRight)
     CHECK_EQUAL(num_ptr, board.at(1, 3).number().get());
 }
 
-TEST(BoardTest, BoardSlideUp)
+TEST(BoardTest, SlideUp)
 {
     Board    board;
     auto     number  = Number::make(ARBITRARY_VALUE);
@@ -139,7 +139,7 @@ TEST(BoardTest, BoardSlideUp)
     CHECK_EQUAL(num_ptr, board.at(0, 2).number().get());
 }
 
-TEST(BoardTest, BoardSlideDown)
+TEST(BoardTest, SlideDown)
 {
     Board    board;
     auto     number  = Number::make(ARBITRARY_VALUE);
@@ -153,7 +153,7 @@ TEST(BoardTest, BoardSlideDown)
     CHECK_EQUAL(num_ptr, board.at(3, 1).number().get());
 }
 
-TEST(BoardTest, BoardSlideIsAppliedToAllNumbers)
+TEST(BoardTest, SlideIsAppliedToAllNumbers)
 {
     Board board;
     auto  num_1_1 = Number::make(ARBITRARY_VALUE);
@@ -173,7 +173,7 @@ TEST(BoardTest, BoardSlideIsAppliedToAllNumbers)
     CHECK_TRUE(board.at(3, 0).hasNumber());
 }
 
-TEST(BoardTest, BoardNotSlideOverBorder)
+TEST(BoardTest, SlideNotOverEdge)
 {
     Board board;
     auto  number = Number::make(ARBITRARY_VALUE);
@@ -184,7 +184,7 @@ TEST(BoardTest, BoardNotSlideOverBorder)
     CHECK_TRUE(board.at(2, 0).hasNumber());
 }
 
-TEST(BoardTest, BoardSlideStopsOnNotMergeableNumber)
+TEST(BoardTest, SlideStopOnNotMergeableNumber)
 {
     Board board;
     auto  moving_number   = Number::make(ARBITRARY_VALUE);
@@ -200,7 +200,7 @@ TEST(BoardTest, BoardSlideStopsOnNotMergeableNumber)
     CHECK_EQUAL(4 * ARBITRARY_VALUE, board.at(2, 0).number()->value());
 }
 
-TEST(BoardTest, BoardSlideStopsOnNotMergeableNumberAfterItsMove)
+TEST(BoardTest, SlideStopOnNotMergeableNumberAfterItsMove)
 {
     Board board;
     auto  moving_number          = Number::make(ARBITRARY_VALUE);
@@ -216,7 +216,7 @@ TEST(BoardTest, BoardSlideStopsOnNotMergeableNumberAfterItsMove)
     CHECK_EQUAL(4 * ARBITRARY_VALUE, board.at(2, 0).number()->value());
 }
 
-TEST(BoardTest, BoardSlideMoveAndMergeAtBorderTwoMergeableNumbers)
+TEST(BoardTest, SlideMoveAndMergeAtEdgeTwoMergeableNumbers)
 {
     Board board;
     auto  moving_number  = Number::make(ARBITRARY_VALUE);
@@ -233,7 +233,7 @@ TEST(BoardTest, BoardSlideMoveAndMergeAtBorderTwoMergeableNumbers)
     CHECK_EQUAL(2 * ARBITRARY_VALUE, board.at(2, 0).number()->value());
 }
 
-TEST(BoardTest, BoardSlideNotMergeThirdMergeableNumber)
+TEST(BoardTest, SlideNotMergeThirdMergeableNumber)
 {
     Board    board;
     auto     moving_number         = Number::make(2 * ARBITRARY_VALUE);
@@ -255,7 +255,7 @@ TEST(BoardTest, BoardSlideNotMergeThirdMergeableNumber)
     CHECK_EQUAL(moving_num_ptr, board.at(2, 1).number().get());
 }
 
-TEST(BoardTest, BoardSlideMergeTwoByTwoOfFourEqualNumbers)
+TEST(BoardTest, SlideMergeTwoByTwoOfFourEqualNumbers)
 {
     Board board;
     auto  num_0 = Number::make(ARBITRARY_VALUE);
@@ -277,7 +277,7 @@ TEST(BoardTest, BoardSlideMergeTwoByTwoOfFourEqualNumbers)
     CHECK_EQUAL(2 * ARBITRARY_VALUE, board.at(2, 1).number()->value());
 }
 
-TEST(BoardTest, BoardSlideMergeCouplesOfMergeableNumbers)
+TEST(BoardTest, SlideMergeCouplesOfMergeableNumbers)
 {
     Board board;
     auto  num_0 = Number::make(ARBITRARY_VALUE);
@@ -299,7 +299,7 @@ TEST(BoardTest, BoardSlideMergeCouplesOfMergeableNumbers)
     CHECK_EQUAL(4 * ARBITRARY_VALUE, board.at(2, 1).number()->value());
 }
 
-TEST(BoardTest, BoardSlideMergeMiddleNumbers)
+TEST(BoardTest, SlideMergeMiddleNumbers)
 {
     Board board;
     auto  num_0 = Number::make(ARBITRARY_VALUE);

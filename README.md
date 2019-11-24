@@ -10,10 +10,9 @@ Game description in https://en.wikipedia.org/wiki/2048_(video_game)#Gameplay
 
 1) There is a board:
     - board is divided in 16 positions (four-by-four);
-    - board positions are arranged inside the board borders;
     - player can make a slide in one direction {left,right,up,down}:
         - a slide is applied to all the numbers in the board, starting from the nearest to the destination of the slide;
-        - a sliding number will stop when encounter a board border or a number that cannot be merged;
+        - a sliding number will stop when encounter a board edge or a number that cannot be merged;
         - if a sliding number encounters a number that can be merged, it will be merged in the number and the sliding number will be removed from the board;
         - if a sliding number encounter a number that was already merged, it must stop.
 0) There are numbers:
