@@ -13,7 +13,9 @@ There are numbers in a board. The position of the number appears to be a importa
 1) there is a board
     - board is divided in 16 positions (four-by-four)
     - board positions are arranged inside its borders
-    - player can make a slide in one direction {left,right,up,down} that is applied at all the number in the board
+    - player can make a slide in one direction {left,right,up,down}
+        - the slide is applied at all the number in the board, starting from the nearest to the destination of the slide
+        - a sliding number will stop when encounter a board border or a number
 0) there are numbers
     - number has a value
     - value must be greater than or equal to 2
