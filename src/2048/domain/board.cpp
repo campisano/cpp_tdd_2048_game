@@ -10,14 +10,19 @@ void slideFrom(
     Position & (Position::*_direction)() const
 )
 {
-    auto dest = & (_position.*_direction)();
+    auto slide_destination = & _position;
 
-    while(((dest->*_has_direction)()) && (!(dest->*_direction)().hasNumber()))
+    while(
+        ((slide_destination->*_has_direction)()) &&
+        (!(slide_destination->*_direction)().hasNumber()))
     {
-        dest = & (dest->*_direction)();
+        slide_destination = & (slide_destination->*_direction)();
     }
 
-    _position.transferTo(*dest);
+    if(slide_destination != & _position)
+    {
+        _position.transferTo(* slide_destination);
+    }
 }
 }
 
