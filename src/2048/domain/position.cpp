@@ -117,5 +117,12 @@ void Position::down(Position & _down)
 
 void Position::transferTo(Position & _position)
 {
-    _position.place(m_number);
+    if(_position.hasNumber())
+    {
+        _position.number()->merge(m_number);
+    }
+    else
+    {
+        _position.place(m_number);
+    }
 }

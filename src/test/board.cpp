@@ -13,6 +13,7 @@ TEST_GROUP(BoardTest) {};
 TEST(BoardTest, Creation)
 {
     Board board;
+
     CHECK_EQUAL(EXPECTED_BOARD_SIZE, board.size());
 }
 
@@ -98,8 +99,8 @@ TEST(BoardTest, BorderDownRight)
 
 TEST(BoardTest, BoardSlideLeft)
 {
-    Board board;
-    auto number = Number::make(ARBITRARY_VALUE);
+    Board    board;
+    auto     number  = Number::make(ARBITRARY_VALUE);
     Number * num_ptr = number.get();
     board.at(2, 2).place(number);
 
@@ -112,8 +113,8 @@ TEST(BoardTest, BoardSlideLeft)
 
 TEST(BoardTest, BoardSlideRight)
 {
-    Board board;
-    auto number = Number::make(ARBITRARY_VALUE);
+    Board    board;
+    auto     number  = Number::make(ARBITRARY_VALUE);
     Number * num_ptr = number.get();
     board.at(1, 1).place(number);
 
@@ -126,8 +127,8 @@ TEST(BoardTest, BoardSlideRight)
 
 TEST(BoardTest, BoardSlideUp)
 {
-    Board board;
-    auto number = Number::make(ARBITRARY_VALUE);
+    Board    board;
+    auto     number  = Number::make(ARBITRARY_VALUE);
     Number * num_ptr = number.get();
     board.at(2, 2).place(number);
 
@@ -140,8 +141,8 @@ TEST(BoardTest, BoardSlideUp)
 
 TEST(BoardTest, BoardSlideDown)
 {
-    Board board;
-    auto number = Number::make(ARBITRARY_VALUE);
+    Board    board;
+    auto     number  = Number::make(ARBITRARY_VALUE);
     Number * num_ptr = number.get();
     board.at(1, 1).place(number);
 
@@ -155,9 +156,9 @@ TEST(BoardTest, BoardSlideDown)
 TEST(BoardTest, BoardSlideIsAppliedToAllNumbers)
 {
     Board board;
-    auto num_1_1 = Number::make(ARBITRARY_VALUE);
-    auto num_2_2 = Number::make(ARBITRARY_VALUE);
-    auto num_3_3 = Number::make(ARBITRARY_VALUE);
+    auto  num_1_1 = Number::make(ARBITRARY_VALUE);
+    auto  num_2_2 = Number::make(ARBITRARY_VALUE);
+    auto  num_3_3 = Number::make(ARBITRARY_VALUE);
     board.at(1, 1).place(num_1_1);
     board.at(2, 2).place(num_2_2);
     board.at(3, 3).place(num_3_3);
@@ -175,7 +176,7 @@ TEST(BoardTest, BoardSlideIsAppliedToAllNumbers)
 TEST(BoardTest, BoardNotSlideOnBorder)
 {
     Board board;
-    auto number = Number::make(ARBITRARY_VALUE);
+    auto  number = Number::make(ARBITRARY_VALUE);
     board.at(2, 0).place(number);
 
     board.slideLeft();
@@ -183,11 +184,11 @@ TEST(BoardTest, BoardNotSlideOnBorder)
     CHECK_TRUE(board.at(2, 0).hasNumber());
 }
 
-TEST(BoardTest, BoardNotSlideOnNumber)
+TEST(BoardTest, BoardNotSlideOnNotMergeableNumber)
 {
     Board board;
-    auto number          = Number::make(ARBITRARY_VALUE);
-    auto blocking_number = Number::make(2 * ARBITRARY_VALUE);
+    auto  number          = Number::make(ARBITRARY_VALUE);
+    auto  blocking_number = Number::make(4 * ARBITRARY_VALUE);
     board.at(2, 3).place(number);
     board.at(2, 0).place(blocking_number);
 
@@ -196,14 +197,14 @@ TEST(BoardTest, BoardNotSlideOnNumber)
     CHECK_TRUE(board.at(2, 1).hasNumber());
     CHECK_TRUE(board.at(2, 1).number()->value() == ARBITRARY_VALUE);
     CHECK_TRUE(board.at(2, 0).hasNumber());
-    CHECK_TRUE(board.at(2, 0).number()->value() == 2 * ARBITRARY_VALUE);
+    CHECK_TRUE(board.at(2, 0).number()->value() == 4 * ARBITRARY_VALUE);
 }
 
-TEST(BoardTest, BoardTwoAlignedNumbersSlides)
+TEST(BoardTest, BoardSlideAlignedNotMergeableNumbersWillMoveBoth)
 {
     Board board;
-    auto number          = Number::make(ARBITRARY_VALUE);
-    auto blocking_number = Number::make(2 * ARBITRARY_VALUE);
+    auto  number          = Number::make(ARBITRARY_VALUE);
+    auto  blocking_number = Number::make(4 * ARBITRARY_VALUE);
     board.at(2, 3).place(number);
     board.at(2, 1).place(blocking_number);
 
@@ -212,5 +213,22 @@ TEST(BoardTest, BoardTwoAlignedNumbersSlides)
     CHECK_TRUE(board.at(2, 1).hasNumber());
     CHECK_TRUE(board.at(2, 1).number()->value() == ARBITRARY_VALUE);
     CHECK_TRUE(board.at(2, 0).hasNumber());
+    CHECK_TRUE(board.at(2, 0).number()->value() == 4 * ARBITRARY_VALUE);
+}
+
+TEST(BoardTest, BoardSlideOnAlignedMergeableNumbersWillMoveBothAndMergeAtBorder)
+{
+    Board board;
+    auto  number          = Number::make(ARBITRARY_VALUE);
+    auto  blocking_number = Number::make(ARBITRARY_VALUE);
+    board.at(2, 3).place(number);
+    board.at(2, 1).place(blocking_number);
+
+    board.slideLeft();
+
+    CHECK_TRUE(board.at(2, 0).hasNumber());
+    CHECK_FALSE(board.at(2, 1).hasNumber());
+    CHECK_FALSE(board.at(2, 2).hasNumber());
+    CHECK_FALSE(board.at(2, 3).hasNumber());
     CHECK_TRUE(board.at(2, 0).number()->value() == 2 * ARBITRARY_VALUE);
 }

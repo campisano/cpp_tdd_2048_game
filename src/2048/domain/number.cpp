@@ -38,9 +38,14 @@ Number::Value Number::value() const
     return m_value;
 }
 
+bool Number::canMerge(const Number & _number) const
+{
+    return _number.value() == m_value;
+}
+
 void Number::merge(Movable & _number)
 {
-    if(_number->value() != m_value)
+    if(! canMerge(* _number))
     {
         throw std::runtime_error("merging numbers must have the same value");
     }

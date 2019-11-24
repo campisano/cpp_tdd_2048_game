@@ -3,24 +3,38 @@
 
 namespace
 {
+inline bool hasSpaceInDirection(
+    Position & _position, bool (Position::*_has_direction)() const)
+{
+    return (_position.*_has_direction)();
+}
+
+inline Position & positionAtDirection(
+    Position & _position, Position & (Position::*_direction)() const)
+{
+    return (_position.*_direction)();
+}
+
 void slideFrom(
     Position & _position,
     bool (Position::*_has_direction)() const,
     Position & (Position::*_direction)() const
 )
 {
-    auto slide_destination = & _position;
+    auto dest = & _position;
 
-    while(
-        ((slide_destination->*_has_direction)()) &&
-        (!(slide_destination->*_direction)().hasNumber()))
+    while(hasSpaceInDirection(* dest, _has_direction) && (
+                !positionAtDirection(* dest, _direction).hasNumber() ||
+                positionAtDirection(* dest, _direction).number()->canMerge(
+                    * _position.number())
+            ))
     {
-        slide_destination = & (slide_destination->*_direction)();
+        dest = & (dest->*_direction)();
     }
 
-    if(slide_destination != & _position)
+    if(dest != & _position)
     {
-        _position.transferTo(* slide_destination);
+        _position.transferTo(* dest);
     }
 }
 }

@@ -15,7 +15,8 @@ There are numbers in a board. The position of the number appears to be a importa
     - board positions are arranged inside its borders
     - player can make a slide in one direction {left,right,up,down}
         - the slide is applied at all the number in the board, starting from the nearest to the destination of the slide
-        - a sliding number will stop when encounter a board border or a number
+        - a sliding number will stop when encounter a board border or a number that can not be merged
+        - if a sliding number encounter a number that can be merged, it will be merged in the number and will be removed from the board
 0) there are numbers
     - number has a value
     - value must be greater than or equal to 2

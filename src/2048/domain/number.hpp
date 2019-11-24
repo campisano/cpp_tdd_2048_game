@@ -23,6 +23,7 @@ public:
 
 public:
     Value value() const;
+    bool canMerge(const Number & _number) const;
     void merge(Movable & _number);
 
 private:
