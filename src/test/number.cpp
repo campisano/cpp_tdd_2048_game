@@ -43,7 +43,7 @@ TEST(NumberTest, ThrowsOnCreationWithValue6NotPowerOf2)
 
 TEST(NumberTest, MergeDoubleValue)
 {
-    Number number_1(ARBITRARY_VALUE);
+    Number          number_1(ARBITRARY_VALUE);
     Number::Movable number_2(new Number(ARBITRARY_VALUE));
 
     number_1.merge(number_2);
@@ -53,7 +53,7 @@ TEST(NumberTest, MergeDoubleValue)
 
 TEST(NumberTest, MergeRemoveNumber)
 {
-    Number number_1(ARBITRARY_VALUE);
+    Number          number_1(ARBITRARY_VALUE);
     Number::Movable number_2(new Number(ARBITRARY_VALUE));
 
     number_1.merge(number_2);
@@ -63,7 +63,7 @@ TEST(NumberTest, MergeRemoveNumber)
 
 TEST(NumberTest, MergeBadValues)
 {
-    Number number_1(ARBITRARY_VALUE);
+    Number          number_1(ARBITRARY_VALUE);
     Number::Movable number_2(new Number(2 * ARBITRARY_VALUE));
 
     CHECK_THROWS_STDEXCEPT(

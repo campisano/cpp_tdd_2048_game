@@ -21,7 +21,7 @@ TEST(PositionTest, Creation)
 
 TEST(PositionTest, PlacingNumber)
 {
-    auto number = Number::make(ARBITRARY_VALUE);
+    auto     number  = Number::make(ARBITRARY_VALUE);
     Number * num_ptr = number.get();
     Position position;
 
