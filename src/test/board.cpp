@@ -195,9 +195,9 @@ TEST(BoardTest, BoardSlideStopsOnNotMergeableNumber)
     board.slideLeft();
 
     CHECK_TRUE(board.at(2, 1).hasNumber());
-    CHECK_TRUE(board.at(2, 1).number()->value() == ARBITRARY_VALUE);
+    CHECK_EQUAL(ARBITRARY_VALUE, board.at(2, 1).number()->value());
     CHECK_TRUE(board.at(2, 0).hasNumber());
-    CHECK_TRUE(board.at(2, 0).number()->value() == 4 * ARBITRARY_VALUE);
+    CHECK_EQUAL(4 * ARBITRARY_VALUE, board.at(2, 0).number()->value());
 }
 
 TEST(BoardTest, BoardSlideStopsOnNotMergeableNumberAfterItsMove)
@@ -211,9 +211,9 @@ TEST(BoardTest, BoardSlideStopsOnNotMergeableNumberAfterItsMove)
     board.slideLeft();
 
     CHECK_TRUE(board.at(2, 1).hasNumber());
-    CHECK_TRUE(board.at(2, 1).number()->value() == ARBITRARY_VALUE);
+    CHECK_EQUAL(ARBITRARY_VALUE, board.at(2, 1).number()->value());
     CHECK_TRUE(board.at(2, 0).hasNumber());
-    CHECK_TRUE(board.at(2, 0).number()->value() == 4 * ARBITRARY_VALUE);
+    CHECK_EQUAL(4 * ARBITRARY_VALUE, board.at(2, 0).number()->value());
 }
 
 TEST(BoardTest, BoardSlideMoveAndMergeAtBorderTwoMergeableNumbers)
@@ -230,7 +230,7 @@ TEST(BoardTest, BoardSlideMoveAndMergeAtBorderTwoMergeableNumbers)
     CHECK_FALSE(board.at(2, 1).hasNumber());
     CHECK_FALSE(board.at(2, 2).hasNumber());
     CHECK_FALSE(board.at(2, 3).hasNumber());
-    CHECK_TRUE(board.at(2, 0).number()->value() == 2 * ARBITRARY_VALUE);
+    CHECK_EQUAL(2 * ARBITRARY_VALUE, board.at(2, 0).number()->value());
 }
 
 TEST(BoardTest, BoardSlideNotMergeThirdMergeableNumber)
@@ -250,8 +250,8 @@ TEST(BoardTest, BoardSlideNotMergeThirdMergeableNumber)
     CHECK_TRUE(board.at(2, 1).hasNumber());
     CHECK_FALSE(board.at(2, 2).hasNumber());
     CHECK_FALSE(board.at(2, 3).hasNumber());
-    CHECK_TRUE(board.at(2, 0).number()->value() == 2 * ARBITRARY_VALUE);
-    CHECK_TRUE(board.at(2, 1).number()->value() == 2 * ARBITRARY_VALUE);
+    CHECK_EQUAL(2 * ARBITRARY_VALUE, board.at(2, 0).number()->value());
+    CHECK_EQUAL(2 * ARBITRARY_VALUE, board.at(2, 1).number()->value());
     CHECK_EQUAL(moving_num_ptr, board.at(2, 1).number().get());
 }
 
@@ -273,8 +273,8 @@ TEST(BoardTest, BoardSlideMergeTwoByTwoOfFourEqualNumbers)
     CHECK_TRUE(board.at(2, 1).hasNumber());
     CHECK_FALSE(board.at(2, 2).hasNumber());
     CHECK_FALSE(board.at(2, 3).hasNumber());
-    CHECK_TRUE(board.at(2, 0).number()->value() == 2 * ARBITRARY_VALUE);
-    CHECK_TRUE(board.at(2, 1).number()->value() == 2 * ARBITRARY_VALUE);
+    CHECK_EQUAL(2 * ARBITRARY_VALUE, board.at(2, 0).number()->value());
+    CHECK_EQUAL(2 * ARBITRARY_VALUE, board.at(2, 1).number()->value());
 }
 
 TEST(BoardTest, BoardSlideMergeCouplesOfMergeableNumbers)
@@ -295,8 +295,8 @@ TEST(BoardTest, BoardSlideMergeCouplesOfMergeableNumbers)
     CHECK_TRUE(board.at(2, 1).hasNumber());
     CHECK_FALSE(board.at(2, 2).hasNumber());
     CHECK_FALSE(board.at(2, 3).hasNumber());
-    CHECK_TRUE(board.at(2, 0).number()->value() == 2 * ARBITRARY_VALUE);
-    CHECK_TRUE(board.at(2, 1).number()->value() == 4 * ARBITRARY_VALUE);
+    CHECK_EQUAL(2 * ARBITRARY_VALUE, board.at(2, 0).number()->value());
+    CHECK_EQUAL(4 * ARBITRARY_VALUE, board.at(2, 1).number()->value());
 }
 
 TEST(BoardTest, BoardSlideMergeMiddleNumbers)
@@ -317,7 +317,7 @@ TEST(BoardTest, BoardSlideMergeMiddleNumbers)
     CHECK_TRUE(board.at(2, 1).hasNumber());
     CHECK_TRUE(board.at(2, 2).hasNumber());
     CHECK_FALSE(board.at(2, 3).hasNumber());
-    CHECK_TRUE(board.at(2, 0).number()->value() == ARBITRARY_VALUE);
-    CHECK_TRUE(board.at(2, 1).number()->value() == 4 * ARBITRARY_VALUE);
-    CHECK_TRUE(board.at(2, 2).number()->value() == 4 * ARBITRARY_VALUE);
+    CHECK_EQUAL(ARBITRARY_VALUE, board.at(2, 0).number()->value());
+    CHECK_EQUAL(4 * ARBITRARY_VALUE, board.at(2, 1).number()->value());
+    CHECK_EQUAL(4 * ARBITRARY_VALUE, board.at(2, 2).number()->value());
 }
