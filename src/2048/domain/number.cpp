@@ -9,7 +9,7 @@ bool isPowerOfTwo(Number::Value _number)
 }
 }
 
-Number::Number(Value _value) : m_value(false)
+Number::Number(Value _value) : m_merged(false)
 {
     if(_value < 2)
     {
