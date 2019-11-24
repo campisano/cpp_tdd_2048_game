@@ -19,6 +19,7 @@ TEST(BoardTest, Creation)
 TEST(BoardTest, AtInside)
 {
     Board board;
+
     board.at(0, 0);
     board.at(3, 3);
 }
@@ -26,6 +27,7 @@ TEST(BoardTest, AtInside)
 TEST(BoardTest, ThrowsOnAtUpOutside)
 {
     Board board;
+
     CHECK_THROWS_STDEXCEPT(
         std::runtime_error, "out of board boundaries", board.at(-1, 0));
 }
@@ -33,6 +35,7 @@ TEST(BoardTest, ThrowsOnAtUpOutside)
 TEST(BoardTest, ThrowsOnAtDownOutside)
 {
     Board board;
+
     CHECK_THROWS_STDEXCEPT(
         std::runtime_error, "out of board boundaries", board.at(4, 0));
 }
@@ -40,6 +43,7 @@ TEST(BoardTest, ThrowsOnAtDownOutside)
 TEST(BoardTest, ThrowsOnAtLeftOutside)
 {
     Board board;
+
     CHECK_THROWS_STDEXCEPT(
         std::runtime_error, "out of board boundaries", board.at(0, -1));
 }
@@ -47,6 +51,7 @@ TEST(BoardTest, ThrowsOnAtLeftOutside)
 TEST(BoardTest, ThrowsOnAtRightOutside)
 {
     Board board;
+
     CHECK_THROWS_STDEXCEPT(
         std::runtime_error, "out of board boundaries", board.at(0, 4));
 }
@@ -54,6 +59,7 @@ TEST(BoardTest, ThrowsOnAtRightOutside)
 TEST(BoardTest, BorderUpLeft)
 {
     Board board;
+
     CHECK_FALSE(board.at(0, 0).hasUp());
     CHECK_TRUE(board.at(0, 0).hasDown());
     CHECK_FALSE(board.at(0, 0).hasLeft());
@@ -63,6 +69,7 @@ TEST(BoardTest, BorderUpLeft)
 TEST(BoardTest, BorderUpRight)
 {
     Board board;
+
     CHECK_FALSE(board.at(0, 3).hasUp());
     CHECK_TRUE(board.at(0, 3).hasDown());
     CHECK_TRUE(board.at(0, 3).hasLeft());
@@ -72,6 +79,7 @@ TEST(BoardTest, BorderUpRight)
 TEST(BoardTest, BorderDownLeft)
 {
     Board board;
+
     CHECK_TRUE(board.at(3, 0).hasUp());
     CHECK_FALSE(board.at(3, 0).hasDown());
     CHECK_FALSE(board.at(3, 0).hasLeft());
@@ -81,6 +89,7 @@ TEST(BoardTest, BorderDownLeft)
 TEST(BoardTest, BorderDownRight)
 {
     Board board;
+
     CHECK_TRUE(board.at(3, 3).hasUp());
     CHECK_FALSE(board.at(3, 3).hasDown());
     CHECK_TRUE(board.at(3, 3).hasLeft());
@@ -113,7 +122,9 @@ TEST(BoardTest, BorderSlideLeft)
     auto number = Number::make(ARBITRARY_VALUE);
     Number * num_ptr = number.get();
     board.at(2, 2).place(number);
+
     board.slideLeft();
+
     CHECK_FALSE(board.at(2, 2).hasNumber());
     CHECK_TRUE(board.at(2, 0).hasNumber());
     CHECK_EQUAL(num_ptr, board.at(2, 0).number().get());
@@ -125,7 +136,9 @@ TEST(BoardTest, BorderSlideRight)
     auto number = Number::make(ARBITRARY_VALUE);
     Number * num_ptr = number.get();
     board.at(1, 1).place(number);
+
     board.slideRight();
+
     CHECK_FALSE(board.at(1, 1).hasNumber());
     CHECK_TRUE(board.at(1, 3).hasNumber());
     CHECK_EQUAL(num_ptr, board.at(1, 3).number().get());
@@ -137,7 +150,9 @@ TEST(BoardTest, BorderSlideUp)
     auto number = Number::make(ARBITRARY_VALUE);
     Number * num_ptr = number.get();
     board.at(2, 2).place(number);
+
     board.slideUp();
+
     CHECK_FALSE(board.at(2, 2).hasNumber());
     CHECK_TRUE(board.at(0, 2).hasNumber());
     CHECK_EQUAL(num_ptr, board.at(0, 2).number().get());
@@ -149,7 +164,9 @@ TEST(BoardTest, BorderSlideDown)
     auto number = Number::make(ARBITRARY_VALUE);
     Number * num_ptr = number.get();
     board.at(1, 1).place(number);
+
     board.slideDown();
+
     CHECK_FALSE(board.at(1, 1).hasNumber());
     CHECK_TRUE(board.at(3, 1).hasNumber());
     CHECK_EQUAL(num_ptr, board.at(3, 1).number().get());
@@ -160,7 +177,9 @@ TEST(BoardTest, BorderNotSlideOnBorder)
     Board board;
     auto number = Number::make(ARBITRARY_VALUE);
     board.at(2, 0).place(number);
+
     board.slideLeft();
+
     CHECK_TRUE(board.at(2, 0).hasNumber());
 }
 
@@ -168,28 +187,30 @@ TEST(BoardTest, BorderNotSlideOnNumber)
 {
     Board board;
     auto number          = Number::make(ARBITRARY_VALUE);
-    auto blocking_number = Number::make(ARBITRARY_VALUE + ARBITRARY_VALUE);
+    auto blocking_number = Number::make(2 * ARBITRARY_VALUE);
     board.at(2, 3).place(number);
     board.at(2, 0).place(blocking_number);
+
     board.slideLeft();
+
     CHECK_TRUE(board.at(2, 1).hasNumber());
     CHECK_TRUE(board.at(2, 1).number()->value() == ARBITRARY_VALUE);
     CHECK_TRUE(board.at(2, 0).hasNumber());
-    CHECK_TRUE(board.at(2, 0).number()->value() == ARBITRARY_VALUE +
-               ARBITRARY_VALUE);
+    CHECK_TRUE(board.at(2, 0).number()->value() == 2 * ARBITRARY_VALUE);
 }
 
 TEST(BoardTest, BorderTwoAlignedNumbersSlides)
 {
     Board board;
     auto number          = Number::make(ARBITRARY_VALUE);
-    auto blocking_number = Number::make(ARBITRARY_VALUE + ARBITRARY_VALUE);
+    auto blocking_number = Number::make(2 * ARBITRARY_VALUE);
     board.at(2, 3).place(number);
     board.at(2, 1).place(blocking_number);
+
     board.slideLeft();
+
     CHECK_TRUE(board.at(2, 1).hasNumber());
     CHECK_TRUE(board.at(2, 1).number()->value() == ARBITRARY_VALUE);
     CHECK_TRUE(board.at(2, 0).hasNumber());
-    CHECK_TRUE(board.at(2, 0).number()->value() == ARBITRARY_VALUE +
-               ARBITRARY_VALUE);
+    CHECK_TRUE(board.at(2, 0).number()->value() == 2 * ARBITRARY_VALUE);
 }

@@ -1,7 +1,6 @@
 #ifndef TESTUTILS__HPP__
 #define TESTUTILS__HPP__
 
-#include <stdexcept>
 #include <string>
 #include "CppUTest/TestHarness.h"
 
