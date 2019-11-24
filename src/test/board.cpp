@@ -87,18 +87,6 @@ TEST(BoardTest, BorderDownRight)
     CHECK_FALSE(board.at(3, 3).hasRight());
 }
 
-TEST(BoardTest, BorderSlideLeft)
-{
-    Board board;
-    auto number = Number::make(ARBITRARY_VALUE);
-    Number * num_ptr = number.get();
-    board.at(2, 2).place(number);
-    board.slideLeft();
-    CHECK_FALSE(board.at(2, 2).hasNumber());
-    CHECK_TRUE(board.at(2, 0).hasNumber());
-    CHECK_EQUAL(num_ptr, board.at(2, 0).number().get());
-}
-
 TEST(BoardTest, BorderSlideLeftIsAppliedToAllNumbers)
 {
     Board board;
@@ -117,4 +105,52 @@ TEST(BoardTest, BorderSlideLeftIsAppliedToAllNumbers)
     CHECK_TRUE(board.at(1, 0).hasNumber());
     CHECK_TRUE(board.at(2, 0).hasNumber());
     CHECK_TRUE(board.at(3, 0).hasNumber());
+}
+
+TEST(BoardTest, BorderSlideLeft)
+{
+    Board board;
+    auto number = Number::make(ARBITRARY_VALUE);
+    Number * num_ptr = number.get();
+    board.at(2, 2).place(number);
+    board.slideLeft();
+    CHECK_FALSE(board.at(2, 2).hasNumber());
+    CHECK_TRUE(board.at(2, 0).hasNumber());
+    CHECK_EQUAL(num_ptr, board.at(2, 0).number().get());
+}
+
+TEST(BoardTest, BorderSlideRight)
+{
+    Board board;
+    auto number = Number::make(ARBITRARY_VALUE);
+    Number * num_ptr = number.get();
+    board.at(1, 1).place(number);
+    board.slideRight();
+    CHECK_FALSE(board.at(1, 1).hasNumber());
+    CHECK_TRUE(board.at(1, 3).hasNumber());
+    CHECK_EQUAL(num_ptr, board.at(1, 3).number().get());
+}
+
+TEST(BoardTest, BorderSlideUp)
+{
+    Board board;
+    auto number = Number::make(ARBITRARY_VALUE);
+    Number * num_ptr = number.get();
+    board.at(2, 2).place(number);
+    board.slideUp();
+    CHECK_FALSE(board.at(2, 2).hasNumber());
+    CHECK_TRUE(board.at(0, 2).hasNumber());
+    CHECK_EQUAL(num_ptr, board.at(0, 2).number().get());
+}
+
+TEST(BoardTest, BorderSlideDown)
+{
+    Board board;
+    auto number = Number::make(ARBITRARY_VALUE);
+    Number * num_ptr = number.get();
+    board.at(1, 1).place(number);
+    board.slideDown();
+    CHECK_FALSE(board.at(1, 1).hasNumber());
+    CHECK_TRUE(board.at(3, 1).hasNumber());
+    CHECK_EQUAL(num_ptr, board.at(3, 1).number().get());
 }

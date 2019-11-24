@@ -82,3 +82,54 @@ void Board::slideLeft()
         }
     }
 }
+
+void Board::slideRight()
+{
+    for(auto row = 0; row < EDGE_SIZE; ++row)
+    {
+        for(auto col = EDGE_SIZE - 2; col >= 0; --col)
+        {
+            if(m_positions[row][col].hasNumber())
+            {
+                slideFrom(
+                    m_positions[row][col],
+                    &Position::hasRight,
+                    &Position::right);
+            }
+        }
+    }
+}
+
+void Board::slideUp()
+{
+    for(auto col = 0; col < EDGE_SIZE; ++col)
+    {
+        for(auto row = 1; row < EDGE_SIZE; ++row)
+        {
+            if(m_positions[row][col].hasNumber())
+            {
+                slideFrom(
+                    m_positions[row][col],
+                    &Position::hasUp,
+                    &Position::up);
+            }
+        }
+    }
+}
+
+void Board::slideDown()
+{
+    for(auto col = 0; col < EDGE_SIZE; ++col)
+    {
+        for(auto row = EDGE_SIZE - 2; row >= 0; --row)
+        {
+            if(m_positions[row][col].hasNumber())
+            {
+                slideFrom(
+                    m_positions[row][col],
+                    &Position::hasDown,
+                    &Position::down);
+            }
+        }
+    }
+}
