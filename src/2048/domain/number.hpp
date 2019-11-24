@@ -23,6 +23,7 @@ public:
 
 public:
     Value value() const;
+    void merge(Movable & _number);
 
 private:
     Value m_value;

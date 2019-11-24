@@ -38,3 +38,14 @@ Number::Value Number::value() const
 {
     return m_value;
 }
+
+void Number::merge(Movable & _number)
+{
+    if(_number->value() != m_value)
+    {
+        throw std::runtime_error("merging numbers must have the same value");
+    }
+
+    m_value += _number->value();
+    auto merging = std::move(_number);
+}

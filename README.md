@@ -18,6 +18,9 @@ There are numbers in a board. The position of the number appears to be a importa
     - number has a value
     - value must be greater than or equal to 2
     - value must be power of two
+    - a number A can merge in another B number with the same value
+        - the B number will have the merge status and the double of its original value
+        - the A number will be removed from its original place
 0) there are positions
     - position can have a number placed on itself
     - position can have adiacent positions {left,right,up,down}

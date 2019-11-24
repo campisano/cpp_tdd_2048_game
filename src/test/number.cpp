@@ -38,3 +38,28 @@ TEST(NumberTest, ThrowsOnCreationWithValue6NotPowerOf2)
     CHECK_THROWS_STDEXCEPT(
         std::runtime_error, "value must be power of 2", Number(6));
 }
+
+TEST(NumberTest, MergeDoubleValue)
+{
+    Number number_1(ARBITRARY_VALUE);
+    Number::Movable number_2(new Number(ARBITRARY_VALUE));
+    number_1.merge(number_2);
+    CHECK_EQUAL(2 * ARBITRARY_VALUE, number_1.value());
+}
+
+TEST(NumberTest, MergeRemoveNumber)
+{
+    Number number_1(ARBITRARY_VALUE);
+    Number::Movable number_2(new Number(ARBITRARY_VALUE));
+    number_1.merge(number_2);
+    CHECK_FALSE(number_2);
+}
+
+TEST(NumberTest, MergeBadValues)
+{
+    Number number_1(ARBITRARY_VALUE);
+    Number::Movable number_2(new Number(ARBITRARY_VALUE * 2));
+    CHECK_THROWS_STDEXCEPT(
+        std::runtime_error, "merging numbers must have the same value",
+        number_1.merge(number_2));
+}
