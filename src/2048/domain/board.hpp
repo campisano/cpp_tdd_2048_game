@@ -17,11 +17,13 @@ public:
 
 public:
     std::size_t size() const;
-    Position & at(uint8_t _row, uint8_t _column);
     void slideLeft();
     void slideRight();
     void slideUp();
     void slideDown();
+
+protected:
+    virtual Position & at(uint8_t _row, uint8_t _column);
 
 private:
     static const uint8_t EDGE_SIZE = 4;
