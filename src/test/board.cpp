@@ -4,8 +4,8 @@
 
 namespace
 {
-const std::size_t EXPECTED_BOARD_SIZE = 16;
-const Number::Value ARBITRARY_VALUE = 8;
+const Board::Size   EXPECTED_BOARD_SIZE = 16;
+const Number::Value ARBITRARY_VALUE     = 8;
 }
 
 TEST_GROUP(BoardTest) {};
@@ -13,17 +13,28 @@ TEST_GROUP(BoardTest) {};
 class BoardTestable : public Board
 {
 public:
-    virtual Position & at(uint8_t _row, uint8_t _column)
+    virtual Size size() const
+    {
+        return Board::size();
+    }
+
+    virtual Position & at(Size _row, Size _column)
     {
         return Board::at(_row, _column);
+    }
+
+    virtual Size count() const
+    {
+        return Board::count();
     }
 };
 
 TEST(BoardTest, Creation)
 {
-    Board board;
+    BoardTestable board;
 
     CHECK_EQUAL(EXPECTED_BOARD_SIZE, board.size());
+    CHECK_EQUAL(0, board.count());
 }
 
 TEST(BoardTest, AtInside)
@@ -329,4 +340,26 @@ TEST(BoardTest, SlideMergeMiddleNumbers)
     CHECK_EQUAL(ARBITRARY_VALUE, board.at(2, 0).number()->value());
     CHECK_EQUAL(4 * ARBITRARY_VALUE, board.at(2, 1).number()->value());
     CHECK_EQUAL(4 * ARBITRARY_VALUE, board.at(2, 2).number()->value());
+}
+
+TEST(BoardTest, PlaceRandomNumber)
+{
+    BoardTestable board;
+
+    board.placeRandomNumber();
+
+    CHECK_EQUAL(1, board.count());
+}
+
+TEST(BoardTest, PlaceRandomNumberOutOfSpace)
+{
+    BoardTestable board;
+    for(int i = 0; i < board.size(); ++i)
+    {
+        board.placeRandomNumber();
+    }
+
+    CHECK_THROWS_STDEXCEPT(
+        std::runtime_error, "no space left on board",
+        board.placeRandomNumber());
 }

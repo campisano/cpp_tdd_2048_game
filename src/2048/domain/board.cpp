@@ -1,4 +1,5 @@
 #include "board.hpp"
+#include <random>
 #include <stdexcept>
 
 namespace
@@ -37,6 +38,14 @@ void slideFrom(
         _position.transferTo(* dest);
     }
 }
+
+inline Board::Size random(Board::Size _limit)
+{
+    std::random_device                 r;
+    std::default_random_engine         e(r());
+    std::uniform_int_distribution<int> dist(0, _limit);
+    return dist(e);
+}
 }
 
 Board::Board()
@@ -67,21 +76,6 @@ Board::Board()
 
 Board::~Board()
 {
-}
-
-std::size_t Board::size() const
-{
-    return EDGE_SIZE * EDGE_SIZE;
-}
-
-Position & Board::at(uint8_t _row, uint8_t _column)
-{
-    if(_row >= EDGE_SIZE || _column >= EDGE_SIZE)
-    {
-        throw std::runtime_error("out of board boundaries");
-    }
-
-    return m_positions[_row][_column];
 }
 
 void Board::slideLeft()
@@ -150,4 +144,70 @@ void Board::slideDown()
             }
         }
     }
+}
+
+void Board::placeRandomNumber()
+{
+    Size free_pos = size() - count();
+
+    if(free_pos == 0)
+    {
+        throw std::runtime_error("no space left on board");
+    }
+
+    Size rand_pos = random(free_pos - 1);
+
+    for(auto row = 0; row < EDGE_SIZE; ++row)
+    {
+        for(auto col = 0; col < EDGE_SIZE; ++col)
+        {
+            if(! m_positions[row][col].hasNumber())
+            {
+                if(rand_pos == 0)
+                {
+                    auto n = Number::make(2);
+                    m_positions[row][col].place(n);
+                    return;
+                }
+                else
+                {
+                    --rand_pos;
+                }
+            }
+        }
+    }
+}
+
+// protected
+
+Board::Size Board::size() const
+{
+    return EDGE_SIZE * EDGE_SIZE;
+}
+
+Position & Board::at(Size _row, Size _column)
+{
+    if(_row >= EDGE_SIZE || _column >= EDGE_SIZE)
+    {
+        throw std::runtime_error("out of board boundaries");
+    }
+
+    return m_positions[_row][_column];
+}
+
+Board::Size Board::count() const
+{
+    Size count = 0;
+    for(auto row = 0; row < EDGE_SIZE; ++row)
+    {
+        for(auto col = 0; col < EDGE_SIZE; ++col)
+        {
+            if(m_positions[row][col].hasNumber())
+            {
+                ++count;
+            }
+        }
+    }
+
+    return count;
 }

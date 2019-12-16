@@ -14,7 +14,8 @@ Game description in https://en.wikipedia.org/wiki/2048_(video_game)#Gameplay
         - a slide is applied to all the numbers in the board, starting from the nearest to the destination of the slide;
         - a sliding number will stop when encounter a board edge or a number that cannot be merged;
         - if a sliding number encounters a number that can be merged, it will be merged in the number and the sliding number will be removed from the board;
-        - if a sliding number encounter a number that was already merged, it must stop.
+        - if a sliding number encounter a number that was already merged, it must stop;
+    - a number can be placed randomly in a board empty position.
 0) There are numbers:
     - a number has a value;
     - a value must be greater than or equal to 2;

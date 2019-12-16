@@ -7,6 +7,9 @@
 class Board
 {
 public:
+    using Size = uint16_t;
+
+public:
     explicit Board();
     Board(const Board &) = delete;
     Board(Board &&) = default;
@@ -16,17 +19,19 @@ public:
     Board & operator=(Board &&) = default;
 
 public:
-    std::size_t size() const;
     void slideLeft();
     void slideRight();
     void slideUp();
     void slideDown();
+    void placeRandomNumber();
 
 protected:
-    virtual Position & at(uint8_t _row, uint8_t _column);
+    virtual Size size() const;
+    virtual Position & at(Size _row, Size _column);
+    virtual Size count() const;
 
 private:
-    static const uint8_t EDGE_SIZE = 4;
+    static const Size EDGE_SIZE = 4;
     Position m_positions[EDGE_SIZE][EDGE_SIZE];
 };
 
