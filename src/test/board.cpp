@@ -6,9 +6,6 @@ namespace
 {
 const Board::Size   EXPECTED_BOARD_SIZE = 16;
 const Number::Value ARBITRARY_VALUE     = 8;
-}
-
-TEST_GROUP(BoardTest) {};
 
 class BoardTestable : public Board
 {
@@ -28,6 +25,9 @@ public:
         return Board::count();
     }
 };
+}
+
+TEST_GROUP(BoardTest) {};
 
 TEST(BoardTest, Creation)
 {
