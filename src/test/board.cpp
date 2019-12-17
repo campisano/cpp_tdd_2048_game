@@ -342,7 +342,7 @@ TEST(BoardTest, SlideMergeMiddleNumbers)
     CHECK_EQUAL(4 * ARBITRARY_VALUE, board.at(2, 2).number()->value());
 }
 
-TEST(BoardTest, PlaceRandomNumber)
+TEST(BoardTest, PlaceNumberRandomly)
 {
     BoardTestable board;
     auto          number = Number::make(ARBITRARY_VALUE);
@@ -352,7 +352,7 @@ TEST(BoardTest, PlaceRandomNumber)
     CHECK_EQUAL(1, board.count());
 }
 
-TEST(BoardTest, PlaceRandomNumberOutOfSpace)
+TEST(BoardTest, PlaceNumberRandomlyOutOfSpace)
 {
     BoardTestable board;
     for(int i = 0; i < board.size(); ++i)
