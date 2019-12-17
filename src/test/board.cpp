@@ -345,8 +345,9 @@ TEST(BoardTest, SlideMergeMiddleNumbers)
 TEST(BoardTest, PlaceRandomNumber)
 {
     BoardTestable board;
+    auto          number = Number::make(ARBITRARY_VALUE);
 
-    board.placeRandomNumber();
+    board.placeNumberRandomly(number);
 
     CHECK_EQUAL(1, board.count());
 }
@@ -356,10 +357,12 @@ TEST(BoardTest, PlaceRandomNumberOutOfSpace)
     BoardTestable board;
     for(int i = 0; i < board.size(); ++i)
     {
-        board.placeRandomNumber();
+        auto n = Number::make(ARBITRARY_VALUE);
+        board.placeNumberRandomly(n);
     }
+    auto number = Number::make(ARBITRARY_VALUE);
 
     CHECK_THROWS_STDEXCEPT(
         std::runtime_error, "no space left on board",
-        board.placeRandomNumber());
+        board.placeNumberRandomly(number));
 }

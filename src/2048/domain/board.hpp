@@ -23,7 +23,7 @@ public:
     void slideRight();
     void slideUp();
     void slideDown();
-    void placeRandomNumber();
+    void placeNumberRandomly(Number::Movable & _number);
 
 protected:
     virtual Size size() const;

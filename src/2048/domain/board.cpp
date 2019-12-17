@@ -39,7 +39,7 @@ void slideFrom(
     }
 }
 
-inline Board::Size random(Board::Size _limit)
+inline Board::Size generateRandomPlace(Board::Size _limit)
 {
     std::random_device                 r;
     std::default_random_engine         e(r());
@@ -146,7 +146,7 @@ void Board::slideDown()
     }
 }
 
-void Board::placeRandomNumber()
+void Board::placeNumberRandomly(Number::Movable & _number)
 {
     Size free_pos = size() - count();
 
@@ -155,7 +155,7 @@ void Board::placeRandomNumber()
         throw std::runtime_error("no space left on board");
     }
 
-    Size rand_pos = random(free_pos - 1);
+    Size rand_pos = generateRandomPlace(free_pos - 1);
 
     for(auto row = 0; row < EDGE_SIZE; ++row)
     {
@@ -165,8 +165,7 @@ void Board::placeRandomNumber()
             {
                 if(rand_pos == 0)
                 {
-                    auto n = Number::make(2);
-                    m_positions[row][col].place(n);
+                    m_positions[row][col].place(_number);
                     return;
                 }
                 else
