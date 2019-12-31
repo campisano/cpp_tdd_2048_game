@@ -1,8 +1,15 @@
-# 2048 Game [![Build Status][ci_img]][ci_link] [![Language grade: C/C++][cq_img]][cq_link]
+[![Build Status][ci_img]][ci_link]
+[![Test Coverage][cov_img]][cov_link]
+[![Code Quality][cq_img]][cq_link]
+
 [ci_link]: https://travis-ci.org/campisano/cpp_tdd_2048_game
 [ci_img]: https://travis-ci.org/campisano/cpp_tdd_2048_game.svg?branch=master "Continuous Integration"
+[cov_link]: https://codecov.io/gh/campisano/cpp_tdd_2048_game
+[cov_img]: https://codecov.io/gh/campisano/cpp_tdd_2048_game/branch/master/graph/badge.svg
 [cq_link]: https://lgtm.com/projects/g/campisano/cpp_tdd_2048_game/context:cpp
 [cq_img]: https://img.shields.io/lgtm/grade/cpp/g/campisano/cpp_tdd_2048_game.svg?logo=lgtm&logoWidth=18 "Code Quality"
+
+# 2048 Game
 
 Game description in https://en.wikipedia.org/wiki/2048_(video_game)#Gameplay
 
@@ -26,3 +33,6 @@ Game description in https://en.wikipedia.org/wiki/2048_(video_game)#Gameplay
 0) There are positions:
     - a position can have a number placed on itself;
     - a position can have adiacent positions {left,right,up,down}.
+
+0) There is a game:
+    - at every turn, a random number, with value of 2 or 4, is placed in a random empty spot of the board
