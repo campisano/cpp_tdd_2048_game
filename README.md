@@ -1,13 +1,6 @@
-[![Build Status][ci_img]][ci_link]
-[![Test Coverage][cov_img]][cov_link]
-[![Code Quality][cq_img]][cq_link]
-
-[ci_link]: https://travis-ci.org/campisano/cpp_tdd_2048_game
-[ci_img]: https://travis-ci.org/campisano/cpp_tdd_2048_game.svg?branch=master "Build Status"
-[cov_link]: https://codecov.io/gh/campisano/cpp_tdd_2048_game
-[cov_img]: https://codecov.io/gh/campisano/cpp_tdd_2048_game/branch/master/graph/badge.svg "Test Coverage"
-[cq_link]: https://lgtm.com/projects/g/campisano/cpp_tdd_2048_game/context:cpp
-[cq_img]: https://img.shields.io/lgtm/grade/cpp/g/campisano/cpp_tdd_2048_game.svg?logo=lgtm&logoWidth=18 "Code Quality"
+[![Build Status](https://travis-ci.org/campisano/cpp_tdd_2048_game.svg?branch=master "Build Status")](https://travis-ci.org/campisano/cpp_tdd_2048_game)
+[![Test Coverage](https://codecov.io/gh/campisano/cpp_tdd_2048_game/branch/master/graph/badge.svg "Test Coverage")](https://codecov.io/gh/campisano/cpp_tdd_2048_game)
+[![Code Quality](https://img.shields.io/lgtm/grade/cpp/g/campisano/cpp_tdd_2048_game.svg "Code Quality")](https://lgtm.com/projects/g/campisano/cpp_tdd_2048_game/context:cpp)
 
 # 2048 Game
 
