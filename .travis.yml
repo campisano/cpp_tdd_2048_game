@@ -14,11 +14,11 @@ jobs:
       if: branch != master
       install: skip
       script:
+        - build-wrapper-linux-x86-64 --out-dir bw-output ./ci/build.sh
+        - sonar-scanner -Dsonar.cfamily.build-wrapper-output=bw-output
         - ./ci/build.sh
         - ./ci/test.sh
         - ./ci/coverage.sh
-        - build-wrapper-linux-x86-64 --out-dir bw-output ./ci/build.sh
-        - sonar-scanner -Dsonar.cfamily.build-wrapper-output=bw-output
     - stage: "Deliver"
       if: branch = master
       install: skip
