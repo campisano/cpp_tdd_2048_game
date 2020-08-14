@@ -10,17 +10,17 @@ const Number::Value ARBITRARY_VALUE     = 8;
 class BoardTestable : public Board
 {
 public:
-    virtual Size size() const
+    inline Size size() const
     {
         return Board::size();
     }
 
-    virtual Position & at(Size _row, Size _column)
+    inline Position & at(Size _row, Size _column)
     {
         return Board::at(_row, _column);
     }
 
-    virtual Size count() const
+    inline Size count() const
     {
         return Board::count();
     }

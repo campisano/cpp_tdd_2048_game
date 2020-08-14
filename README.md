@@ -3,6 +3,7 @@
 [![Code Quality](https://img.shields.io/lgtm/grade/cpp/g/campisano/cpp_tdd_2048_game.svg "Code Quality")](https://lgtm.com/projects/g/campisano/cpp_tdd_2048_game/context:cpp)
 [![Sonar Coverage](https://sonarcloud.io/api/project_badges/measure?project=campisano_cpp_tdd_2048_game&metric=coverage)](https://sonarcloud.io/dashboard?id=campisano_cpp_tdd_2048_game)
 [![Sonar Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=campisano_cpp_tdd_2048_game&metric=alert_status)](https://sonarcloud.io/dashboard?id=campisano_cpp_tdd_2048_game)
+
 [![Docker Hub](https://img.shields.io/docker/image-size/riccardocampisano/public/cpp_tdd_2048_game-latest?label=cpp_tdd_2048_game-latest&logo=docker)](https://hub.docker.com/r/riccardocampisano/public/tags?name=cpp_tdd_2048_game)
 
 # 2048 Game
