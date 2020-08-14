@@ -4,10 +4,12 @@ set -x -o errexit -o nounset -o pipefail
 
 TOKEN="$1"
 
+export DEBIAN_FRONTEND=noninteractive
+
+rm -f /etc/apt/apt.conf.d/docker*
 apt-get -qq -y update
-apt-get -qq -y install gcc g++ make cmake > /dev/null
-apt-get -qq -y install curl git lcov > /dev/null
-apt-get -qq -y clean
+apt-get -qq -y install --no-install-recommends gcc g++ make cmake > /dev/null
+apt-get -qq -y install --no-install-recommends curl git lcov > /dev/null
 
 make -e debug
 
