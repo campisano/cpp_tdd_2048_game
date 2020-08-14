@@ -8,6 +8,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 rm -f /etc/apt/apt.conf.d/docker*
 apt-get -qq -y update
+apt-get -qq -y install --no-install-recommends apt-utils > /dev/null
 apt-get -qq -y install --no-install-recommends gcc g++ make cmake > /dev/null
 apt-get -qq -y install --no-install-recommends curl git lcov > /dev/null
 
@@ -17,7 +18,7 @@ make -e debug
 
 for F in `find build/debug -name '*.cpp'`;
 do
-  gcov -n -o . "${F}" > /dev/null;
+  gcov -n -o . -p "${F}" > /dev/null;
 done
 
 lcov --directory "build/debug" --capture --output-file coverage.info
