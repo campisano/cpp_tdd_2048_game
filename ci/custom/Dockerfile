@@ -8,4 +8,5 @@ COPY build /srv/app/build
 COPY external /srv/app/external
 
 WORKDIR /srv/app
-ENTRYPOINT ./run.sh release
+ENTRYPOINT ["./run.sh"]
+CMD ["release"]
