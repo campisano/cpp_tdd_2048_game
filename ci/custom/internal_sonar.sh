@@ -2,7 +2,9 @@
 
 set -x -o errexit -o nounset -o pipefail
 
-TOKEN="$1"
+SONAR_ORGANIZATION="$1"
+SONAR_TOKEN="$2"
+SONAR_PROJECT_KEY="$3"
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -36,13 +38,11 @@ done
 cd ..
 
 
-
-export SONAR_TOKEN=${TOKEN}
-export SONAR_PROJECT_KEY=campisano/cpp_tdd_2048_game
-
+export SONAR_TOKEN
 export SONAR_USER_HOME=/srv/cache/sonar
 /srv/sonar/sonar-scanner-4.4.0.2170-linux/bin/sonar-scanner \
     -Dsonar.host.url=https://sonarcloud.io \
+    -Dsonar.organization=${SONAR_ORGANIZATION}
     -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
     -Dsonar.scm.provider=git \
     -Dsonar.sources=src \

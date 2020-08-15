@@ -19,4 +19,4 @@ docker run \
        --mount type=bind,source="${HOME}/.custom_cache/var/cache/apt/archives",target=/var/cache/apt/archives \
        "${DOCKER_IMAGE}" \
        /bin/bash -c \
-       'cd /srv/repository; ./ci/custom/internal_coverage.sh ${COVERAGE_TOKEN}'
+       'cd /srv/repository; ./ci/custom/internal_coverage.sh "${COVERAGE_TOKEN}"'

@@ -2,7 +2,7 @@
 
 set -x -o errexit -o nounset -o pipefail
 
-TOKEN="$1"
+COVERAGE_TOKEN="$1"
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -26,7 +26,7 @@ ls -alt --color
 lcov --remove coverage.info "/usr/*" "`pwd`/external/*" "`pwd`/src/test/*" --output-file coverage.info
 lcov --list coverage.info
 
-bash <(curl -s https://codecov.io/bash) -f coverage.info -t "${TOKEN}"
+bash <(curl -s https://codecov.io/bash) -f coverage.info -t "${COVERAGE_TOKEN}"
 
 rm -f coverage.info
 make distclean
