@@ -38,17 +38,20 @@ cd ..
 
 
 export SONAR_TOKEN=${TOKEN}
+export SONAR_PROJECT_KEY=campisano/cpp_tdd_2048_game
+
 export SONAR_USER_HOME=/srv/cache/sonar
 /srv/sonar/sonar-scanner-4.4.0.2170-linux/bin/sonar-scanner \
     -Dsonar.host.url=https://sonarcloud.io \
-    -Dsonar.organization=campisano \
-    -Dsonar.projectKey=campisano_cpp_tdd_2048_game \
+    -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+    -Dsonar.scm.provider=git \
     -Dsonar.sources=src \
     -Dsonar.sourceEncoding=UTF-8 \
+    -Dsonar.working.directory=.scannerwork \
     -Dsonar.cfamily.threads=1 \
     -Dsonar.cfamily.gcov.reportsPath=gcov \
     -Dsonar.cfamily.build-wrapper-output=bw-output \
     -Dsonar.cfamily.cache.enabled=false
 
-rm -rf gcov bw-output .scannerwork
+rm -rf bw-output gcov .scannerwork
 make distclean
