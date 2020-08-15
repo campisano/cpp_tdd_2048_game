@@ -42,7 +42,7 @@ export SONAR_TOKEN
 export SONAR_USER_HOME=/srv/cache/sonar
 /srv/sonar/sonar-scanner-4.4.0.2170-linux/bin/sonar-scanner \
     -Dsonar.host.url=https://sonarcloud.io \
-    -Dsonar.organization=${SONAR_ORGANIZATION}
+    -Dsonar.organization=${SONAR_ORGANIZATION} \
     -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
     -Dsonar.scm.provider=git \
     -Dsonar.sources=src \
