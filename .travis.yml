@@ -17,16 +17,16 @@ jobs:
       if: branch != master
       install: skip
       script:
-        - ./ci/build.sh
-        - ./ci/test.sh
-        - ./ci/coverage.sh
-        - ./ci/sonar.sh
+        - ./ci/build.sh $(basename "$TRAVIS_BUILD_DIR") "$TRAVIS_BRANCH"
+        - ./ci/test.sh $(basename "$TRAVIS_BUILD_DIR") "$TRAVIS_BRANCH"
+        - ./ci/coverage.sh $(basename "$TRAVIS_BUILD_DIR") "$TRAVIS_BRANCH"
+        - ./ci/sonar.sh $(basename "$TRAVIS_BUILD_DIR") "$TRAVIS_BRANCH"
     - stage: "Deliver"
       if: branch = master
       install: skip
       script:
-        - ./ci/build.sh
-        - ./ci/test.sh
-        - ./ci/deliver.sh
-        - ./ci/coverage.sh
-        - ./ci/sonar.sh
+        - ./ci/build.sh $(basename "$TRAVIS_BUILD_DIR") "$TRAVIS_BRANCH"
+        - ./ci/test.sh $(basename "$TRAVIS_BUILD_DIR") "$TRAVIS_BRANCH"
+        - ./ci/deliver.sh $(basename "$TRAVIS_BUILD_DIR") "$TRAVIS_BRANCH"
+        - ./ci/coverage.sh $(basename "$TRAVIS_BUILD_DIR") "$TRAVIS_BRANCH"
+        - ./ci/sonar.sh $(basename "$TRAVIS_BUILD_DIR") "$TRAVIS_BRANCH"
