@@ -10,19 +10,9 @@ const Number::Value ARBITRARY_VALUE     = 8;
 class BoardTestable : public Board
 {
 public:
-    inline Size size() const
-    {
-        return Board::size();
-    }
-
     inline Position & at(Size _row, Size _column)
     {
         return Board::at(_row, _column);
-    }
-
-    inline Size count() const
-    {
-        return Board::count();
     }
 };
 }
@@ -45,6 +35,7 @@ TEST(BoardTest, AtInside)
     board.at(3, 3);
 }
 
+// TODO -1 unsigned became int.max -1 so the test break but for luck
 TEST(BoardTest, ThrowsOnAtUpOutside)
 {
     BoardTestable board;
@@ -193,7 +184,7 @@ TEST(BoardTest, SlideIsAppliedToAllNumbers)
     CHECK_TRUE(board.at(3, 0).hasNumber());
 }
 
-TEST(BoardTest, SlideNotOverEdge)
+TEST(BoardTest, SlideNotOverBoardEdge)
 {
     BoardTestable board;
     auto          number = Number::make(ARBITRARY_VALUE);

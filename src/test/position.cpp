@@ -126,8 +126,8 @@ TEST(PositionTest, TransferToEmptyImplyPlaceThere)
     auto     number  = Number::make(ARBITRARY_VALUE);
     Number * num_ptr = number.get();
     Position pos_start;
-    pos_start.place(number);
     Position pos_end;
+    pos_start.place(number);
 
     pos_start.transferTo(pos_end);
 
@@ -141,8 +141,8 @@ TEST(PositionTest, TransferToNotEmptyImplyMergeThere)
     auto     num_start  = Number::make(ARBITRARY_VALUE);
     auto     num_end    = Number::make(ARBITRARY_VALUE);
     Position pos_start;
-    pos_start.place(num_start);
     Position pos_end;
+    pos_start.place(num_start);
     pos_end.place(num_end);
 
     pos_start.transferTo(pos_end);

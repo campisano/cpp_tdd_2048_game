@@ -2,12 +2,14 @@
 #define BOARD__HPP__
 
 #include <cstdint>
+#include <memory>
 #include "position.hpp"
 
 class Board
 {
 public:
-    using Size = uint16_t;
+    using Movable = std::unique_ptr<Board>;
+    using Size = uint16_t; //TODO use of unsigned values can mask logic errors
 
 public:
     explicit Board();
@@ -24,11 +26,11 @@ public:
     void slideUp();
     void slideDown();
     void placeNumberRandomly(Number::Movable & _number);
+    Size size() const;
+    Size count() const;
 
 protected:
-    virtual Size size() const;
     virtual Position & at(Size _row, Size _column);
-    virtual Size count() const;
 
 private:
     static const Size EDGE_SIZE = 4;
