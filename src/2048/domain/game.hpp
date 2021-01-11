@@ -4,6 +4,7 @@
 #include <cstdint>
 #include "board.hpp"
 #include "number.hpp"
+#include "player.hpp"
 
 class Game
 {
@@ -11,7 +12,8 @@ public:
     using Score = int16_t;
 
 public:
-    explicit Game(Board::Movable & _board, Score _win_score);
+    explicit Game(Score _win_score, Board::Movable & _board,
+                  Player::Movable & _player);
     Game(const Game &) = delete;
     Game(Game &&) = default;
     virtual ~Game();
@@ -27,6 +29,7 @@ protected:
 private:
     Score m_win_score;
     Board::Movable m_board;
+    Player::Movable m_player;
 };
 
 #endif

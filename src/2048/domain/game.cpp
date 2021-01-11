@@ -9,7 +9,6 @@ inline Number::Value generateRandomValue()
     std::random_device                 r;
     std::default_random_engine         e(r());
     std::uniform_int_distribution<int> dist(0, 5);
-
     if(dist(e) < 4)
     {
         return 2;
@@ -21,7 +20,7 @@ inline Number::Value generateRandomValue()
 }
 }
 
-Game::Game(Board::Movable & _board, Score _win_score)
+Game::Game(Score _win_score, Board::Movable & _board, Player::Movable & _player)
 {
     if(_win_score <= 0)
     {
@@ -29,6 +28,7 @@ Game::Game(Board::Movable & _board, Score _win_score)
     }
 
     m_board = std::move(_board);
+    m_player = std::move(_player);
 }
 
 Game::~Game()
@@ -39,6 +39,7 @@ void Game::start()
 {
     auto num = this->generateRandomNumber();
     m_board->placeNumberRandomly(num);
+    m_player->makeSlide();
 }
 
 // protected

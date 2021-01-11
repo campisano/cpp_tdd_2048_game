@@ -31,5 +31,9 @@ Game description in https://en.wikipedia.org/wiki/2048_(video_game)#Gameplay
     - a position can have a number placed on itself;
     - a position can have adiacent positions {left,right,up,down}.
 
+0) There is a player:
+    - a player can be queried for a direction to slide.
+
 0) There is a game:
-    - at every turn, a random number, with value of 2 or 4, is placed in a random empty spot of the board
+    - at every turn, a random number, with value of 2 or 4, is placed in a random empty spot of the board;
+    - at every turn, a slide direction is requested to the player.
