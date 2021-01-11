@@ -1,0 +1,13 @@
+-pipe
+-std=c++11
+-fexceptions
+-pedantic
+-Wall
+-Wextra
+-Wshadow
+-Wnon-virtual-dtor
+-Og
+-ggdb3
+-g3
+-fno-omit-frame-pointer
+-Iexternal/cpputest/install/include/
