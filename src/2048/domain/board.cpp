@@ -175,9 +175,9 @@ void Board::placeNumberRandomly(Number::Movable & _number)
             }
         }
     }
-}
 
-// protected
+    throw std::runtime_error("algorithm fault");
+}
 
 Board::Size Board::size() const
 {

@@ -10,13 +10,13 @@ public:
     using Movable = std::unique_ptr<Player>;
 
 public:
-    explicit Player() = default;
+    explicit Player()      = default;
     Player(const Player &) = delete;
-    Player(Player &&) = default;
-    virtual ~Player() = default;
+    Player(Player &&)      = default;
+    virtual ~Player()      = default;
 
     Player & operator=(const Player &) = delete;
-    Player & operator=(Player &&) = default;
+    Player & operator=(Player &&)      = default;
 
 public:
     virtual Direction makeSlide() = 0;

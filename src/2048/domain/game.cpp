@@ -39,10 +39,12 @@ void Game::start()
 {
     auto num = this->generateRandomNumber();
     m_board->placeNumberRandomly(num);
-    m_player->makeSlide();
+    auto direction = m_player->makeSlide();
+    if(direction == Direction::left)
+    {
+        m_board->slideLeft();
+    }
 }
-
-// protected
 
 Number::Movable Game::generateRandomNumber()
 {

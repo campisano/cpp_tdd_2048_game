@@ -7,8 +7,9 @@ namespace
 class GameTestable : public Game
 {
 public:
-    GameTestable(Board::Movable & _board, Player::Movable & _player): Game(2048,
-                _board, _player)
+    GameTestable(
+        Score _win_score, Board::Movable & _board, Player::Movable & _player):
+        Game(_win_score, _board, _player)
     {
     }
 
@@ -21,12 +22,21 @@ public:
 class PlayerTestable : public Player
 {
 public:
-    bool makeSlide_in;
+    int      makeSlide_calls = 0;
     Direction makeSlide_out;
     inline Direction makeSlide()
     {
-        makeSlide_in = true;
+        ++makeSlide_calls;
         return makeSlide_out;
+    }
+};
+
+class BoardTestable : public Board
+{
+public:
+    inline Position & at(Size _row, Size _column)
+    {
+        return Board::at(_row, _column);
     }
 };
 }
@@ -35,9 +45,9 @@ TEST_GROUP(GameTest) {};
 
 TEST(GameTest, GenerateRandomNumber)
 {
-    Board::Movable board(new Board());
+    Board::Movable  board(new Board());
     Player::Movable player(new PlayerTestable());
-    GameTestable game(board, player);
+    GameTestable    game(1, board, player);
 
     for(int i = 0; i < 100; ++i)
     {
@@ -48,10 +58,10 @@ TEST(GameTest, GenerateRandomNumber)
 
 TEST(GameTest, PlaceNumberAfterStart)
 {
-    Board * board = new Board();
-    Board::Movable b(board);
+    Board     *     board = new Board();
+    Board::Movable  b(board);
     Player::Movable player(new PlayerTestable());
-    GameTestable game(b, player);
+    GameTestable    game(1, b, player);
 
     game.start();
 
@@ -60,14 +70,14 @@ TEST(GameTest, PlaceNumberAfterStart)
 
 TEST(GameTest, QueryPlayerSlideAfterStart)
 {
-    Board * board = new Board();
-    Board::Movable b(board);
+    Board      *     board  = new Board();
+    Board::Movable   b(board);
     PlayerTestable * player = new PlayerTestable();
-    player->makeSlide_out = Direction::left;
-    Player::Movable p(player);
-    GameTestable game(b, p);
+    player->makeSlide_out   = Direction::left;
+    Player::Movable  p(player);
+    GameTestable     game(1, b, p);
 
     game.start();
 
-    CHECK_EQUAL(true, player->makeSlide_in);
+    CHECK_EQUAL(1, player->makeSlide_calls);
 }

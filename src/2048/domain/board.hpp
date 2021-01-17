@@ -14,11 +14,11 @@ public:
 public:
     explicit Board();
     Board(const Board &) = delete;
-    Board(Board &&) = default;
+    Board(Board &&)      = default;
     virtual ~Board();
 
     Board & operator=(const Board &) = delete;
-    Board & operator=(Board &&) = default;
+    Board & operator=(Board &&)      = default;
 
 public:
     void slideLeft();
@@ -26,7 +26,8 @@ public:
     void slideUp();
     void slideDown();
     void placeNumberRandomly(Number::Movable & _number);
-    Size size() const;
+
+    Size size()  const;
     Size count() const;
 
 protected:

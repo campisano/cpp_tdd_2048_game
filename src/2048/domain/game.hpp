@@ -12,14 +12,16 @@ public:
     using Score = int16_t;
 
 public:
-    explicit Game(Score _win_score, Board::Movable & _board,
-                  Player::Movable & _player);
+    explicit Game(
+        Score _win_score,
+        Board::Movable & _board,
+        Player::Movable & _player);
     Game(const Game &) = delete;
-    Game(Game &&) = default;
+    Game(Game &&)      = default;
     virtual ~Game();
 
     Game & operator=(const Game &) = delete;
-    Game & operator=(Game &&) = default;
+    Game & operator=(Game &&)      = default;
 
     void start();
 
