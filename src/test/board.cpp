@@ -118,7 +118,7 @@ TEST(BoardTest, SlideLeft)
     Number    *   num_ptr = number.get();
     board.at(2, 2).place(number);
 
-    board.slideLeft();
+    board.slide(Direction::left);
 
     CHECK_FALSE(board.at(2, 2).hasNumber());
     CHECK_TRUE(board.at(2, 0).hasNumber());
@@ -132,7 +132,7 @@ TEST(BoardTest, SlideRight)
     Number    *   num_ptr = number.get();
     board.at(1, 1).place(number);
 
-    board.slideRight();
+    board.slide(Direction::right);
 
     CHECK_FALSE(board.at(1, 1).hasNumber());
     CHECK_TRUE(board.at(1, 3).hasNumber());
@@ -146,7 +146,7 @@ TEST(BoardTest, SlideUp)
     Number    *   num_ptr = number.get();
     board.at(2, 2).place(number);
 
-    board.slideUp();
+    board.slide(Direction::up);
 
     CHECK_FALSE(board.at(2, 2).hasNumber());
     CHECK_TRUE(board.at(0, 2).hasNumber());
@@ -160,7 +160,7 @@ TEST(BoardTest, SlideDown)
     Number    *   num_ptr = number.get();
     board.at(1, 1).place(number);
 
-    board.slideDown();
+    board.slide(Direction::down);
 
     CHECK_FALSE(board.at(1, 1).hasNumber());
     CHECK_TRUE(board.at(3, 1).hasNumber());
@@ -177,7 +177,7 @@ TEST(BoardTest, SlideIsAppliedToAllNumbers)
     board.at(2, 2).place(num_2_2);
     board.at(3, 3).place(num_3_3);
 
-    board.slideLeft();
+    board.slide(Direction::left);
 
     CHECK_FALSE(board.at(1, 1).hasNumber());
     CHECK_FALSE(board.at(2, 2).hasNumber());
@@ -193,7 +193,7 @@ TEST(BoardTest, SlideNotOverBoardEdge)
     auto          number = Number::make(ARBITRARY_VALUE);
     board.at(2, 0).place(number);
 
-    board.slideLeft();
+    board.slide(Direction::left);
 
     CHECK_TRUE(board.at(2, 0).hasNumber());
 }
@@ -206,7 +206,7 @@ TEST(BoardTest, SlideStopOnNotMergeableNumber)
     board.at(2, 3).place(moving_number);
     board.at(2, 0).place(blocking_number);
 
-    board.slideLeft();
+    board.slide(Direction::left);
 
     CHECK_TRUE(board.at(2, 1).hasNumber());
     CHECK_EQUAL(ARBITRARY_VALUE, board.at(2, 1).number()->value());
@@ -222,7 +222,7 @@ TEST(BoardTest, SlideStopOnNotMergeableNumberAfterItsMove)
     board.at(2, 3).place(moving_number);
     board.at(2, 1).place(moving_blocking_number);
 
-    board.slideLeft();
+    board.slide(Direction::left);
 
     CHECK_TRUE(board.at(2, 1).hasNumber());
     CHECK_EQUAL(ARBITRARY_VALUE, board.at(2, 1).number()->value());
@@ -238,7 +238,7 @@ TEST(BoardTest, SlideMoveAndMergeAtEdgeTwoMergeableNumbers)
     board.at(2, 3).place(moving_number);
     board.at(2, 1).place(blocked_number);
 
-    board.slideLeft();
+    board.slide(Direction::left);
 
     CHECK_TRUE(board.at(2, 0).hasNumber());
     CHECK_FALSE(board.at(2, 1).hasNumber());
@@ -258,7 +258,7 @@ TEST(BoardTest, SlideNotMergeThirdMergeableNumber)
     board.at(2, 1).place(moving_merging_number);
     board.at(2, 0).place(blocked_number);
 
-    board.slideLeft();
+    board.slide(Direction::left);
 
     CHECK_TRUE(board.at(2, 0).hasNumber());
     CHECK_TRUE(board.at(2, 1).hasNumber());
@@ -281,7 +281,7 @@ TEST(BoardTest, SlideMergeTwoByTwoOfFourEqualNumbers)
     board.at(2, 2).place(num_2);
     board.at(2, 3).place(num_3);
 
-    board.slideLeft();
+    board.slide(Direction::left);
 
     CHECK_TRUE(board.at(2, 0).hasNumber());
     CHECK_TRUE(board.at(2, 1).hasNumber());
@@ -303,7 +303,7 @@ TEST(BoardTest, SlideMergeCouplesOfMergeableNumbers)
     board.at(2, 2).place(num_2);
     board.at(2, 3).place(num_3);
 
-    board.slideLeft();
+    board.slide(Direction::left);
 
     CHECK_TRUE(board.at(2, 0).hasNumber());
     CHECK_TRUE(board.at(2, 1).hasNumber());
@@ -325,7 +325,7 @@ TEST(BoardTest, SlideMergeMiddleNumbers)
     board.at(2, 2).place(num_2);
     board.at(2, 3).place(num_3);
 
-    board.slideLeft();
+    board.slide(Direction::left);
 
     CHECK_TRUE(board.at(2, 0).hasNumber());
     CHECK_TRUE(board.at(2, 1).hasNumber());

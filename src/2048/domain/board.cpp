@@ -75,6 +75,32 @@ Board::~Board()
 {
 }
 
+void Board::slide(Direction _direction)
+{
+    if(_direction == Direction::left)
+    {
+        slideLeft();
+    }
+    else if(_direction == Direction::right)
+    {
+        slideRight();
+    }
+    else if(_direction == Direction::up)
+    {
+        slideUp();
+    }
+    else if(_direction == Direction::down)
+    {
+        slideDown();
+    }
+    else
+    {
+        throw std::runtime_error("algorithm fault");
+    }
+
+    clearMergeState();
+}
+
 void Board::slideLeft()
 {
     for(auto row = 0; row < EDGE_SIZE; ++row)
@@ -90,8 +116,6 @@ void Board::slideLeft()
             }
         }
     }
-
-    clearMergeState();
 }
 
 void Board::slideRight()
@@ -109,8 +133,6 @@ void Board::slideRight()
             }
         }
     }
-
-    clearMergeState();
 }
 
 void Board::slideUp()
@@ -128,8 +150,6 @@ void Board::slideUp()
             }
         }
     }
-
-    clearMergeState();
 }
 
 void Board::slideDown()
@@ -147,8 +167,6 @@ void Board::slideDown()
             }
         }
     }
-
-    clearMergeState();
 }
 
 void Board::placeNumberRandomly(Number::Movable & _number)

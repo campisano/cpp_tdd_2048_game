@@ -43,14 +43,10 @@ void Game::start()
         auto num = this->generateRandomNumber();
         m_board->placeNumberRandomly(num);
 
-        auto direction = m_player->makeSlide();
-        if(direction == Direction::left)
-        {
-            m_board->slideLeft();
-        }
+        auto direction = m_player->chooseDirection();
+        m_board->slide(direction);
     }
     while(! isOver());
-
 }
 
 bool Game::isOver() const

@@ -19,7 +19,7 @@ public:
     Player & operator=(Player &&)      = default;
 
 public:
-    virtual Direction makeSlide() = 0;
+    virtual Direction chooseDirection() = 0;
 };
 
 #endif

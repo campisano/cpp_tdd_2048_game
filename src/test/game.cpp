@@ -22,12 +22,12 @@ public:
 class PlayerTestable : public Player
 {
 public:
-    int       makeSlide_calls = 0;
-    Direction makeSlide_out;
-    inline Direction makeSlide()
+    int       chooseDirection_calls = 0;
+    Direction chooseDirection_out;
+    inline Direction chooseDirection()
     {
-        ++makeSlide_calls;
-        return makeSlide_out;
+        ++chooseDirection_calls;
+        return chooseDirection_out;
     }
 };
 
@@ -76,13 +76,13 @@ TEST(GameTest, QueryPlayerSlideAfterStart)
     Board      *     board  = new Board();
     Board::Movable   b(board);
     PlayerTestable * player = new PlayerTestable();
-    player->makeSlide_out   = Direction::left;
+    player->chooseDirection_out = Direction::left;
     Player::Movable  p(player);
     GameTestable     game(1, b, p);
 
     game.start();
 
-    CHECK_EQUAL(1, player->makeSlide_calls);
+    CHECK_EQUAL(1, player->chooseDirection_calls);
 }
 
 TEST(GameTest, GameEndWhenWin)
@@ -93,7 +93,7 @@ TEST(GameTest, GameEndWhenWin)
     auto             n2     = Number::make(1024);
     board->at(2, 1).place(n2);
     PlayerTestable * player = new PlayerTestable();
-    player->makeSlide_out   = Direction::left;
+    player->chooseDirection_out = Direction::left;
     Board::Movable   b(board);
     Player::Movable  p(player);
     GameTestable     game(2048, b, p);
@@ -102,7 +102,7 @@ TEST(GameTest, GameEndWhenWin)
 
     CHECK_EQUAL(true,  game.playerWin());
     CHECK_EQUAL(false, game.playerLose());
-    CHECK_EQUAL(1, player->makeSlide_calls);
+    CHECK_EQUAL(1, player->chooseDirection_calls);
 }
 
 TEST(GameTest, GameEndWhenLose)
@@ -110,7 +110,7 @@ TEST(GameTest, GameEndWhenLose)
     BoardTestable  * board = new BoardTestable();
     fillBoardWithUnmergeableNumbers(*board, board->size() - 1, 16);
     PlayerTestable * player = new PlayerTestable();
-    player->makeSlide_out   = Direction::left;
+    player->chooseDirection_out = Direction::left;
     Board::Movable   b(board);
     Player::Movable  p(player);
     GameTestable     game(2048, b, p);
@@ -119,7 +119,7 @@ TEST(GameTest, GameEndWhenLose)
 
     CHECK_EQUAL(true,  game.playerLose());
     CHECK_EQUAL(false, game.playerWin());
-    CHECK_EQUAL(1, player->makeSlide_calls);
+    CHECK_EQUAL(1, player->chooseDirection_calls);
 }
 
 namespace

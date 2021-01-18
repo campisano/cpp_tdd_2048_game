@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <memory>
+#include "direction.hpp"
 #include "position.hpp"
 
 class Board
@@ -21,10 +22,7 @@ public:
     Board & operator=(Board &&)      = default;
 
 public:
-    void slideLeft();
-    void slideRight();
-    void slideUp();
-    void slideDown();
+    void slide(Direction _direction);
     void placeNumberRandomly(Number::Movable & _number);
 
     Size size()  const;
@@ -40,6 +38,10 @@ protected:
     virtual Position & at(Size _row, Size _column);
 
 private:
+    void slideLeft();
+    void slideRight();
+    void slideUp();
+    void slideDown();
     void clearMergeState();
 
     static const Size EDGE_SIZE = 4;
