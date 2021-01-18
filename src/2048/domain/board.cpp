@@ -4,33 +4,30 @@
 
 namespace
 {
-inline bool hasSpaceInDirection(
-    const Position & _position, bool (Position::*_has_direction)() const)
-{
-    return (_position.*_has_direction)();
-}
-
-inline Position & positionAtDirection(
-    const Position & _position, Position & (Position::*_direction)() const)
-{
-    return (_position.*_direction)();
-}
-
 void slideFrom(
     Position & _position,
     bool (Position::*_has_direction)() const,
-    Position & (Position::*_direction)() const
+    Position & (Position::*_next_direction)() const
 )
 {
-    auto dest = & _position;
+    Position * dest = & _position;
+    Position * next;
 
-    while(hasSpaceInDirection(* dest, _has_direction) && (
-                !positionAtDirection(* dest, _direction).hasNumber() ||
-                positionAtDirection(* dest, _direction).number()->canMerge(
-                    * _position.number())
-            ))
+    while((dest->*_has_direction)())
     {
-        dest = & (dest->*_direction)();
+        next = & (dest->*_next_direction)();
+
+        if(next->hasNumber())
+        {
+            if(next->number()->canMerge(* _position.number()))
+            {
+                dest = next;
+            }
+
+            break;
+        }
+
+        dest = next;
     }
 
     if(dest != & _position)
@@ -294,6 +291,7 @@ bool Board::canSlide() const
 
     return false;
 }
+
 void Board::clearMergeState()
 {
     for(auto col = 0; col < EDGE_SIZE; ++col)
