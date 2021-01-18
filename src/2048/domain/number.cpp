@@ -56,3 +56,8 @@ void Number::merge(Movable & _number)
     auto merging = std::move(_number);
     m_merged = true;
 }
+
+void Number::clearMergeState()
+{
+    m_merged = false;
+}

@@ -22,7 +22,7 @@ public:
 class PlayerTestable : public Player
 {
 public:
-    int      makeSlide_calls = 0;
+    int       makeSlide_calls = 0;
     Direction makeSlide_out;
     inline Direction makeSlide()
     {
@@ -39,6 +39,9 @@ public:
         return Board::at(_row, _column);
     }
 };
+
+void fillBoardWithUnmergeableNumbers(
+    BoardTestable & _board, int _numbers, int _value);
 }
 
 TEST_GROUP(GameTest) {};
@@ -80,4 +83,81 @@ TEST(GameTest, QueryPlayerSlideAfterStart)
     game.start();
 
     CHECK_EQUAL(1, player->makeSlide_calls);
+}
+
+TEST(GameTest, GameEndWhenWin)
+{
+    BoardTestable  * board  = new BoardTestable();
+    auto             n1     = Number::make(1024);
+    board->at(2, 0).place(n1);
+    auto             n2     = Number::make(1024);
+    board->at(2, 1).place(n2);
+    PlayerTestable * player = new PlayerTestable();
+    player->makeSlide_out   = Direction::left;
+    Board::Movable   b(board);
+    Player::Movable  p(player);
+    GameTestable     game(2048, b, p);
+
+    game.start();
+
+    CHECK_EQUAL(true,  game.playerWin());
+    CHECK_EQUAL(false, game.playerLose());
+    CHECK_EQUAL(1, player->makeSlide_calls);
+}
+
+TEST(GameTest, GameEndWhenLose)
+{
+    BoardTestable  * board = new BoardTestable();
+    fillBoardWithUnmergeableNumbers(*board, board->size() - 1, 16);
+    PlayerTestable * player = new PlayerTestable();
+    player->makeSlide_out   = Direction::left;
+    Board::Movable   b(board);
+    Player::Movable  p(player);
+    GameTestable     game(2048, b, p);
+
+    game.start();
+
+    CHECK_EQUAL(true,  game.playerLose());
+    CHECK_EQUAL(false, game.playerWin());
+    CHECK_EQUAL(1, player->makeSlide_calls);
+}
+
+namespace
+{
+// TODO duplicated
+void fillBoardWithUnmergeableNumbers(
+    BoardTestable & _board, int _numbers, int _value)
+{
+    Position * p = & _board.at(0, 0);
+    bool forward = true;
+    for(int i = 0; i < _numbers; ++i)
+    {
+        auto n = Number::make(_value * (1 + (i % 2)));
+        p->place(n);
+        if(forward)
+        {
+            if(p->hasRight())
+            {
+                p = & p->right();
+            }
+            else if(p->hasDown())
+            {
+                forward = false;
+                p = & p->down();
+            }
+        }
+        else
+        {
+            if(p->hasLeft())
+            {
+                p = & p->left();
+            }
+            else if(p->hasDown())
+            {
+                forward = true;
+                p = & p->down();
+            }
+        }
+    }
+}
 }

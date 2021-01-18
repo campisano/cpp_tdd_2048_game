@@ -25,6 +25,10 @@ public:
 
     void start();
 
+    bool isOver()     const;
+    bool playerWin()  const;
+    bool playerLose() const;
+
 protected:
     Number::Movable generateRandomNumber();
 

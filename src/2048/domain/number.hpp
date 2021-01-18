@@ -13,18 +13,20 @@ public:
 public:
     explicit Number(Value _value);
     Number(const Number &) = delete;
-    Number(Number &&) = default;
+    Number(Number &&)      = default;
     virtual ~Number();
 
     Number & operator=(const Number &) = delete;
-    Number & operator=(Number &&) = default;
+    Number & operator=(Number &&)      = default;
 
     static Movable make(Value _value);
 
 public:
     Value value() const;
     bool canMerge(const Number & _number) const;
+
     void merge(Movable & _number);
+    void clearMergeState();
 
 private:
     Value m_value;

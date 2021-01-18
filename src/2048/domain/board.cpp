@@ -5,13 +5,13 @@
 namespace
 {
 inline bool hasSpaceInDirection(
-    Position & _position, bool (Position::*_has_direction)() const)
+    const Position & _position, bool (Position::*_has_direction)() const)
 {
     return (_position.*_has_direction)();
 }
 
 inline Position & positionAtDirection(
-    Position & _position, Position & (Position::*_direction)() const)
+    const Position & _position, Position & (Position::*_direction)() const)
 {
     return (_position.*_direction)();
 }
@@ -93,6 +93,8 @@ void Board::slideLeft()
             }
         }
     }
+
+    clearMergeState();
 }
 
 void Board::slideRight()
@@ -110,6 +112,8 @@ void Board::slideRight()
             }
         }
     }
+
+    clearMergeState();
 }
 
 void Board::slideUp()
@@ -127,6 +131,8 @@ void Board::slideUp()
             }
         }
     }
+
+    clearMergeState();
 }
 
 void Board::slideDown()
@@ -144,6 +150,8 @@ void Board::slideDown()
             }
         }
     }
+
+    clearMergeState();
 }
 
 void Board::placeNumberRandomly(Number::Movable & _number)
@@ -194,6 +202,16 @@ Position & Board::at(Size _row, Size _column)
     return m_positions[_row][_column];
 }
 
+const Position & Board::at(Size _row, Size _column) const
+{
+    if(_row >= EDGE_SIZE || _column >= EDGE_SIZE)
+    {
+        throw std::runtime_error("out of board boundaries");
+    }
+
+    return m_positions[_row][_column];
+}
+
 Board::Size Board::count() const
 {
     Size count = 0;
@@ -209,4 +227,83 @@ Board::Size Board::count() const
     }
 
     return count;
+}
+
+Board::Size Board::getMaxNumber() const
+{
+    Size max = 0;
+    Size num;
+    for(auto row = 0; row < EDGE_SIZE; ++row)
+    {
+        for(auto col = 0; col < EDGE_SIZE; ++col)
+        {
+            if(m_positions[row][col].hasNumber())
+            {
+                num = m_positions[row][col].number()->value();
+                if(num > max)
+                {
+                    max = num;
+                }
+            }
+        }
+    }
+
+    return max;
+}
+
+bool Board::hasFreeSpaces() const
+{
+    return (size() - count()) > 0;
+}
+
+bool Board::canSlide() const
+{
+    if(hasFreeSpaces())
+    {
+        return true;
+    }
+
+    const Position * pos;
+
+    for(auto row = 0; row < EDGE_SIZE; ++row)
+    {
+        for(auto col = 0; col < EDGE_SIZE; ++col)
+        {
+            pos = & m_positions[row][col];
+            if(
+                pos->hasNumber()
+                && (
+                    (pos->hasLeft()
+                     && pos->number()->canMerge(* pos->left().number()))
+                    ||
+                    (pos->hasRight()
+                     && pos->number()->canMerge(* pos->right().number()))
+                    ||
+                    (pos->hasUp()
+                     && pos->number()->canMerge(* pos->up().number()))
+                    ||
+                    (pos->hasDown()
+                     && pos->number()->canMerge(* pos->down().number()))
+                )
+            )
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+void Board::clearMergeState()
+{
+    for(auto col = 0; col < EDGE_SIZE; ++col)
+    {
+        for(auto row = 1; row < EDGE_SIZE; ++row)
+        {
+            if(m_positions[row][col].hasNumber())
+            {
+                m_positions[row][col].number()->clearMergeState();
+            }
+        }
+    }
 }

@@ -15,6 +15,9 @@ public:
         return Board::at(_row, _column);
     }
 };
+
+void fillBoardWithUnmergeableNumbers(
+    BoardTestable & _board, int _numbers, int _value);
 }
 
 TEST_GROUP(BoardTest) {};
@@ -346,7 +349,7 @@ TEST(BoardTest, PlaceNumberRandomly)
 TEST(BoardTest, PlaceNumberRandomlyOutOfSpace)
 {
     BoardTestable board;
-    for(int i = 0; i < board.size(); ++i)
+    while(board.count() != board.size())
     {
         auto n = Number::make(ARBITRARY_VALUE);
         board.placeNumberRandomly(n);
@@ -356,4 +359,147 @@ TEST(BoardTest, PlaceNumberRandomlyOutOfSpace)
     CHECK_THROWS_STDEXCEPT(
         std::runtime_error, "no space left on board",
         board.placeNumberRandomly(number));
+}
+
+TEST(BoardTest, GetMaxNumberOfNone)
+{
+    Board board;
+
+    int max = board.getMaxNumber();
+
+    CHECK_EQUAL(0, max);
+}
+
+TEST(BoardTest, GetMaxNumberOfOne)
+{
+    BoardTestable board;
+    auto          number = Number::make(ARBITRARY_VALUE);
+    board.at(2, 2).place(number);
+
+    int max = board.getMaxNumber();
+
+    CHECK_EQUAL(ARBITRARY_VALUE, max);
+}
+
+TEST(BoardTest, GetMaxNumberOfAll)
+{
+    BoardTestable board;
+    auto          number = Number::make(1024);
+    board.placeNumberRandomly(number);
+    while(board.count() != board.size())
+    {
+        number = Number::make(ARBITRARY_VALUE);
+        board.placeNumberRandomly(number);
+    }
+
+    int max = board.getMaxNumber();
+
+    CHECK_EQUAL(1024, max);
+}
+
+TEST(BoardTest, HasFreeSpaceWhenEmpty)
+{
+    BoardTestable board;
+
+    bool has_space = board.hasFreeSpaces();
+
+    CHECK_EQUAL(true, has_space);
+}
+
+TEST(BoardTest, HasFreeSpaceWhenAlmostFull)
+{
+    BoardTestable board;
+    while(board.count() < (board.size() - 1))
+    {
+        auto number = Number::make(ARBITRARY_VALUE);
+        board.placeNumberRandomly(number);
+    }
+
+    bool has_space = board.hasFreeSpaces();
+
+    CHECK_EQUAL(true, has_space);
+}
+
+TEST(BoardTest, HasFreeSpaceWhenFull)
+{
+    BoardTestable board;
+    while(board.count() != board.size())
+    {
+        auto number = Number::make(ARBITRARY_VALUE);
+        board.placeNumberRandomly(number);
+    }
+
+    bool has_space = board.hasFreeSpaces();
+
+    CHECK_EQUAL(false, has_space);
+}
+
+TEST(BoardTest, CanSlideWhenEmpty)
+{
+    Board board;
+
+    bool can_slide = board.canSlide();
+
+    CHECK_EQUAL(true, can_slide);
+}
+
+
+TEST(BoardTest, CanSlideWhenFullNotMergeable)
+{
+    BoardTestable board;
+    fillBoardWithUnmergeableNumbers(board, board.size(), 2);
+
+    bool can_slide = board.canSlide();
+
+    CHECK_EQUAL(false, can_slide);
+}
+
+TEST(BoardTest, CanSlideWhenAlmostFullNotMergeable)
+{
+    BoardTestable board;
+    fillBoardWithUnmergeableNumbers(board, board.size() - 1, 2);
+
+    bool can_slide = board.canSlide();
+
+    CHECK_EQUAL(true, can_slide);
+}
+
+namespace
+{
+// TODO duplicated
+void fillBoardWithUnmergeableNumbers(
+    BoardTestable & _board, int _numbers, int _value)
+{
+    Position * p = & _board.at(0, 0);
+    bool forward = true;
+    for(int i = 0; i < _numbers; ++i)
+    {
+        auto n = Number::make(_value * (1 + (i % 2)));
+        p->place(n);
+        if(forward)
+        {
+            if(p->hasRight())
+            {
+                p = & p->right();
+            }
+            else if(p->hasDown())
+            {
+                forward = false;
+                p = & p->down();
+            }
+        }
+        else
+        {
+            if(p->hasLeft())
+            {
+                p = & p->left();
+            }
+            else if(p->hasDown())
+            {
+                forward = true;
+                p = & p->down();
+            }
+        }
+    }
+}
 }

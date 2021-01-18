@@ -30,10 +30,18 @@ public:
     Size size()  const;
     Size count() const;
 
+    Size getMaxNumber()  const;
+    bool hasFreeSpaces() const;
+    bool canSlide()      const;
+
+    const Position & at(Size _row, Size _column) const;
+
 protected:
     virtual Position & at(Size _row, Size _column);
 
 private:
+    void clearMergeState();
+
     static const Size EDGE_SIZE = 4;
     Position m_positions[EDGE_SIZE][EDGE_SIZE];
 };
