@@ -35,8 +35,6 @@ public:
     bool hasFreeSpaces() const;
     bool canSlide()      const;
 
-    const Position & at(Size _row, Size _column) const;
-
     Array status() const;
 
 protected:

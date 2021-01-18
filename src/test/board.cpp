@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <iostream>
 #include "testutils.hpp"
 #include "../2048/domain/board.hpp"
 
@@ -13,6 +14,49 @@ public:
     inline Position & at(Size _row, Size _column)
     {
         return Board::at(_row, _column);
+    }
+
+    void print()
+    {
+        std::cout << std::endl;
+        const Position * row = & at(0, 0);
+        const Position * col = row;
+        printPos(*col);
+
+        while(col->hasRight())
+        {
+            col = & col->right();
+            printPos(*col);
+        }
+        std::cout << std::endl;
+
+        while(row->hasDown())
+        {
+            row = & row->down();
+            col = row;
+            printPos(*col);
+
+            while(col->hasRight())
+            {
+                col = & col->right();
+                printPos(*col);
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
+    }
+
+private:
+    void printPos(const Position & _p) const
+    {
+        if(_p.hasNumber())
+        {
+            std::cout << ' ' << _p.number()->value();
+        }
+        else
+        {
+            std::cout << " x";
+        }
     }
 };
 
@@ -334,6 +378,26 @@ TEST(BoardTest, SlideMergeMiddleNumbers)
     CHECK_EQUAL(ARBITRARY_VALUE, board.at(2, 0).number()->value());
     CHECK_EQUAL(4 * ARBITRARY_VALUE, board.at(2, 1).number()->value());
     CHECK_EQUAL(4 * ARBITRARY_VALUE, board.at(2, 2).number()->value());
+}
+
+TEST(BoardTest, SlideTwiceMergePreviousMergedNumbers)
+{
+    BoardTestable board;
+    auto          num_0 = Number::make(4);
+    auto          num_1 = Number::make(2);
+    auto          num_2 = Number::make(2);
+    board.at(0, 0).place(num_0);
+    board.at(0, 1).place(num_1);
+    board.at(0, 3).place(num_2);
+    board.slide(Direction::left);
+
+    board.slide(Direction::left);
+
+    CHECK_TRUE(board.at(0, 0).hasNumber());
+    CHECK_FALSE(board.at(0, 1).hasNumber());
+    CHECK_FALSE(board.at(0, 2).hasNumber());
+    CHECK_FALSE(board.at(0, 3).hasNumber());
+    CHECK_EQUAL(8, board.at(0, 0).number()->value());
 }
 
 TEST(BoardTest, PlaceNumberRandomly)

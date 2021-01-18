@@ -217,16 +217,6 @@ Position & Board::at(Size _row, Size _column)
     return m_positions[_row][_column];
 }
 
-const Position & Board::at(Size _row, Size _column) const
-{
-    if(_row >= EDGE_SIZE || _column >= EDGE_SIZE)
-    {
-        throw std::runtime_error("out of board boundaries");
-    }
-
-    return m_positions[_row][_column];
-}
-
 Board::Size Board::count() const
 {
     Size count = 0;
@@ -314,7 +304,7 @@ void Board::clearMergeState()
 {
     for(auto col = 0; col < EDGE_SIZE; ++col)
     {
-        for(auto row = 1; row < EDGE_SIZE; ++row)
+        for(auto row = 0; row < EDGE_SIZE; ++row)
         {
             if(m_positions[row][col].hasNumber())
             {
