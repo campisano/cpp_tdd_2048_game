@@ -323,3 +323,25 @@ void Board::clearMergeState()
         }
     }
 }
+
+Board::Array Board::status() const
+{
+    Array arr(EDGE_SIZE, Row(EDGE_SIZE));
+
+    for(auto col = 0; col < EDGE_SIZE; ++col)
+    {
+        for(auto row = 0; row < EDGE_SIZE; ++row)
+        {
+            if(m_positions[row][col].hasNumber())
+            {
+                arr[row][col] = m_positions[row][col].number()->value();
+            }
+            else
+            {
+                arr[row][col] = 0;
+            }
+        }
+    }
+
+    return arr;
+}

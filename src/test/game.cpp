@@ -8,14 +8,26 @@ class GameTestable : public Game
 {
 public:
     GameTestable(
-        Score _win_score, Board::Movable & _board, Player::Movable & _player):
-        Game(_win_score, _board, _player)
+        Score               _win_score,
+        Board::Movable   &  _board,
+        Player::Movable  &  _player,
+        Observer::Movable & _observer):
+        Game(_win_score, _board, _player, _observer)
     {
     }
 
     inline Number::Movable generateRandomNumber()
     {
         return Game::generateRandomNumber();
+    }
+};
+
+class BoardTestable : public Board
+{
+public:
+    inline Position & at(Size _row, Size _column)
+    {
+        return Board::at(_row, _column);
     }
 };
 
@@ -31,13 +43,13 @@ public:
     }
 };
 
-class BoardTestable : public Board
+class ObserverTestable : public Observer
 {
 public:
-    inline Position & at(Size _row, Size _column)
-    {
-        return Board::at(_row, _column);
-    }
+    void notifyStart(Board::Array _board) {}
+    void notifyNumberPlaced(Number::Value _number, Board::Array _board) {}
+    void notifySlide(Direction _direction, Board::Array _board) {}
+    void notifyEnd(bool player_win, Score player_score) {}
 };
 
 void fillBoardWithUnmergeableNumbers(
@@ -48,9 +60,10 @@ TEST_GROUP(GameTest) {};
 
 TEST(GameTest, GenerateRandomNumber)
 {
-    Board::Movable  board(new Board());
-    Player::Movable player(new PlayerTestable());
-    GameTestable    game(1, board, player);
+    Board::Movable    board(new Board());
+    Player::Movable   player(new PlayerTestable());
+    Observer::Movable observer(new ObserverTestable());
+    GameTestable      game(1, board, player, observer);
 
     for(int i = 0; i < 100; ++i)
     {
@@ -61,10 +74,11 @@ TEST(GameTest, GenerateRandomNumber)
 
 TEST(GameTest, PlaceNumberAfterStart)
 {
-    Board     *     board = new Board();
-    Board::Movable  b(board);
-    Player::Movable player(new PlayerTestable());
-    GameTestable    game(1, b, player);
+    Board      *      board = new Board();
+    Board::Movable    b(board);
+    Player::Movable   player(new PlayerTestable());
+    Observer::Movable observer(new ObserverTestable());
+    GameTestable      game(1, b, player, observer);
 
     game.start();
 
@@ -73,12 +87,13 @@ TEST(GameTest, PlaceNumberAfterStart)
 
 TEST(GameTest, QueryPlayerSlideAfterStart)
 {
-    Board      *     board  = new Board();
-    Board::Movable   b(board);
-    PlayerTestable * player = new PlayerTestable();
+    Board      *      board  = new Board();
+    Board::Movable    b(board);
+    PlayerTestable  * player = new PlayerTestable();
     player->chooseDirection_out = Direction::left;
-    Player::Movable  p(player);
-    GameTestable     game(1, b, p);
+    Player::Movable   p(player);
+    Observer::Movable observer(new ObserverTestable());
+    GameTestable      game(1, b, p, observer);
 
     game.start();
 
@@ -87,16 +102,17 @@ TEST(GameTest, QueryPlayerSlideAfterStart)
 
 TEST(GameTest, GameEndWhenWin)
 {
-    BoardTestable  * board  = new BoardTestable();
-    auto             n1     = Number::make(1024);
+    BoardTestable  *  board  = new BoardTestable();
+    auto              n1     = Number::make(1024);
     board->at(2, 0).place(n1);
-    auto             n2     = Number::make(1024);
+    auto              n2     = Number::make(1024);
     board->at(2, 1).place(n2);
-    PlayerTestable * player = new PlayerTestable();
+    PlayerTestable  * player = new PlayerTestable();
     player->chooseDirection_out = Direction::left;
-    Board::Movable   b(board);
-    Player::Movable  p(player);
-    GameTestable     game(2048, b, p);
+    Board::Movable    b(board);
+    Player::Movable   p(player);
+    Observer::Movable observer(new ObserverTestable());
+    GameTestable      game(2048, b, p, observer);
 
     game.start();
 
@@ -107,13 +123,14 @@ TEST(GameTest, GameEndWhenWin)
 
 TEST(GameTest, GameEndWhenLose)
 {
-    BoardTestable  * board = new BoardTestable();
+    BoardTestable  *  board = new BoardTestable();
     fillBoardWithUnmergeableNumbers(*board, board->size() - 1, 16);
-    PlayerTestable * player = new PlayerTestable();
+    PlayerTestable  * player = new PlayerTestable();
     player->chooseDirection_out = Direction::left;
-    Board::Movable   b(board);
-    Player::Movable  p(player);
-    GameTestable     game(2048, b, p);
+    Board::Movable    b(board);
+    Player::Movable   p(player);
+    Observer::Movable observer(new ObserverTestable());
+    GameTestable      game(2048, b, p, observer);
 
     game.start();
 

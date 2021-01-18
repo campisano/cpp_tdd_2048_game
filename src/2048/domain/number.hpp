@@ -22,15 +22,15 @@ public:
     static Movable make(Value _value);
 
 public:
-    Value value() const;
-    bool canMerge(const Number & _number) const;
+    Value value()                          const;
+    bool  canMerge(const Number & _number) const;
 
     void merge(Movable & _number);
     void clearMergeState();
 
 private:
     Value m_value;
-    bool m_merged;
+    bool  m_merged;
 };
 
 #endif

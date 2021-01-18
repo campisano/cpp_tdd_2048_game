@@ -3,14 +3,17 @@
 
 #include <cstdint>
 #include <memory>
+#include <vector>
 #include "direction.hpp"
 #include "position.hpp"
 
 class Board
 {
 public:
+    using Row     = std::vector<Number::Value>;
+    using Array   = std::vector<Row>;
     using Movable = std::unique_ptr<Board>;
-    using Size = uint16_t; //TODO use of unsigned values can mask logic errors
+    using Size    = uint16_t; //TODO use of unsigned values can mask logic errors
 
 public:
     explicit Board();
@@ -33,6 +36,8 @@ public:
     bool canSlide()      const;
 
     const Position & at(Size _row, Size _column) const;
+
+    Array status() const;
 
 protected:
     virtual Position & at(Size _row, Size _column);
