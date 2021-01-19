@@ -1,5 +1,5 @@
-#include <cstdint>
 #include <iostream>
+#include <vector>
 #include "testutils.hpp"
 #include "../2048/domain/board.hpp"
 
@@ -11,57 +11,40 @@ const Number::Value ARBITRARY_VALUE     = 8;
 class BoardTestable : public Board
 {
 public:
-    inline Position & at(Size _row, Size _column)
+    Position & at(Size _row, Size _column)
     {
         return Board::at(_row, _column);
     }
 
-    void print()
+    void fill(std::vector<std::vector<Number::Value>> _numbers)
     {
-        std::cout << std::endl;
-        const Position * row = & at(0, 0);
-        const Position * col = row;
-        printPos(*col);
+        Position * p_row = & at(0, 0);
+        Position * p_col = p_row;
 
-        while(col->hasRight())
+        for(auto row = _numbers.begin(); row != _numbers.end(); ++row)
         {
-            col = & col->right();
-            printPos(*col);
-        }
-        std::cout << std::endl;
-
-        while(row->hasDown())
-        {
-            row = & row->down();
-            col = row;
-            printPos(*col);
-
-            while(col->hasRight())
+            for(auto col = row->begin(); col != row->end(); ++col)
             {
-                col = & col->right();
-                printPos(*col);
-            }
-            std::cout << std::endl;
-        }
-        std::cout << std::endl;
-    }
+                if((*col) != 0)
+                {
+                    auto n = Number::make(*col);
+                    p_col->place(n);
+                }
 
-private:
-    void printPos(const Position & _p) const
-    {
-        if(_p.hasNumber())
-        {
-            std::cout << ' ' << _p.number()->value();
-        }
-        else
-        {
-            std::cout << " x";
+                if(p_col->hasRight())
+                {
+                    p_col = & p_col->right();
+                }
+            }
+
+            if(p_row->hasDown())
+            {
+                p_row = & p_row->down();
+                p_col = p_row;
+            }
         }
     }
 };
-
-void fillBoardWithUnmergeableNumbers(
-    BoardTestable & _board, int _numbers, int _value);
 }
 
 TEST_GROUP(BoardTest) {};
@@ -511,7 +494,13 @@ TEST(BoardTest, CanSlideWhenEmpty)
 TEST(BoardTest, CanSlideWhenFullNotMergeable)
 {
     BoardTestable board;
-    fillBoardWithUnmergeableNumbers(board, board.size(), 2);
+    board.fill(
+    {
+        { 16, 32, 16, 32 },
+        { 32, 16, 32, 16 },
+        { 16, 32, 16, 32 },
+        { 32, 16, 32, 16 }
+    });
 
     bool can_slide = board.canSlide();
 
@@ -521,49 +510,15 @@ TEST(BoardTest, CanSlideWhenFullNotMergeable)
 TEST(BoardTest, CanSlideWhenAlmostFullNotMergeable)
 {
     BoardTestable board;
-    fillBoardWithUnmergeableNumbers(board, board.size() - 1, 2);
+    board.fill(
+    {
+        { 16, 32, 16, 32 },
+        { 32, 16, 32, 16 },
+        { 16, 32, 16, 32 },
+        { 32, 16, 32, 0  }
+    });
 
     bool can_slide = board.canSlide();
 
     CHECK_EQUAL(true, can_slide);
-}
-
-namespace
-{
-// TODO duplicated
-void fillBoardWithUnmergeableNumbers(
-    BoardTestable & _board, int _numbers, int _value)
-{
-    Position * p = & _board.at(0, 0);
-    bool forward = true;
-    for(int i = 0; i < _numbers; ++i)
-    {
-        auto n = Number::make(_value * (1 + (i % 2)));
-        p->place(n);
-        if(forward)
-        {
-            if(p->hasRight())
-            {
-                p = & p->right();
-            }
-            else if(p->hasDown())
-            {
-                forward = false;
-                p = & p->down();
-            }
-        }
-        else
-        {
-            if(p->hasLeft())
-            {
-                p = & p->left();
-            }
-            else if(p->hasDown())
-            {
-                forward = true;
-                p = & p->down();
-            }
-        }
-    }
-}
 }

@@ -4,45 +4,12 @@
 
 namespace
 {
-void slideFrom(
+bool slideFromPositionToDirection(
     Position & _position,
     bool (Position::*_has_direction)() const,
-    Position & (Position::*_next_direction)() const
-)
-{
-    Position * dest = & _position;
-    Position * next;
+    Position & (Position::*_next_direction)() const);
 
-    while((dest->*_has_direction)())
-    {
-        next = & (dest->*_next_direction)();
-
-        if(next->hasNumber())
-        {
-            if(next->number()->canMerge(* _position.number()))
-            {
-                dest = next;
-            }
-
-            break;
-        }
-
-        dest = next;
-    }
-
-    if(dest != & _position)
-    {
-        _position.transferTo(* dest);
-    }
-}
-
-inline Board::Size generateRandomPlace(Board::Size _limit)
-{
-    std::random_device                 r;
-    std::default_random_engine         e(r());
-    std::uniform_int_distribution<int> dist(0, _limit);
-    return dist(e);
-}
+Board::Size generateRandomPlace(Board::Size _limit);
 }
 
 Board::Board()
@@ -75,23 +42,25 @@ Board::~Board()
 {
 }
 
-void Board::slide(Direction _direction)
+bool Board::slide(Direction _direction)
 {
+    bool valid_move;
+
     if(_direction == Direction::left)
     {
-        slideLeft();
+        valid_move = slideLeft();
     }
     else if(_direction == Direction::right)
     {
-        slideRight();
+        valid_move = slideRight();
     }
     else if(_direction == Direction::up)
     {
-        slideUp();
+        valid_move = slideUp();
     }
     else if(_direction == Direction::down)
     {
-        slideDown();
+        valid_move = slideDown();
     }
     else
     {
@@ -99,74 +68,116 @@ void Board::slide(Direction _direction)
     }
 
     clearMergeState();
+
+    return valid_move;
 }
 
-void Board::slideLeft()
+bool Board::slideLeft()
 {
+    bool any_valid_slide = false;
+    bool valid_slide;
+
     for(auto row = 0; row < EDGE_SIZE; ++row)
     {
         for(auto col = 1; col < EDGE_SIZE; ++col)
         {
             if(m_positions[row][col].hasNumber())
             {
-                slideFrom(
-                    m_positions[row][col],
-                    &Position::hasLeft,
-                    &Position::left);
+                valid_slide = slideFromPositionToDirection(
+                                  m_positions[row][col],
+                                  &Position::hasLeft,
+                                  &Position::left);
+
+                if(valid_slide && ! any_valid_slide)
+                {
+                    any_valid_slide = valid_slide;
+                }
             }
         }
     }
+
+    return any_valid_slide;
 }
 
-void Board::slideRight()
+bool Board::slideRight()
 {
+    bool any_valid_slide = false;
+    bool valid_slide;
+
     for(auto row = 0; row < EDGE_SIZE; ++row)
     {
         for(auto col = EDGE_SIZE - 2; col >= 0; --col)
         {
             if(m_positions[row][col].hasNumber())
             {
-                slideFrom(
-                    m_positions[row][col],
-                    &Position::hasRight,
-                    &Position::right);
+                valid_slide = slideFromPositionToDirection(
+                                  m_positions[row][col],
+                                  &Position::hasRight,
+                                  &Position::right);
+
+                if(valid_slide && ! any_valid_slide)
+                {
+                    any_valid_slide = valid_slide;
+                }
             }
         }
     }
+
+    return any_valid_slide;
 }
 
-void Board::slideUp()
+bool Board::slideUp()
 {
+    bool any_valid_slide = false;
+    bool valid_slide;
+
     for(auto col = 0; col < EDGE_SIZE; ++col)
     {
         for(auto row = 1; row < EDGE_SIZE; ++row)
         {
             if(m_positions[row][col].hasNumber())
             {
-                slideFrom(
-                    m_positions[row][col],
-                    &Position::hasUp,
-                    &Position::up);
+                valid_slide = slideFromPositionToDirection(
+                                  m_positions[row][col],
+                                  &Position::hasUp,
+                                  &Position::up);
+
+                if(valid_slide && ! any_valid_slide)
+                {
+                    any_valid_slide = valid_slide;
+                }
             }
         }
     }
+
+    return any_valid_slide;
 }
 
-void Board::slideDown()
+bool Board::slideDown()
 {
+    bool any_valid_slide = false;
+    bool valid_slide;
+
     for(auto col = 0; col < EDGE_SIZE; ++col)
     {
         for(auto row = EDGE_SIZE - 2; row >= 0; --row)
         {
             if(m_positions[row][col].hasNumber())
             {
-                slideFrom(
-                    m_positions[row][col],
-                    &Position::hasDown,
-                    &Position::down);
+                valid_slide = slideFromPositionToDirection(
+                                  m_positions[row][col],
+                                  &Position::hasDown,
+                                  &Position::down);
+
+                if(valid_slide && ! any_valid_slide)
+                {
+                    any_valid_slide = valid_slide;
+                }
             }
         }
     }
+
+    return any_valid_slide;
 }
 
 void Board::placeNumberRandomly(Number::Movable & _number)
@@ -334,4 +345,51 @@ Board::Array Board::status() const
     }
 
     return arr;
+}
+
+namespace
+{
+bool slideFromPositionToDirection(
+    Position & _position,
+    bool (Position::*_has_direction)() const,
+    Position & (Position::*_next_direction)() const)
+{
+    Position * dest = & _position;
+    Position * next;
+
+    while((dest->*_has_direction)())
+    {
+        next = & (dest->*_next_direction)();
+
+        if(next->hasNumber())
+        {
+            if(next->number()->canMerge(* _position.number()))
+            {
+                dest = next;
+            }
+
+            break;
+        }
+
+        dest = next;
+    }
+
+    if(dest != & _position)
+    {
+        _position.transferTo(* dest);
+
+        return true;
+    }
+
+    return false;
+}
+
+Board::Size generateRandomPlace(Board::Size _limit)
+{
+    std::random_device                 r;
+    std::default_random_engine         e(r());
+    std::uniform_int_distribution<int> dist(0, _limit);
+
+    return dist(e);
+}
 }

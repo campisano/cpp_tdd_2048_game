@@ -30,9 +30,13 @@ public:
     Score playerScore() const;
 
 protected:
+    void turn();
     Number::Movable generateRandomNumber();
 
 private:
+    void placeNumber();
+    void requestValidSlide();
+
     void notifyStart();
     void notifyNumberPlaced(Number::Value);
     void notifySlide(Direction _direction);

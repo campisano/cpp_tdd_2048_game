@@ -138,8 +138,8 @@ TEST(PositionTest, TransferToEmptyImplyPlaceThere)
 
 TEST(PositionTest, TransferToNotEmptyImplyMergeThere)
 {
-    auto     num_start  = Number::make(ARBITRARY_VALUE);
-    auto     num_end    = Number::make(ARBITRARY_VALUE);
+    auto     num_start = Number::make(ARBITRARY_VALUE);
+    auto     num_end   = Number::make(ARBITRARY_VALUE);
     Position pos_start;
     Position pos_end;
     pos_start.place(num_start);

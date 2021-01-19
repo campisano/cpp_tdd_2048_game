@@ -25,7 +25,7 @@ public:
     Board & operator=(Board &&)      = default;
 
 public:
-    void slide(Direction _direction);
+    bool slide(Direction _direction);
     void placeNumberRandomly(Number::Movable & _number);
 
     Size size()  const;
@@ -41,10 +41,10 @@ protected:
     virtual Position & at(Size _row, Size _column);
 
 private:
-    void slideLeft();
-    void slideRight();
-    void slideUp();
-    void slideDown();
+    bool slideLeft();
+    bool slideRight();
+    bool slideUp();
+    bool slideDown();
     void clearMergeState();
 
     static const Size EDGE_SIZE = 4;

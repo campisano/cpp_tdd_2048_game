@@ -32,12 +32,12 @@ Game description in https://en.wikipedia.org/wiki/2048_(video_game)#Gameplay
     - a position can have adiacent positions {left,right,up,down}.
 
 0) There is a player:
-    - a player can be queried for a direction to slide.
+    - a player is queried for a valid direction to slide.
 
 0) There is a game:
-    - at every turn, a random number, with value of 2 or 4, is placed in a random empty spot of the board;
-    - at every turn, a slide direction is requested to the player;
+    - at every turn, a random number (with value of 2 or 4) is placed in a random empty spot of the board;
+    - at every turn, a valid slide direction is requested to the player;
     - game ends when player win (when obtain a 2048 number) or lose (when can not slide due to end of spaces and mergeable slides in the board).
 
 0) There is an observer:
-    - an observer can be notified about game events (start, number placed, player slided, end).
+    - an observer is notified about game events (start, number placed, player slided, end).

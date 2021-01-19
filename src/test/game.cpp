@@ -2,6 +2,9 @@
 #include "testutils.hpp"
 #include "../2048/domain/game.hpp"
 
+#include <cmath>
+#include <iostream>
+
 namespace
 {
 class GameTestable : public Game
@@ -16,7 +19,12 @@ public:
     {
     }
 
-    inline Number::Movable generateRandomNumber()
+    void turn()
+    {
+        Game::turn();
+    }
+
+    Number::Movable generateRandomNumber()
     {
         return Game::generateRandomNumber();
     }
@@ -25,9 +33,33 @@ public:
 class BoardTestable : public Board
 {
 public:
-    inline Position & at(Size _row, Size _column)
+    void fill(std::vector<std::vector<Number::Value>> _numbers)
     {
-        return Board::at(_row, _column);
+        Position * p_row = & at(0, 0);
+        Position * p_col = p_row;
+
+        for(auto row = _numbers.begin(); row != _numbers.end(); ++row)
+        {
+            for(auto col = row->begin(); col != row->end(); ++col)
+            {
+                if((*col) != 0)
+                {
+                    auto n = Number::make(*col);
+                    p_col->place(n);
+                }
+
+                if(p_col->hasRight())
+                {
+                    p_col = & p_col->right();
+                }
+            }
+
+            if(p_row->hasDown())
+            {
+                p_row = & p_row->down();
+                p_col = p_row;
+            }
+        }
     }
 };
 
@@ -36,7 +68,7 @@ class PlayerTestable : public Player
 public:
     int       chooseDirection_calls = 0;
     Direction chooseDirection_out;
-    inline Direction chooseDirection()
+    Direction chooseDirection()
     {
         ++chooseDirection_calls;
         return chooseDirection_out;
@@ -46,14 +78,11 @@ public:
 class ObserverTestable : public Observer
 {
 public:
-    void notifyStart(Board::Array _board) {}
-    void notifyNumberPlaced(Number::Value _number, Board::Array _board) {}
-    void notifySlide(Direction _direction, Board::Array _board) {}
-    void notifyEnd(bool player_win, Score player_score) {}
+    void notifyStart(Board::Array) {}
+    void notifyNumberPlaced(Number::Value, Board::Array) {}
+    void notifySlide(Direction, Board::Array) {}
+    void notifyEnd(bool, Score) {}
 };
-
-void fillBoardWithUnmergeableNumbers(
-    BoardTestable & _board, int _numbers, int _value);
 }
 
 TEST_GROUP(GameTest) {};
@@ -87,13 +116,20 @@ TEST(GameTest, PlaceNumberAfterStart)
 
 TEST(GameTest, QueryPlayerSlideAfterStart)
 {
-    Board      *      board  = new Board();
+    BoardTestable  *  board = new BoardTestable();
+    board->fill(
+    {
+        { 8, 8, 0, 0 },
+        { 0, 0, 0, 0 },
+        { 0, 0, 0, 0 },
+        { 0, 0, 0, 0 }
+    });
     Board::Movable    b(board);
     PlayerTestable  * player = new PlayerTestable();
     player->chooseDirection_out = Direction::left;
     Player::Movable   p(player);
     Observer::Movable observer(new ObserverTestable());
-    GameTestable      game(1, b, p, observer);
+    GameTestable      game(16, b, p, observer);
 
     game.start();
 
@@ -103,10 +139,13 @@ TEST(GameTest, QueryPlayerSlideAfterStart)
 TEST(GameTest, GameEndWhenWin)
 {
     BoardTestable  *  board  = new BoardTestable();
-    auto              n1     = Number::make(1024);
-    board->at(2, 0).place(n1);
-    auto              n2     = Number::make(1024);
-    board->at(2, 1).place(n2);
+    board->fill(
+    {
+        {    0,    0, 0, 0 },
+        {    0,    0, 0, 0 },
+        { 1024, 1024, 0, 0 },
+        {    0,    0, 0, 0 }
+    });
     PlayerTestable  * player = new PlayerTestable();
     player->chooseDirection_out = Direction::left;
     Board::Movable    b(board);
@@ -114,7 +153,7 @@ TEST(GameTest, GameEndWhenWin)
     Observer::Movable observer(new ObserverTestable());
     GameTestable      game(2048, b, p, observer);
 
-    game.start();
+    game.turn();
 
     CHECK_EQUAL(true,  game.playerWin());
     CHECK_EQUAL(false, game.playerLose());
@@ -124,7 +163,13 @@ TEST(GameTest, GameEndWhenWin)
 TEST(GameTest, GameEndWhenLose)
 {
     BoardTestable  *  board = new BoardTestable();
-    fillBoardWithUnmergeableNumbers(*board, board->size() - 1, 16);
+    board->fill(
+    {
+        { 16, 32, 16, 32 },
+        { 32, 16, 32, 16 },
+        { 16, 32, 16, 32 },
+        {  0, 32, 16, 32 }
+    });
     PlayerTestable  * player = new PlayerTestable();
     player->chooseDirection_out = Direction::left;
     Board::Movable    b(board);
@@ -132,49 +177,9 @@ TEST(GameTest, GameEndWhenLose)
     Observer::Movable observer(new ObserverTestable());
     GameTestable      game(2048, b, p, observer);
 
-    game.start();
+    game.turn();
 
     CHECK_EQUAL(true,  game.playerLose());
     CHECK_EQUAL(false, game.playerWin());
     CHECK_EQUAL(1, player->chooseDirection_calls);
-}
-
-namespace
-{
-// TODO duplicated
-void fillBoardWithUnmergeableNumbers(
-    BoardTestable & _board, int _numbers, int _value)
-{
-    Position * p = & _board.at(0, 0);
-    bool forward = true;
-    for(int i = 0; i < _numbers; ++i)
-    {
-        auto n = Number::make(_value * (1 + (i % 2)));
-        p->place(n);
-        if(forward)
-        {
-            if(p->hasRight())
-            {
-                p = & p->right();
-            }
-            else if(p->hasDown())
-            {
-                forward = false;
-                p = & p->down();
-            }
-        }
-        else
-        {
-            if(p->hasLeft())
-            {
-                p = & p->left();
-            }
-            else if(p->hasDown())
-            {
-                forward = true;
-                p = & p->down();
-            }
-        }
-    }
-}
 }

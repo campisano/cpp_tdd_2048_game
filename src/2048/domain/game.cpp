@@ -2,24 +2,6 @@
 #include <random>
 #include <stdexcept>
 
-namespace
-{
-inline Number::Value generateRandomValue()
-{
-    std::random_device                 r;
-    std::default_random_engine         e(r());
-    std::uniform_int_distribution<int> dist(0, 5);
-    if(dist(e) < 4)
-    {
-        return 2;
-    }
-    else
-    {
-        return 4;
-    }
-}
-}
-
 Game::Game(
     Score _win_score,
     Board::Movable & _board,
@@ -45,22 +27,45 @@ void Game::start()
 {
     notifyStart();
 
-    do
+    placeNumber();
+
+    while(! isOver())
     {
-        auto num = this->generateRandomNumber();
-        auto value = num->value();
-        m_board->placeNumberRandomly(num);
-
-        notifyNumberPlaced(value);
-
-        auto direction = m_player->chooseDirection();
-        m_board->slide(direction);
-
-        notifySlide(direction);
+        turn();
     }
-    while(! isOver());
 
     notifyEnd();
+}
+
+void Game::placeNumber()
+{
+    auto num   = generateRandomNumber();
+    auto value = num->value();
+    m_board->placeNumberRandomly(num);
+
+    notifyNumberPlaced(value);
+}
+
+void Game::turn()
+{
+    requestValidSlide();
+
+    if(! playerWin())
+    {
+        placeNumber();
+    }
+}
+
+void Game::requestValidSlide()
+{
+    bool valid_slide;
+    do
+    {
+        auto direction = m_player->chooseDirection();
+        valid_slide    = m_board->slide(direction);
+        notifySlide(direction);
+    }
+    while(! valid_slide);
 }
 
 bool Game::isOver() const
@@ -105,5 +110,16 @@ void Game::notifyEnd()
 
 Number::Movable Game::generateRandomNumber()
 {
-    return Number::make(generateRandomValue());
+    std::random_device                 r;
+    std::default_random_engine         e(r());
+    std::uniform_int_distribution<int> dist(0, 5);
+
+    if(dist(e) < 4)
+    {
+        return Number::make(2);
+    }
+    else
+    {
+        return Number::make(4);
+    }
 }

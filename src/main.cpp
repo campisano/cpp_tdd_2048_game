@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 #include <stdexcept>
 #include "2048/domain/game.hpp"
 
@@ -15,7 +16,7 @@ public:
     {
     }
 
-    inline Number::Movable generateRandomNumber()
+    Number::Movable generateRandomNumber()
     {
         return Game::generateRandomNumber();
     }
@@ -24,12 +25,25 @@ public:
 class PlayerTestable : public Player
 {
 public:
-    int       chooseDirection_calls = 0;
-    Direction chooseDirection_out;
-    inline Direction chooseDirection()
+    Direction chooseDirection()
     {
-        ++chooseDirection_calls;
-        return chooseDirection_out;
+        std::random_device                 r;
+        std::default_random_engine         e(r());
+        std::uniform_int_distribution<int> dist(0, 3);
+
+        switch(dist(e))
+        {
+        case 0:
+            return Direction::left;
+        case 1:
+            return Direction::right;
+        case 2:
+            return Direction::up;
+        case 3:
+            return Direction::down;
+        }
+
+        throw std::runtime_error("algorithm fault");
     }
 };
 
@@ -91,7 +105,6 @@ int main(int, char **)
         Board      *      board = new Board();
         Board::Movable    b(board);
         PlayerTestable  * player = new PlayerTestable();
-        player->chooseDirection_out = Direction::left;
         Player::Movable   p(player);
         Observer::Movable o(new ObserverTestable());
         GameTestable      game(b, p, o);
