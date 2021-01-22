@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 #include "direction.hpp"
+#include "number.hpp"
 #include "position.hpp"
 
 class Board

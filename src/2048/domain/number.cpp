@@ -3,10 +3,7 @@
 
 namespace
 {
-bool isPowerOfTwo(Number::Value _number)
-{
-    return (_number > 0) && ((_number & (_number - 1)) == 0);
-}
+bool isPowerOfTwo(Number::Value _number);
 }
 
 Number::Number(Value _value) : m_merged(false)
@@ -60,4 +57,12 @@ void Number::merge(Movable & _number)
 void Number::clearMergeState()
 {
     m_merged = false;
+}
+
+namespace
+{
+bool isPowerOfTwo(Number::Value _number)
+{
+    return (_number > 0) && ((_number & (_number - 1)) == 0);
+}
 }

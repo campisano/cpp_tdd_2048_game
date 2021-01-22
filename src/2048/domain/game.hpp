@@ -2,6 +2,7 @@
 #define GAME__HPP__
 
 #include "board.hpp"
+#include "direction.hpp"
 #include "number.hpp"
 #include "observer.hpp"
 #include "player.hpp"

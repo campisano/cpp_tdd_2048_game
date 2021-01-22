@@ -5,24 +5,7 @@
 
 namespace
 {
-class GameTestable : public Game
-{
-public:
-    GameTestable(
-        Board::Movable & _board,
-        Player::Movable & _player,
-        Observer::Movable & _observer):
-        Game(2048, _board, _player, _observer)
-    {
-    }
-
-    Number::Movable generateRandomNumber()
-    {
-        return Game::generateRandomNumber();
-    }
-};
-
-class PlayerTestable : public Player
+class PlayerFake : public Player
 {
 public:
     Direction chooseDirection()
@@ -47,7 +30,7 @@ public:
     }
 };
 
-class ObserverTestable : public Observer
+class ObserverFake : public Observer
 {
 public:
     void notifyStart(Board::Array _board)
@@ -104,10 +87,10 @@ int main(int, char **)
     {
         Board      *      board = new Board();
         Board::Movable    b(board);
-        PlayerTestable  * player = new PlayerTestable();
+        Player      *     player = new PlayerFake();
         Player::Movable   p(player);
-        Observer::Movable o(new ObserverTestable());
-        GameTestable      game(b, p, o);
+        Observer::Movable o(new ObserverFake());
+        Game              game(2048, b, p, o);
 
         game.start();
     }

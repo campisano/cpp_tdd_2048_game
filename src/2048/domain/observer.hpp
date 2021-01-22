@@ -2,6 +2,7 @@
 #define OBSERVER__HPP__
 
 #include <memory>
+#include "board.hpp"
 #include "direction.hpp"
 #include "score.hpp"
 
