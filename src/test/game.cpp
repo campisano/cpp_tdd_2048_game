@@ -8,7 +8,7 @@ TEST_GROUP(GameTest) {};
 
 TEST(GameTest, GenerateRandomNumber)
 {
-    Board::Movable    board(new Board());
+    auto              board = Board::make();
     Player::Movable   player(new PlayerSpy());
     Observer::Movable observer(new ObserverStub());
     GameTestable      game(1, board, player, observer);
@@ -22,7 +22,7 @@ TEST(GameTest, GenerateRandomNumber)
 
 TEST(GameTest, PlaceNumberAfterStart)
 {
-    Board      *      board = new Board();
+    auto              board = new BoardTestable();
     Board::Movable    b(board);
     Player::Movable   player(new PlayerSpy());
     Observer::Movable observer(new ObserverStub());
@@ -35,7 +35,7 @@ TEST(GameTest, PlaceNumberAfterStart)
 
 TEST(GameTest, QueryPlayerSlideAfterStart)
 {
-    BoardTestable  *  board = new BoardTestable();
+    auto board = new BoardTestable();
     board->fill(
     {
         { 8, 8, 0, 0 },
@@ -44,7 +44,7 @@ TEST(GameTest, QueryPlayerSlideAfterStart)
         { 0, 0, 0, 0 }
     });
     Board::Movable    b(board);
-    PlayerSpy    *    player = new PlayerSpy();
+    auto              player = new PlayerSpy();
     player->chooseDirection_out = Direction::left;
     Player::Movable   p(player);
     Observer::Movable observer(new ObserverStub());
@@ -57,7 +57,7 @@ TEST(GameTest, QueryPlayerSlideAfterStart)
 
 TEST(GameTest, GameEndWhenWin)
 {
-    BoardTestable  *  board  = new BoardTestable();
+    auto board = new BoardTestable();
     board->fill(
     {
         {    0,    0, 0, 0 },
@@ -65,7 +65,7 @@ TEST(GameTest, GameEndWhenWin)
         { 1024, 1024, 0, 0 },
         {    0,    0, 0, 0 }
     });
-    PlayerSpy    *    player = new PlayerSpy();
+    auto              player = new PlayerSpy();
     player->chooseDirection_out = Direction::left;
     Board::Movable    b(board);
     Player::Movable   p(player);
@@ -81,7 +81,7 @@ TEST(GameTest, GameEndWhenWin)
 
 TEST(GameTest, GameEndWhenLose)
 {
-    BoardTestable  *  board = new BoardTestable();
+    auto board = new BoardTestable();
     board->fill(
     {
         { 16, 32, 16, 32 },
@@ -89,7 +89,7 @@ TEST(GameTest, GameEndWhenLose)
         { 16, 32, 16, 32 },
         {  0, 32, 16, 32 }
     });
-    PlayerSpy    *    player = new PlayerSpy();
+    auto              player = new PlayerSpy();
     player->chooseDirection_out = Direction::left;
     Board::Movable    b(board);
     Player::Movable   p(player);

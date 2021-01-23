@@ -14,9 +14,9 @@ Board::Size generateRandomPlace(Board::Size _limit);
 
 Board::Board()
 {
-    for(auto row = 0; row < EDGE_SIZE; ++row)
+    for(Size row = 0; row < EDGE_SIZE; ++row)
     {
-        for(auto col = 0; col < EDGE_SIZE; ++col)
+        for(Size col = 0; col < EDGE_SIZE; ++col)
         {
             if(row > 0)
             {
@@ -40,6 +40,11 @@ Board::Board()
 
 Board::~Board()
 {
+}
+
+Board::Movable Board::make()
+{
+    return Movable(new Board());
 }
 
 bool Board::slide(Direction _direction)
@@ -77,9 +82,9 @@ bool Board::slideLeft()
     bool any_valid_slide = false;
     bool valid_slide;
 
-    for(auto row = 0; row < EDGE_SIZE; ++row)
+    for(Size row = 0; row < EDGE_SIZE; ++row)
     {
-        for(auto col = 1; col < EDGE_SIZE; ++col)
+        for(Size col = 1; col < EDGE_SIZE; ++col)
         {
             if(m_positions[row][col].hasNumber())
             {
@@ -104,9 +109,9 @@ bool Board::slideRight()
     bool any_valid_slide = false;
     bool valid_slide;
 
-    for(auto row = 0; row < EDGE_SIZE; ++row)
+    for(Size row = 0; row < EDGE_SIZE; ++row)
     {
-        for(auto col = EDGE_SIZE - 2; col >= 0; --col)
+        for(Size col = EDGE_SIZE - 2; col >= 0; --col)
         {
             if(m_positions[row][col].hasNumber())
             {
@@ -131,9 +136,9 @@ bool Board::slideUp()
     bool any_valid_slide = false;
     bool valid_slide;
 
-    for(auto col = 0; col < EDGE_SIZE; ++col)
+    for(Size col = 0; col < EDGE_SIZE; ++col)
     {
-        for(auto row = 1; row < EDGE_SIZE; ++row)
+        for(Size row = 1; row < EDGE_SIZE; ++row)
         {
             if(m_positions[row][col].hasNumber())
             {
@@ -158,9 +163,9 @@ bool Board::slideDown()
     bool any_valid_slide = false;
     bool valid_slide;
 
-    for(auto col = 0; col < EDGE_SIZE; ++col)
+    for(Size col = 0; col < EDGE_SIZE; ++col)
     {
-        for(auto row = EDGE_SIZE - 2; row >= 0; --row)
+        for(Size row = EDGE_SIZE - 2; row >= 0; --row)
         {
             if(m_positions[row][col].hasNumber())
             {
@@ -191,9 +196,9 @@ void Board::placeNumberRandomly(Number::Movable & _number)
 
     Size rand_pos = generateRandomPlace(free_pos - 1);
 
-    for(auto row = 0; row < EDGE_SIZE; ++row)
+    for(Size row = 0; row < EDGE_SIZE; ++row)
     {
-        for(auto col = 0; col < EDGE_SIZE; ++col)
+        for(Size col = 0; col < EDGE_SIZE; ++col)
         {
             if(! m_positions[row][col].hasNumber())
             {
@@ -220,7 +225,9 @@ Board::Size Board::size() const
 
 Position & Board::at(Size _row, Size _column)
 {
-    if(_row >= EDGE_SIZE || _column >= EDGE_SIZE)
+    if(
+        _row < 0 || _column < 0 ||
+        _row >= EDGE_SIZE || _column >= EDGE_SIZE)
     {
         throw std::runtime_error("out of board boundaries");
     }
@@ -231,9 +238,10 @@ Position & Board::at(Size _row, Size _column)
 Board::Size Board::count() const
 {
     Size count = 0;
-    for(auto row = 0; row < EDGE_SIZE; ++row)
+
+    for(Size row = 0; row < EDGE_SIZE; ++row)
     {
-        for(auto col = 0; col < EDGE_SIZE; ++col)
+        for(Size col = 0; col < EDGE_SIZE; ++col)
         {
             if(m_positions[row][col].hasNumber())
             {
@@ -249,13 +257,15 @@ Board::Size Board::getMaxNumber() const
 {
     Size max = 0;
     Size num;
-    for(auto row = 0; row < EDGE_SIZE; ++row)
+
+    for(Size row = 0; row < EDGE_SIZE; ++row)
     {
-        for(auto col = 0; col < EDGE_SIZE; ++col)
+        for(Size col = 0; col < EDGE_SIZE; ++col)
         {
             if(m_positions[row][col].hasNumber())
             {
                 num = m_positions[row][col].number()->value();
+
                 if(num > max)
                 {
                     max = num;
@@ -281,11 +291,12 @@ bool Board::canSlide() const
 
     const Position * pos;
 
-    for(auto row = 0; row < EDGE_SIZE; ++row)
+    for(Size row = 0; row < EDGE_SIZE; ++row)
     {
-        for(auto col = 0; col < EDGE_SIZE; ++col)
+        for(Size col = 0; col < EDGE_SIZE; ++col)
         {
             pos = & m_positions[row][col];
+
             if(
                 pos->hasNumber()
                 && (
@@ -313,9 +324,9 @@ bool Board::canSlide() const
 
 void Board::clearMergeState()
 {
-    for(auto col = 0; col < EDGE_SIZE; ++col)
+    for(Size col = 0; col < EDGE_SIZE; ++col)
     {
-        for(auto row = 0; row < EDGE_SIZE; ++row)
+        for(Size row = 0; row < EDGE_SIZE; ++row)
         {
             if(m_positions[row][col].hasNumber())
             {
@@ -329,9 +340,9 @@ Board::Array Board::status() const
 {
     Array arr(EDGE_SIZE, Row(EDGE_SIZE));
 
-    for(auto col = 0; col < EDGE_SIZE; ++col)
+    for(Size col = 0; col < EDGE_SIZE; ++col)
     {
-        for(auto row = 0; row < EDGE_SIZE; ++row)
+        for(Size row = 0; row < EDGE_SIZE; ++row)
         {
             if(m_positions[row][col].hasNumber())
             {

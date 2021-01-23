@@ -3,6 +3,6 @@
 
 #include <cstdint>
 
-using Score = int16_t;
+using Score = int32_t;
 
 #endif

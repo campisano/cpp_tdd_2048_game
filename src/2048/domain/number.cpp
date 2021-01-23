@@ -50,7 +50,7 @@ void Number::merge(Movable & _number)
     }
 
     m_value += _number->value();
-    auto merging = std::move(_number);
+    _number.reset();
     m_merged = true;
 }
 

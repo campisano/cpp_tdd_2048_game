@@ -102,7 +102,7 @@ TEST(BoardTest, SlideLeft)
 {
     BoardTestable board;
     auto          number  = Number::make(ARBITRARY_VALUE);
-    Number    *   num_ptr = number.get();
+    auto          num_ptr = number.get();
     board.at(2, 2).place(number);
 
     board.slide(Direction::left);
@@ -116,7 +116,7 @@ TEST(BoardTest, SlideRight)
 {
     BoardTestable board;
     auto          number  = Number::make(ARBITRARY_VALUE);
-    Number    *   num_ptr = number.get();
+    auto          num_ptr = number.get();
     board.at(1, 1).place(number);
 
     board.slide(Direction::right);
@@ -130,7 +130,7 @@ TEST(BoardTest, SlideUp)
 {
     BoardTestable board;
     auto          number  = Number::make(ARBITRARY_VALUE);
-    Number    *   num_ptr = number.get();
+    auto          num_ptr = number.get();
     board.at(2, 2).place(number);
 
     board.slide(Direction::up);
@@ -144,7 +144,7 @@ TEST(BoardTest, SlideDown)
 {
     BoardTestable board;
     auto          number  = Number::make(ARBITRARY_VALUE);
-    Number    *   num_ptr = number.get();
+    auto          num_ptr = number.get();
     board.at(1, 1).place(number);
 
     board.slide(Direction::down);
@@ -238,7 +238,7 @@ TEST(BoardTest, SlideNotMergeThirdMergeableNumber)
 {
     BoardTestable board;
     auto          moving_number         = Number::make(2 * ARBITRARY_VALUE);
-    Number    *   moving_num_ptr        = moving_number.get();
+    auto          moving_num_ptr        = moving_number.get();
     auto          moving_merging_number = Number::make(ARBITRARY_VALUE);
     auto          blocked_number        = Number::make(ARBITRARY_VALUE);
     board.at(2, 2).place(moving_number);
@@ -370,9 +370,9 @@ TEST(BoardTest, PlaceNumberRandomlyOutOfSpace)
 
 TEST(BoardTest, GetMaxNumberOfNone)
 {
-    Board board;
+    auto board = Board::make();
 
-    int max = board.getMaxNumber();
+    auto max = board->getMaxNumber();
 
     CHECK_EQUAL(0, max);
 }
@@ -383,7 +383,7 @@ TEST(BoardTest, GetMaxNumberOfOne)
     auto          number = Number::make(ARBITRARY_VALUE);
     board.at(2, 2).place(number);
 
-    int max = board.getMaxNumber();
+    auto max = board.getMaxNumber();
 
     CHECK_EQUAL(ARBITRARY_VALUE, max);
 }
@@ -399,7 +399,7 @@ TEST(BoardTest, GetMaxNumberOfAll)
         board.placeNumberRandomly(number);
     }
 
-    int max = board.getMaxNumber();
+    auto max = board.getMaxNumber();
 
     CHECK_EQUAL(1024, max);
 }
@@ -408,7 +408,7 @@ TEST(BoardTest, HasFreeSpaceWhenEmpty)
 {
     BoardTestable board;
 
-    bool has_space = board.hasFreeSpaces();
+    auto has_space = board.hasFreeSpaces();
 
     CHECK_EQUAL(true, has_space);
 }
@@ -422,7 +422,7 @@ TEST(BoardTest, HasFreeSpaceWhenAlmostFull)
         board.placeNumberRandomly(number);
     }
 
-    bool has_space = board.hasFreeSpaces();
+    auto has_space = board.hasFreeSpaces();
 
     CHECK_EQUAL(true, has_space);
 }
@@ -436,16 +436,16 @@ TEST(BoardTest, HasFreeSpaceWhenFull)
         board.placeNumberRandomly(number);
     }
 
-    bool has_space = board.hasFreeSpaces();
+    auto has_space = board.hasFreeSpaces();
 
     CHECK_EQUAL(false, has_space);
 }
 
 TEST(BoardTest, CanSlideWhenEmpty)
 {
-    Board board;
+    auto board = Board::make();
 
-    bool can_slide = board.canSlide();
+    auto can_slide = board->canSlide();
 
     CHECK_EQUAL(true, can_slide);
 }
@@ -462,7 +462,7 @@ TEST(BoardTest, CanSlideWhenFullNotMergeable)
         { 32, 16, 32, 16 }
     });
 
-    bool can_slide = board.canSlide();
+    auto can_slide = board.canSlide();
 
     CHECK_EQUAL(false, can_slide);
 }
@@ -478,7 +478,7 @@ TEST(BoardTest, CanSlideWhenAlmostFullNotMergeable)
         { 32, 16, 32, 0  }
     });
 
-    bool can_slide = board.canSlide();
+    auto can_slide = board.canSlide();
 
     CHECK_EQUAL(true, can_slide);
 }

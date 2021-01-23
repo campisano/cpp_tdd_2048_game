@@ -22,7 +22,7 @@ TEST(PositionTest, Creation)
 TEST(PositionTest, PlacingNumber)
 {
     auto     number  = Number::make(ARBITRARY_VALUE);
-    Number * num_ptr = number.get();
+    auto     num_ptr = number.get();
     Position position;
 
     position.place(number);
@@ -124,7 +124,7 @@ TEST(PositionTest, ThrowsOnGetEmptyDown)
 TEST(PositionTest, TransferToEmptyImplyPlaceThere)
 {
     auto     number  = Number::make(ARBITRARY_VALUE);
-    Number * num_ptr = number.get();
+    auto     num_ptr = number.get();
     Position pos_start;
     Position pos_end;
     pos_start.place(number);

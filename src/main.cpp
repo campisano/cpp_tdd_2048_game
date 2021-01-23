@@ -85,12 +85,11 @@ int main(int, char **)
 {
     try
     {
-        Board      *      board = new Board();
-        Board::Movable    b(board);
-        Player      *     player = new PlayerFake();
+        auto              board = Board::make();
+        auto              player = new PlayerFake();
         Player::Movable   p(player);
         Observer::Movable o(new ObserverFake());
-        Game              game(2048, b, p, o);
+        Game              game(2048, board, p, o);
 
         game.start();
     }

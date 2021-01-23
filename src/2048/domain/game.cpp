@@ -3,9 +3,9 @@
 #include <stdexcept>
 
 Game::Game(
-    Score _win_score,
-    Board::Movable & _board,
-    Player::Movable & _player,
+    Score               _win_score,
+    Board::Movable   &  _board,
+    Player::Movable  &  _player,
     Observer::Movable & _observer)
 {
     if(_win_score <= 0)
@@ -59,6 +59,7 @@ void Game::turn()
 void Game::requestValidSlide()
 {
     bool valid_slide;
+
     do
     {
         auto direction = m_player->chooseDirection();

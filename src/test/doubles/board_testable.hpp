@@ -14,8 +14,8 @@ public:
 
     void fill(std::vector<std::vector<Number::Value>> _numbers)
     {
-        Position * p_row = & at(0, 0);
-        Position * p_col = p_row;
+        auto p_row = & at(0, 0);
+        auto p_col = p_row;
 
         for(auto row = _numbers.begin(); row != _numbers.end(); ++row)
         {

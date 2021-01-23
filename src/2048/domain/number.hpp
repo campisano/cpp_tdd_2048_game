@@ -7,19 +7,21 @@
 class Number
 {
 public:
+    using Value = uint32_t; //TODO use of unsigned values can mask logic errors
+
     using Movable = std::unique_ptr<Number>;
-    using Value = uint32_t;
+    static Movable make(Value _value);
+
+protected:
+    explicit Number(Value _value);
 
 public:
-    explicit Number(Value _value);
     Number(const Number &) = delete;
     Number(Number &&)      = default;
     virtual ~Number();
 
     Number & operator=(const Number &) = delete;
     Number & operator=(Number &&)      = default;
-
-    static Movable make(Value _value);
 
 public:
     Value value()                          const;

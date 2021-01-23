@@ -11,13 +11,17 @@
 class Board
 {
 public:
-    using Row     = std::vector<Number::Value>;
-    using Array   = std::vector<Row>;
+    using Row   = std::vector<Number::Value>;
+    using Array = std::vector<Row>;
+    using Size  = int16_t;
+
     using Movable = std::unique_ptr<Board>;
-    using Size    = uint16_t; //TODO use of unsigned values can mask logic errors
+    static Movable make();
+
+protected:
+    explicit Board();
 
 public:
-    explicit Board();
     Board(const Board &) = delete;
     Board(Board &&)      = default;
     virtual ~Board();
