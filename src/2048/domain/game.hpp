@@ -1,6 +1,7 @@
 #ifndef GAME__HPP__
 #define GAME__HPP__
 
+#include "../../common/move_only.hpp"
 #include "board.hpp"
 #include "direction.hpp"
 #include "number.hpp"
@@ -8,7 +9,7 @@
 #include "player.hpp"
 #include "score.hpp"
 
-class Game
+class Game : MoveOnly
 {
 public:
     explicit Game(
@@ -16,12 +17,7 @@ public:
         Board::Movable   &  _board,
         Player::Movable  &  _player,
         Observer::Movable & _observer);
-    Game(const Game &) = delete;
-    Game(Game &&)      = default;
     virtual ~Game();
-
-    Game & operator=(const Game &) = delete;
-    Game & operator=(Game &&)      = default;
 
     void start();
 

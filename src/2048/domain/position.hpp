@@ -2,20 +2,15 @@
 #define POSITION__HPP__
 
 #include <memory>
+#include "../../common/move_only.hpp"
 #include "number.hpp"
 
-class Position
+class Position : MoveOnly
 {
 public:
     explicit Position();
-    Position(const Position &) = delete;
-    Position(Position &&)      = default;
     virtual ~Position();
 
-    Position & operator=(const Position &) = delete;
-    Position & operator=(Position &&)      = default;
-
-public:
     bool                    hasNumber() const;
     const Number::Movable & number()    const;
 

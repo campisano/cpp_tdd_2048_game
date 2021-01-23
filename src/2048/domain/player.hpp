@@ -2,23 +2,16 @@
 #define PLAYER__HPP__
 
 #include <memory>
+#include "../../common/move_only.hpp"
 #include "direction.hpp"
 
-class Player
+class Player : MoveOnly
 {
 public:
     using Movable = std::unique_ptr<Player>;
 
-public:
-    explicit Player()      = default;
-    Player(const Player &) = delete;
-    Player(Player &&)      = default;
-    virtual ~Player()      = default;
+    virtual ~Player() = default;
 
-    Player & operator=(const Player &) = delete;
-    Player & operator=(Player &&)      = default;
-
-public:
     virtual Direction chooseDirection() = 0;
 };
 

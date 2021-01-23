@@ -3,25 +3,20 @@
 
 #include <cstdint>
 #include <memory>
+#include "../../common/move_only.hpp"
 
-class Number
+class Number : MoveOnly
 {
 public:
-    using Value = uint32_t; //TODO use of unsigned values can mask logic errors
-
+    using Value   = uint32_t; //TODO use of unsigned values can mask logic errors
     using Movable = std::unique_ptr<Number>;
+
     static Movable make(Value _value);
+
+    virtual ~Number();
 
 protected:
     explicit Number(Value _value);
-
-public:
-    Number(const Number &) = delete;
-    Number(Number &&)      = default;
-    virtual ~Number();
-
-    Number & operator=(const Number &) = delete;
-    Number & operator=(Number &&)      = default;
 
 public:
     Value value()                          const;

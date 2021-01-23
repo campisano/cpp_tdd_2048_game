@@ -4,30 +4,25 @@
 #include <cstdint>
 #include <memory>
 #include <vector>
+#include "../../common/move_only.hpp"
 #include "direction.hpp"
 #include "number.hpp"
 #include "position.hpp"
 
-class Board
+class Board : MoveOnly
 {
 public:
-    using Row   = std::vector<Number::Value>;
-    using Array = std::vector<Row>;
-    using Size  = int16_t;
-
+    using Row     = std::vector<Number::Value>;
+    using Array   = std::vector<Row>;
+    using Size    = int16_t;
     using Movable = std::unique_ptr<Board>;
+
     static Movable make();
+
+    virtual ~Board();
 
 protected:
     explicit Board();
-
-public:
-    Board(const Board &) = delete;
-    Board(Board &&)      = default;
-    virtual ~Board();
-
-    Board & operator=(const Board &) = delete;
-    Board & operator=(Board &&)      = default;
 
 public:
     bool slide(Direction _direction);
