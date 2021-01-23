@@ -109,7 +109,7 @@ void Game::notifyEnd()
     m_observer->notifyEnd(playerWin(), playerScore());
 }
 
-Number::Movable Game::generateRandomNumber()
+Number::Movable Game::generateRandomNumber() const
 {
     std::random_device                 r;
     std::default_random_engine         e(r());

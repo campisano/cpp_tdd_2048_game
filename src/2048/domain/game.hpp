@@ -21,14 +21,14 @@ public:
 
     void start();
 
+protected:
     bool  isOver()      const;
     bool  playerWin()   const;
     bool  playerLose()  const;
     Score playerScore() const;
 
-protected:
     void turn();
-    Number::Movable generateRandomNumber();
+    Number::Movable generateRandomNumber() const;
 
 private:
     void placeNumber();

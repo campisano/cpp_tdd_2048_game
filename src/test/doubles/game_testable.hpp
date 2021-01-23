@@ -15,12 +15,22 @@ public:
     {
     }
 
+    bool  playerWin()   const
+    {
+        return Game::playerWin();
+    }
+
+    bool  playerLose()  const
+    {
+        return Game::playerLose();
+    }
+
     void turn()
     {
         Game::turn();
     }
 
-    Number::Movable generateRandomNumber()
+    Number::Movable generateRandomNumber() const
     {
         return Game::generateRandomNumber();
     }
