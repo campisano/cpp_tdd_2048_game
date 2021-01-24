@@ -3,6 +3,8 @@
 #include <stdexcept>
 #include "2048/domain/game.hpp"
 
+#include <termios.h>
+
 namespace
 {
 class PlayerFake : public Player
@@ -10,23 +12,45 @@ class PlayerFake : public Player
 public:
     Direction chooseDirection()
     {
-        std::random_device                 r;
-        std::default_random_engine         e(r());
-        std::uniform_int_distribution<int> dist(0, 3);
-
-        switch(dist(e))
+        while(true)
         {
-        case 0:
-            return Direction::left;
-        case 1:
-            return Direction::right;
-        case 2:
-            return Direction::up;
-        case 3:
-            return Direction::down;
-        }
+            // from https://stackoverflow.com/a/42334773
 
-        throw std::runtime_error("algorithm fault");
+            const int STDIN_FILENO = 0;
+            // Black magic to prevent Linux from buffering keystrokes.
+            struct termios t;
+            tcgetattr(STDIN_FILENO, &t);
+            t.c_lflag &= ~ICANON;
+            tcsetattr(STDIN_FILENO, TCSANOW, &t);
+
+            // Once the buffering is turned off, the rest is simple.
+            std::cout << "make your move: ";
+            std::cout.flush();
+            char c, d, e;
+            std::cin >> c;
+            std::cin >> d;
+            std::cin >> e;
+
+            // Using 3 char type, Cause up down right left consist with 3 character
+            if((c == 27) && (d = 91))
+            {
+
+                switch(e)
+                {
+                case 68:
+                    return Direction::left;
+                case 67:
+                    return Direction::right;
+                case 65:
+                    return Direction::up;
+                case 66:
+                    return Direction::down;
+                default:
+                    std::cout << "wrong key" << std::endl;
+                }
+            }
+
+        }
     }
 };
 
