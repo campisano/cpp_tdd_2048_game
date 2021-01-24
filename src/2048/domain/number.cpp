@@ -6,19 +6,17 @@ namespace
 bool isPowerOfTwo(Number::Value _number);
 }
 
-Number::Number(Value _value) : m_merged(false)
+Number::Number(Value _value) : m_value(_value), m_merged(false)
 {
-    if(_value < 2)
+    if(m_value < 2)
     {
         throw std::runtime_error("value cannot be less than 2");
     }
 
-    if(! isPowerOfTwo(_value))
+    if(! isPowerOfTwo(m_value))
     {
         throw std::runtime_error("value must be power of 2");
     }
-
-    m_value = _value;
 }
 
 Number::~Number()

@@ -14,15 +14,15 @@ class Board : MoveOnly
 public:
     using Row     = std::vector<Number::Value>;
     using Array   = std::vector<Row>;
-    using Size    = int16_t;
+    using Size    = int32_t;
     using Movable = std::unique_ptr<Board>;
 
-    static Movable make();
+    static Movable make(Size _rows, Size _cols);
 
     virtual ~Board();
 
 protected:
-    explicit Board();
+    explicit Board(Size _rows, Size _cols);
 
 public:
     bool slide(Direction _direction);
@@ -38,7 +38,7 @@ public:
     Array status() const;
 
 protected:
-    virtual Position & at(Size _row, Size _column);
+    virtual Position & at(Size _row, Size _col);
 
 private:
     bool slideLeft();
@@ -47,8 +47,9 @@ private:
     bool slideDown();
     void clearMergeState();
 
-    static const Size EDGE_SIZE = 4;
-    Position m_positions[EDGE_SIZE][EDGE_SIZE];
+    const Size m_rows;
+    const Size m_cols;
+    Position ** m_positions;
 };
 
 #endif

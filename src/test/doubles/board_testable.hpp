@@ -7,9 +7,13 @@
 class BoardTestable : public Board
 {
 public:
-    Position & at(Size _row, Size _column)
+    BoardTestable(Size _rows, Size _cols) : Board(_rows, _cols)
     {
-        return Board::at(_row, _column);
+    }
+
+    Position & at(Size _row, Size _col)
+    {
+        return Board::at(_row, _col);
     }
 
     void fill(std::vector<std::vector<Number::Value>> _numbers)

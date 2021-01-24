@@ -8,7 +8,7 @@ TEST_GROUP(GameTest) {};
 
 TEST(GameTest, GenerateRandomNumber)
 {
-    auto              board = Board::make();
+    auto              board = Board::make(4, 4);
     Player::Movable   player(new PlayerSpy());
     Observer::Movable observer(new ObserverStub());
     GameTestable      game(1, board, player, observer);
@@ -22,7 +22,7 @@ TEST(GameTest, GenerateRandomNumber)
 
 TEST(GameTest, PlaceNumberAfterStart)
 {
-    auto              board = new BoardTestable();
+    auto              board = new BoardTestable(4, 4);
     Board::Movable    b(board);
     Player::Movable   player(new PlayerSpy());
     Observer::Movable observer(new ObserverStub());
@@ -35,7 +35,7 @@ TEST(GameTest, PlaceNumberAfterStart)
 
 TEST(GameTest, QueryPlayerSlideAfterStart)
 {
-    auto board = new BoardTestable();
+    auto board = new BoardTestable(4, 4);
     board->fill(
     {
         { 8, 8, 0, 0 },
@@ -57,7 +57,7 @@ TEST(GameTest, QueryPlayerSlideAfterStart)
 
 TEST(GameTest, GameEndWhenWin)
 {
-    auto board = new BoardTestable();
+    auto board = new BoardTestable(4, 4);
     board->fill(
     {
         {    0,    0, 0, 0 },
@@ -81,7 +81,7 @@ TEST(GameTest, GameEndWhenWin)
 
 TEST(GameTest, GameEndWhenLose)
 {
-    auto board = new BoardTestable();
+    auto board = new BoardTestable(4, 4);
     board->fill(
     {
         { 16, 32, 16, 32 },

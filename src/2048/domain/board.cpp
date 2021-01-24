@@ -12,17 +12,35 @@ bool slideFromPositionToDirection(
 Board::Size generateRandomPlace(Board::Size _limit);
 }
 
-Board::Board()
+Board::Board(Size _rows, Size _cols) : m_rows(_rows), m_cols(_cols)
 {
-    for(Size row = 0; row < EDGE_SIZE; ++row)
+    if(m_rows < 1)
     {
-        for(Size col = 0; col < EDGE_SIZE; ++col)
+        throw std::runtime_error("rows cannot be less than 1");
+    }
+
+    if(m_cols < 1)
+    {
+        throw std::runtime_error("cols cannot be less than 1");
+    }
+
+
+    m_positions = new Position *[m_rows];
+
+    for(int row = 0; row < m_rows; ++row)
+    {
+        m_positions[row] = new Position[m_cols];
+    }
+
+    for(Size row = 0; row < m_rows; ++row)
+    {
+        for(Size col = 0; col < m_cols; ++col)
         {
             if(row > 0)
             {
                 m_positions[row][col].up(m_positions[row - 1][col]);
             }
-            if(row < (EDGE_SIZE - 1))
+            if(row < (m_rows - 1))
             {
                 m_positions[row][col].down(m_positions[row + 1][col]);
             }
@@ -30,7 +48,7 @@ Board::Board()
             {
                 m_positions[row][col].left(m_positions[row][col - 1]);
             }
-            if(col < (EDGE_SIZE - 1))
+            if(col < (m_cols - 1))
             {
                 m_positions[row][col].right(m_positions[row][col + 1]);
             }
@@ -40,11 +58,17 @@ Board::Board()
 
 Board::~Board()
 {
+    for(Size row = 0; row < m_rows; ++row)
+    {
+        delete [] m_positions[row];
+    }
+
+    delete [] m_positions;
 }
 
-Board::Movable Board::make()
+Board::Movable Board::make(Size _rows, Size _cols)
 {
-    return Movable(new Board());
+    return Movable(new Board(_rows, _cols));
 }
 
 bool Board::slide(Direction _direction)
@@ -82,9 +106,9 @@ bool Board::slideLeft()
     bool any_valid_slide = false;
     bool valid_slide;
 
-    for(Size row = 0; row < EDGE_SIZE; ++row)
+    for(Size row = 0; row < m_rows; ++row)
     {
-        for(Size col = 1; col < EDGE_SIZE; ++col)
+        for(Size col = 1; col < m_cols; ++col)
         {
             if(m_positions[row][col].hasNumber())
             {
@@ -109,9 +133,9 @@ bool Board::slideRight()
     bool any_valid_slide = false;
     bool valid_slide;
 
-    for(Size row = 0; row < EDGE_SIZE; ++row)
+    for(Size row = 0; row < m_rows; ++row)
     {
-        for(Size col = EDGE_SIZE - 2; col >= 0; --col)
+        for(Size col = m_cols - 2; col >= 0; --col)
         {
             if(m_positions[row][col].hasNumber())
             {
@@ -136,9 +160,9 @@ bool Board::slideUp()
     bool any_valid_slide = false;
     bool valid_slide;
 
-    for(Size col = 0; col < EDGE_SIZE; ++col)
+    for(Size col = 0; col < m_cols; ++col)
     {
-        for(Size row = 1; row < EDGE_SIZE; ++row)
+        for(Size row = 1; row < m_rows; ++row)
         {
             if(m_positions[row][col].hasNumber())
             {
@@ -163,9 +187,9 @@ bool Board::slideDown()
     bool any_valid_slide = false;
     bool valid_slide;
 
-    for(Size col = 0; col < EDGE_SIZE; ++col)
+    for(Size col = 0; col < m_cols; ++col)
     {
-        for(Size row = EDGE_SIZE - 2; row >= 0; --row)
+        for(Size row = m_rows - 2; row >= 0; --row)
         {
             if(m_positions[row][col].hasNumber())
             {
@@ -196,9 +220,9 @@ void Board::placeNumberRandomly(Number::Movable & _number)
 
     Size rand_pos = generateRandomPlace(free_pos - 1);
 
-    for(Size row = 0; row < EDGE_SIZE; ++row)
+    for(Size row = 0; row < m_rows; ++row)
     {
-        for(Size col = 0; col < EDGE_SIZE; ++col)
+        for(Size col = 0; col < m_cols; ++col)
         {
             if(! m_positions[row][col].hasNumber())
             {
@@ -220,28 +244,28 @@ void Board::placeNumberRandomly(Number::Movable & _number)
 
 Board::Size Board::size() const
 {
-    return EDGE_SIZE * EDGE_SIZE;
+    return m_rows * m_cols;
 }
 
-Position & Board::at(Size _row, Size _column)
+Position & Board::at(Size _row, Size _col)
 {
     if(
-        _row < 0 || _column < 0 ||
-        _row >= EDGE_SIZE || _column >= EDGE_SIZE)
+        _row < 0 || _col < 0 ||
+        _row >= m_rows || _col >= m_cols)
     {
         throw std::runtime_error("out of board boundaries");
     }
 
-    return m_positions[_row][_column];
+    return m_positions[_row][_col];
 }
 
 Board::Size Board::count() const
 {
     Size count = 0;
 
-    for(Size row = 0; row < EDGE_SIZE; ++row)
+    for(Size row = 0; row < m_rows; ++row)
     {
-        for(Size col = 0; col < EDGE_SIZE; ++col)
+        for(Size col = 0; col < m_cols; ++col)
         {
             if(m_positions[row][col].hasNumber())
             {
@@ -258,9 +282,9 @@ Board::Size Board::getMaxNumber() const
     Size max = 0;
     Size num;
 
-    for(Size row = 0; row < EDGE_SIZE; ++row)
+    for(Size row = 0; row < m_rows; ++row)
     {
-        for(Size col = 0; col < EDGE_SIZE; ++col)
+        for(Size col = 0; col < m_cols; ++col)
         {
             if(m_positions[row][col].hasNumber())
             {
@@ -291,9 +315,9 @@ bool Board::canSlide() const
 
     const Position * pos;
 
-    for(Size row = 0; row < EDGE_SIZE; ++row)
+    for(Size row = 0; row < m_rows; ++row)
     {
-        for(Size col = 0; col < EDGE_SIZE; ++col)
+        for(Size col = 0; col < m_cols; ++col)
         {
             pos = & m_positions[row][col];
 
@@ -324,9 +348,9 @@ bool Board::canSlide() const
 
 void Board::clearMergeState()
 {
-    for(Size col = 0; col < EDGE_SIZE; ++col)
+    for(Size col = 0; col < m_cols; ++col)
     {
-        for(Size row = 0; row < EDGE_SIZE; ++row)
+        for(Size row = 0; row < m_rows; ++row)
         {
             if(m_positions[row][col].hasNumber())
             {
@@ -338,11 +362,11 @@ void Board::clearMergeState()
 
 Board::Array Board::status() const
 {
-    Array arr(EDGE_SIZE, Row(EDGE_SIZE));
+    Array arr(m_rows, Row(m_cols));
 
-    for(Size col = 0; col < EDGE_SIZE; ++col)
+    for(Size col = 0; col < m_cols; ++col)
     {
-        for(Size row = 0; row < EDGE_SIZE; ++row)
+        for(Size row = 0; row < m_rows; ++row)
         {
             if(m_positions[row][col].hasNumber())
             {

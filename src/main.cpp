@@ -85,7 +85,7 @@ int main(int, char **)
 {
     try
     {
-        auto              board = Board::make();
+        auto              board = Board::make(4, 4);
         auto              player = new PlayerFake();
         Player::Movable   p(player);
         Observer::Movable o(new ObserverFake());
