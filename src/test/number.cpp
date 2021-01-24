@@ -24,6 +24,12 @@ TEST(NumberTest, CreationByMake)
     CHECK_EQUAL(ARBITRARY_VALUE, number->value());
 }
 
+TEST(NumberTest, ThrowsOnCreationWithValueNegative)
+{
+    CHECK_THROWS_STDEXCEPT(
+        std::runtime_error, "value cannot be less than 2", Number::make(-1));
+}
+
 TEST(NumberTest, ThrowsOnCreationWithValueLessThanTwo)
 {
     CHECK_THROWS_STDEXCEPT(

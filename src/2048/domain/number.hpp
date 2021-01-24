@@ -8,7 +8,7 @@
 class Number : MoveOnly
 {
 public:
-    using Value   = uint32_t; //TODO use of unsigned values can mask logic errors
+    using Value   = int32_t;
     using Movable = std::unique_ptr<Number>;
 
     static Movable make(Value _value);

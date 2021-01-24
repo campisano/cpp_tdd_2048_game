@@ -25,7 +25,6 @@ TEST(BoardTest, AtInside)
     board.at(3, 3);
 }
 
-// TODO -1 unsigned became int.max -1 so the test break but for luck
 TEST(BoardTest, ThrowsOnAtUpOutside)
 {
     BoardTestable board;
