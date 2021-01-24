@@ -47,8 +47,8 @@ private:
     bool slideDown();
     void clearMergeState();
 
-    const Size m_rows;
-    const Size m_cols;
+    const Size  m_rows;
+    const Size  m_cols;
     Position ** m_positions;
 };
 

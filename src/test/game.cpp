@@ -115,6 +115,14 @@ TEST(GameTest, NotifyStart)
     game.start();
 
     CHECK_EQUAL(1, observer->notifyStart_calls);
+    CHECK_TRUE(
+        std::vector<std::vector<Number::Value>>(
+    {
+        { 0, 0, 0, 0 },
+        { 0, 0, 0, 0 },
+        { 0, 0, 0, 0 },
+        { 0, 0, 0, 0 }
+    }) == observer->notifyStart_in1)
 }
 
 TEST(GameTest, NotifyPlaceNumber)

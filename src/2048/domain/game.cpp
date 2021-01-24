@@ -6,17 +6,16 @@ Game::Game(
     Score               _win_score,
     Board::Movable   &  _board,
     Player::Movable  &  _player,
-    Observer::Movable & _observer)
+    Observer::Movable & _observer) :
+    m_win_score(_win_score),
+    m_board(std::move(_board)),
+    m_player(std::move(_player)),
+    m_observer(std::move(_observer))
 {
-    if(_win_score <= 0)
+    if(m_win_score <= 0)
     {
         throw std::runtime_error("win_score must be positive");
     }
-
-    m_win_score = _win_score;
-    m_board     = std::move(_board);
-    m_player    = std::move(_player);
-    m_observer  = std::move(_observer);
 }
 
 Game::~Game()

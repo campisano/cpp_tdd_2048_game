@@ -39,10 +39,10 @@ private:
     void notifySlide(Direction _direction);
     void notifyEnd();
 
-    Score             m_win_score;
-    Board::Movable    m_board;
-    Player::Movable   m_player;
-    Observer::Movable m_observer;
+    const Score             m_win_score;
+    const Board::Movable    m_board;
+    const Player::Movable   m_player;
+    const Observer::Movable m_observer;
 };
 
 #endif

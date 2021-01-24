@@ -7,9 +7,11 @@ class ObserverSpy : public Observer
 {
 public:
     int  notifyStart_calls = 0;
-    void notifyStart(Board::Array)
+    Board::Array notifyStart_in1;
+    void notifyStart(Board::Array _in1)
     {
         ++notifyStart_calls;
+        notifyStart_in1 = _in1;
     }
 
     int  notifyNumberPlaced_calls = 0;
