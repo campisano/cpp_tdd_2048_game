@@ -94,10 +94,17 @@ private:
         {
             for(auto col = row->begin(); col != row->end(); ++col)
             {
-                std::cout << ' ' << * col;
+                if(* col != 0)
+                {
+                    std::cout << '\t' << * col;
+                }
+                else
+                {
+                    std::cout << '\t' << '.';
+                }
             }
 
-            std::cout << std::endl;
+            std::cout << std::endl << std::endl;
         }
 
         std::cout << std::endl;
