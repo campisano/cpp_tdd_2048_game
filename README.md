@@ -12,6 +12,8 @@ Game description in https://en.wikipedia.org/wiki/2048_(video_game)#Gameplay
 
 # Test Specs
 
+## Business rules
+
 1) There is a board:
     - board is a set of positions organized in rows and columns (e.g. 16 positions in a 4 rows and 4 columns);
     - a board can not have less than 2 positins, less than 2 rows and less than 2 columns;
@@ -44,3 +46,12 @@ Game description in https://en.wikipedia.org/wiki/2048_(video_game)#Gameplay
 
 0) There is an observer:
     - an observer is notified about game events (start, number placed, player slided, end).
+
+## Use cases
+
+1) A player starts a new game:
+    - the player defines the end score and the board size;
+    - the game validates the board size;
+    - the game notifies the start with winning score and board size;
+    - the game places a number;
+    - the game notifies the number value and position.

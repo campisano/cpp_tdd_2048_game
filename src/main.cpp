@@ -57,7 +57,8 @@ public:
 class ObserverFake : public Observer
 {
 public:
-    void notifyStart(Board::Array _board)
+    void notifyStart(
+        Score, Board::Size, Board::Size, Board::Array _board)
     {
         std::cout << "game start" << std::endl;
         print(_board);

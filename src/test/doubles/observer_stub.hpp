@@ -6,7 +6,7 @@
 class ObserverStub : public Observer
 {
 public:
-    void notifyStart(Board::Array) {}
+    void notifyStart(Score, Board::Size, Board::Size, Board::Array) {}
     void notifyNumberPlaced(Number::Value, Board::Array) {}
     void notifySlide(Direction, Board::Array) {}
     void notifyEnd(bool, Score) {}

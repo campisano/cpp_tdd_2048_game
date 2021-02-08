@@ -90,7 +90,11 @@ Score Game::playerScore() const
 
 void Game::notifyStart()
 {
-    m_observer.notifyStart(m_board->status());
+    m_observer.notifyStart(
+        m_win_score,
+        m_board->rows(),
+        m_board->cols(),
+        m_board->status());
 }
 
 void Game::notifyNumberPlaced(Number::Value _number)

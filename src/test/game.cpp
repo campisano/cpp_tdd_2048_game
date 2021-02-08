@@ -122,7 +122,7 @@ TEST(GameTest, NotifyStart)
         { 0, 0, 0, 0 },
         { 0, 0, 0, 0 },
         { 0, 0, 0, 0 }
-    }) == observer->notifyStart_in1)
+    }) == observer->notifyStart_in4)
 }
 
 TEST(GameTest, NotifyPlaceNumber)

@@ -28,6 +28,8 @@ public:
     bool slide(Direction _direction);
     void placeNumberRandomly(Number::Movable & _number);
 
+    Size rows()  const;
+    Size cols()  const;
     Size size()  const;
     Size count() const;
 

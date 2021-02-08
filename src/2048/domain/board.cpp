@@ -242,6 +242,16 @@ void Board::placeNumberRandomly(Number::Movable & _number)
     throw std::runtime_error("algorithm fault");
 }
 
+Board::Size Board::rows() const
+{
+    return m_rows;
+}
+
+Board::Size Board::cols() const
+{
+    return m_cols;
+}
+
 Board::Size Board::size() const
 {
     return m_rows * m_cols;

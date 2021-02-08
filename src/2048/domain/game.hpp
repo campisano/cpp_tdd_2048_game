@@ -52,8 +52,8 @@ private:
 
     const Score             m_win_score;
     const Board::Movable    m_board;
-    Player &                m_player;
-    Observer &              m_observer;
+    Player         &        m_player;
+    Observer        &       m_observer;
 };
 
 #endif
