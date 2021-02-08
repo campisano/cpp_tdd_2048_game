@@ -1,7 +1,7 @@
 #ifndef NUMBER_TESTABLE__HPP__
 #define NUMBER_TESTABLE__HPP__
 
-#include "../../2048/domain/number.hpp"
+#include "../../../2048/domain/number.hpp"
 
 class NumberTestable : public Number
 {

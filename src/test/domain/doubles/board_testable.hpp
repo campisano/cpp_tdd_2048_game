@@ -2,7 +2,7 @@
 #define BOARD_TESTABLE__HPP__
 
 #include <vector>
-#include "../../2048/domain/board.hpp"
+#include "../../../2048/domain/board.hpp"
 
 class BoardTestable : public Board
 {

@@ -1,4 +1,4 @@
-#include "testutils.hpp"
+#include "../testutils.hpp"
 #include "doubles/board_testable.hpp"
 
 namespace

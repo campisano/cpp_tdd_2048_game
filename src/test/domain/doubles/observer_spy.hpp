@@ -1,7 +1,7 @@
 #ifndef OBSERVER_SPY__HPP__
 #define OBSERVER_SPY__HPP__
 
-#include "../../2048/domain/observer.hpp"
+#include "../../../2048/domain/observer.hpp"
 
 class ObserverSpy : public Observer
 {

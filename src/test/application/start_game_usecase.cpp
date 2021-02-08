@@ -1,9 +1,9 @@
-#include "testutils.hpp"
-#include "doubles/board_testable.hpp"
-#include "doubles/game_testable.hpp"
+#include "../testutils.hpp"
+#include "../domain/doubles/board_testable.hpp"
+#include "../domain/doubles/game_testable.hpp"
 
-#include "doubles/player_spy.hpp"
-#include "doubles/observer_spy.hpp"
+#include "../domain/doubles/player_spy.hpp"
+#include "../domain/doubles/observer_spy.hpp"
 
 namespace
 {
@@ -21,7 +21,7 @@ public:
     }
 };
 
-#include "../common/move_only.hpp"
+#include "../../common/move_only.hpp"
 
 class StartNewGameUsecase : MoveOnly
 {

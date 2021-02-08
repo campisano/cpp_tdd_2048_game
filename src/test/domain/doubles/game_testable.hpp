@@ -1,7 +1,7 @@
 #ifndef GAME_TESTABLE__HPP__
 #define GAME_TESTABLE__HPP__
 
-#include "../../2048/domain/game.hpp"
+#include "../../../2048/domain/game.hpp"
 
 class GameTestable : public Game
 {

@@ -1,7 +1,7 @@
 #ifndef OBSERVER_STUB__HPP__
 #define OBSERVER_STUB__HPP__
 
-#include "../../2048/domain/observer.hpp"
+#include "../../../2048/domain/observer.hpp"
 
 class ObserverStub : public Observer
 {

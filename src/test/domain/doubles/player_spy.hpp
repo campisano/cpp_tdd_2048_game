@@ -1,7 +1,7 @@
 #ifndef PLAYER_SPY__HPP__
 #define PLAYER_SPY__HPP__
 
-#include "../../2048/domain/player.hpp"
+#include "../../../2048/domain/player.hpp"
 
 class PlayerSpy : public Player
 {

@@ -1,5 +1,5 @@
-#include "testutils.hpp"
-#include "../2048/domain/number.hpp"
+#include "../testutils.hpp"
+#include "../../2048/domain/number.hpp"
 #include "doubles/number_testable.hpp"
 
 namespace

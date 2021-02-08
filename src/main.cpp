@@ -1,7 +1,7 @@
 #include <iostream>
 #include <random>
 #include <stdexcept>
-#include "test/doubles/game_testable.hpp"
+#include "test/domain/doubles/game_testable.hpp"
 
 #include <termios.h>
 
