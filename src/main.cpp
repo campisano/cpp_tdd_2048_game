@@ -1,9 +1,9 @@
 #include <iostream>
 #include <random>
 #include <stdexcept>
-#include "test/domain/doubles/game_testable.hpp"
-
 #include <termios.h>
+#include "2048/application/usecases/start_game_usecase.hpp"
+#include "test/domain/doubles/game_testable.hpp"
 
 namespace
 {
@@ -117,12 +117,11 @@ int main(int, char **)
 {
     try
     {
-        auto              board = Board::make(4, 4);
+        GameRepository    grp;
         Player::Movable   player(new PlayerFake());
         Observer::Movable observer(new ObserverFake());
-        GameTestable      game(2048, board, *player, *observer);
-
-        game.start();
+        auto              usecase = StartGameUsecase::make(grp, *player, *observer);
+        usecase->execute(2048, 3, 5);
     }
     catch(std::exception const & _ex)
     {
