@@ -12,7 +12,7 @@ TEST(GameTest, GenerateRandomNumber)
     auto              board = Board::make(4, 4);
     Player::Movable   player(new PlayerSpy());
     Observer::Movable observer(new ObserverStub());
-    GameTestable      game(1, board, player, observer);
+    GameTestable      game(1, board, *player, *observer);
 
     for(int i = 0; i < 100; ++i)
     {
@@ -27,7 +27,7 @@ TEST(GameTest, PlaceNumberAfterStart)
     Board::Movable    b(board);
     Player::Movable   player(new PlayerSpy());
     Observer::Movable observer(new ObserverStub());
-    GameTestable      game(1, b, player, observer);
+    GameTestable      game(1, b, *player, *observer);
 
     game.start();
 
@@ -49,7 +49,7 @@ TEST(GameTest, QueryPlayerSlideAfterStart)
     player->chooseDirection_out = Direction::left;
     Player::Movable   p(player);
     Observer::Movable observer(new ObserverStub());
-    GameTestable      game(16, b, p, observer);
+    GameTestable      game(16, b, *p, *observer);
 
     game.start();
 
@@ -71,7 +71,7 @@ TEST(GameTest, GameEndWhenWin)
     Board::Movable    b(board);
     Player::Movable   p(player);
     Observer::Movable observer(new ObserverStub());
-    GameTestable      game(2048, b, p, observer);
+    GameTestable      game(2048, b, *p, *observer);
 
     game.turn();
 
@@ -95,7 +95,7 @@ TEST(GameTest, GameEndWhenLose)
     Board::Movable    b(board);
     Player::Movable   p(player);
     Observer::Movable observer(new ObserverStub());
-    GameTestable      game(2048, b, p, observer);
+    GameTestable      game(2048, b, *p, *observer);
 
     game.turn();
 
@@ -110,7 +110,7 @@ TEST(GameTest, NotifyStart)
     Player::Movable   player(new PlayerSpy());
     auto              observer = new ObserverSpy;
     Observer::Movable o(observer);
-    GameTestable      game(1, board, player, o);
+    GameTestable      game(1, board, *player, *o);
 
     game.start();
 
@@ -131,7 +131,7 @@ TEST(GameTest, NotifyPlaceNumber)
     Player::Movable   player(new PlayerSpy());
     auto              observer = new ObserverSpy;
     Observer::Movable o(observer);
-    GameTestable      game(1, board, player, o);
+    GameTestable      game(1, board, *player, *o);
 
     game.start();
 
@@ -154,7 +154,7 @@ TEST(GameTest, NotifySlide)
     Player::Movable   p(player);
     auto              observer = new ObserverSpy;
     Observer::Movable o(observer);
-    GameTestable      game(2048, b, p, o);
+    GameTestable      game(2048, b, *p, *o);
 
     game.start();
 
@@ -167,7 +167,7 @@ TEST(GameTest, NotifyEnd)
     Player::Movable   player(new PlayerSpy());
     auto              observer = new ObserverSpy;
     Observer::Movable o(observer);
-    GameTestable      game(1, board, player, o);
+    GameTestable      game(1, board, *player, *o);
 
     game.start();
 

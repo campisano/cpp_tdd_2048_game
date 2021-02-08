@@ -12,16 +12,27 @@
 class Game : MoveOnly
 {
 public:
-    explicit Game(
-        Score               _win_score,
-        Board::Movable   &  _board,
-        Player::Movable  &  _player,
-        Observer::Movable & _observer);
+    using Movable = std::unique_ptr<Game>;
+    static Movable make(
+        Score      &     _win_score,
+        Board::Movable & _board,
+        Player     &     _player,
+        Observer    &    _observer)
+    {
+        return Movable(new Game(_win_score, _board, _player, _observer));
+    }
+
     virtual ~Game();
 
     void start();
 
 protected:
+    explicit Game(
+        Score            _win_score,
+        Board::Movable & _board,
+        Player     &     _player,
+        Observer    &    _observer);
+
     bool  isOver()      const;
     bool  playerWin()   const;
     bool  playerLose()  const;
@@ -41,8 +52,8 @@ private:
 
     const Score             m_win_score;
     const Board::Movable    m_board;
-    const Player::Movable   m_player;
-    const Observer::Movable m_observer;
+    Player &                m_player;
+    Observer &              m_observer;
 };
 
 #endif

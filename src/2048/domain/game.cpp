@@ -3,14 +3,14 @@
 #include <stdexcept>
 
 Game::Game(
-    Score               _win_score,
-    Board::Movable   &  _board,
-    Player::Movable  &  _player,
-    Observer::Movable & _observer) :
+    Score            _win_score,
+    Board::Movable & _board,
+    Player     &     _player,
+    Observer    &    _observer) :
     m_win_score(_win_score),
     m_board(std::move(_board)),
-    m_player(std::move(_player)),
-    m_observer(std::move(_observer))
+    m_player(_player),
+    m_observer(_observer)
 {
     if(m_win_score <= 0)
     {
@@ -61,7 +61,7 @@ void Game::requestValidSlide()
 
     do
     {
-        auto direction = m_player->chooseDirection();
+        auto direction = m_player.chooseDirection();
         valid_slide    = m_board->slide(direction);
         notifySlide(direction);
     }
@@ -90,22 +90,22 @@ Score Game::playerScore() const
 
 void Game::notifyStart()
 {
-    m_observer->notifyStart(m_board->status());
+    m_observer.notifyStart(m_board->status());
 }
 
 void Game::notifyNumberPlaced(Number::Value _number)
 {
-    m_observer->notifyNumberPlaced(_number, m_board->status());
+    m_observer.notifyNumberPlaced(_number, m_board->status());
 }
 
 void Game::notifySlide(Direction _direction)
 {
-    m_observer->notifySlide(_direction, m_board->status());
+    m_observer.notifySlide(_direction, m_board->status());
 }
 
 void Game::notifyEnd()
 {
-    m_observer->notifyEnd(playerWin(), playerScore());
+    m_observer.notifyEnd(playerWin(), playerScore());
 }
 
 Number::Movable Game::generateRandomNumber() const

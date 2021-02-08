@@ -1,7 +1,7 @@
 #include <iostream>
 #include <random>
 #include <stdexcept>
-#include "2048/domain/game.hpp"
+#include "test/doubles/game_testable.hpp"
 
 #include <termios.h>
 
@@ -117,10 +117,9 @@ int main(int, char **)
     try
     {
         auto              board = Board::make(4, 4);
-        auto              player = new PlayerFake();
-        Player::Movable   p(player);
-        Observer::Movable o(new ObserverFake());
-        Game              game(2048, board, p, o);
+        Player::Movable   player(new PlayerFake());
+        Observer::Movable observer(new ObserverFake());
+        GameTestable      game(2048, board, *player, *observer);
 
         game.start();
     }

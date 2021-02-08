@@ -7,10 +7,10 @@ class GameTestable : public Game
 {
 public:
     GameTestable(
-        Score               _win_score,
-        Board::Movable   &  _board,
-        Player::Movable  &  _player,
-        Observer::Movable & _observer):
+        Score            _win_score,
+        Board::Movable & _board,
+        Player     &     _player,
+        Observer    &    _observer):
         Game(_win_score, _board, _player, _observer)
     {
     }
