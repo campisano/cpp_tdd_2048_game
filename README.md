@@ -13,13 +13,15 @@ Game description in https://en.wikipedia.org/wiki/2048_(video_game)#Gameplay
 # Test Specs
 
 1) There is a board:
-    - board is divided in 16 positions (four-by-four);
+    - board is a set of positions organized in rows and columns (e.g. 16 positions in a 4 rows and 4 columns);
+    - a board can not have less than 2 positins, less than 2 rows and less than 2 columns;
     - player can make a slide in one direction {left,right,up,down}:
         - a slide is applied to all the numbers in the board, starting from the nearest to the destination of the slide;
         - a sliding number will stop when encounter a board edge or a number that cannot be merged;
         - if a sliding number encounters a number that can be merged, it will be merged in the number and the sliding number will be removed from the board;
         - if a sliding number encounter a number that was already merged, it must stop;
     - a number can be placed randomly in a board empty position.
+
 0) There are numbers:
     - a number has a value;
     - a value must be greater than or equal to 2;
@@ -27,6 +29,7 @@ Game description in https://en.wikipedia.org/wiki/2048_(video_game)#Gameplay
     - a number A can merge in another number B with the same value:
         - the B number will became merged and will have the double of its original value;
         - the A number will be removed from its original place.
+
 0) There are positions:
     - a position can have a number placed on itself;
     - a position can have adiacent positions {left,right,up,down}.
