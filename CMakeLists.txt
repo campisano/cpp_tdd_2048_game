@@ -39,7 +39,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     # RELEASE: use optimization, remove all symbol table
     if ("${CMAKE_BUILD_TYPE}" STREQUAL "release")
         set_target_properties(${PROJECT_NAME}_common ${PROJECT_NAME}_exec ${PROJECT_NAME}_test PROPERTIES
-            COMPILE_FLAGS "${COMPILE_FLAGS} ${BASE_CXX_FLAGS} -O3 -s"
+            COMPILE_FLAGS "${COMPILE_FLAGS} ${BASE_CXX_FLAGS} -O2 -s"
             LINK_FLAGS "${LINK_FLAGS}")
     endif()
 

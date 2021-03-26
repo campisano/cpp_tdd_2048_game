@@ -1,0 +1,7 @@
+%clang
+%c -std=gnu11
+%cpp -std=gnu++11
+-pthread
+
+# Includes
+-Iexternal/cpputest/install/include

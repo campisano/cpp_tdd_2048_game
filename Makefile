@@ -29,7 +29,6 @@ format:
 --suffix=none \
 $(shell find $(FORMAT_INC_DIRS) $(FORMAT_SRC_DIRS) -type f \( -name \*$(HEADER_EXT) -o -name \*$(SOURCE_EXT) \)) \
 || echo "Warning: can't find astyle executable";
-	#&& astyle --style=ansi -r -n "./*.h" "./*.cpp" || echo "Warning: can't find astyle executable!";
 
 release:	format
 	mkdir -p $(BUILD_PATH)/release;
