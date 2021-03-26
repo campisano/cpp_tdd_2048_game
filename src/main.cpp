@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include <random>
 #include <stdexcept>
 #include <termios.h>
@@ -10,6 +11,8 @@ namespace
 class PlayerFake : public Player
 {
 public:
+    using Movable = std::unique_ptr<PlayerFake>;
+
     Direction chooseDirection()
     {
         while(true)
@@ -57,6 +60,8 @@ public:
 class ObserverFake : public Observer
 {
 public:
+    using Movable = std::unique_ptr<ObserverFake>;
+
     void notifyStart(
         Score, Board::Size, Board::Size, Board::Array _board)
     {
@@ -76,11 +81,11 @@ public:
         print(_board);
     }
 
-    void notifyEnd(bool player_win, Score player_score)
+    void notifyEnd(bool _player_win, Score _player_score)
     {
-        if(player_win)
+        if(_player_win)
         {
-            std::cout << "player wins with score " << player_score << std::endl;
+            std::cout << "player wins with score " << _player_score << std::endl;
         }
         else
         {
@@ -117,10 +122,10 @@ int main(int, char **)
 {
     try
     {
-        GameRepository    grp;
-        Player::Movable   player(new PlayerFake());
-        Observer::Movable observer(new ObserverFake());
-        auto              usecase = StartGameUsecase::make(grp, *player, *observer);
+        GameRepository        grp;
+        PlayerFake::Movable   player(new PlayerFake());
+        ObserverFake::Movable observer(new ObserverFake());
+        auto                  usecase = StartGameUsecase::make(grp, *player, *observer);
         usecase->execute(2048, 3, 5);
     }
     catch(std::exception const & _ex)

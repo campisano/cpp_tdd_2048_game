@@ -1,11 +1,14 @@
 #ifndef OBSERVER_SPY__HPP__
 #define OBSERVER_SPY__HPP__
 
+#include <memory>
 #include "../../../2048/domain/observer.hpp"
 
 class ObserverSpy : public Observer
 {
 public:
+    using Movable = std::unique_ptr<Observer>;
+
     int          notifyStart_calls = 0;
     Score        notifyStart_in1;
     Board::Size  notifyStart_in2;

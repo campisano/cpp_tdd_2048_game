@@ -40,7 +40,7 @@ public:
     Array status() const;
 
 protected:
-    virtual Position & at(Size _row, Size _col);
+    Position & at(Size _row, Size _col);
 
 private:
     bool slideLeft();

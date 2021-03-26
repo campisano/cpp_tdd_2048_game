@@ -10,12 +10,12 @@ TEST_GROUP(StartGameUsecaseTest) {};
 
 TEST(StartGameUsecaseTest, seila)
 {
-    Player::Movable   player(new PlayerSpy());
+    PlayerSpy::Movable   player(new PlayerSpy());
     auto obs_spy = new ObserverSpy();
-    Observer::Movable observer(obs_spy);
-    GameRepository    game_repository;
-    auto              usecase = StartGameUsecase::make(
-                                    game_repository, * player, * observer);
+    ObserverSpy::Movable observer(obs_spy);
+    GameRepository       game_repository;
+    auto                 usecase = StartGameUsecase::make(game_repository, * player,
+                                   * observer);
 
     usecase->execute(1, 4, 5);
 

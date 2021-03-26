@@ -9,10 +9,10 @@ TEST_GROUP(GameTest) {};
 
 TEST(GameTest, GenerateRandomNumber)
 {
-    auto              board = Board::make(4, 4);
-    Player::Movable   player(new PlayerSpy());
-    Observer::Movable observer(new ObserverStub());
-    GameTestable      game(1, board, *player, *observer);
+    auto                  board = Board::make(4, 4);
+    PlayerSpy::Movable    player(new PlayerSpy());
+    ObserverStub::Movable observer(new ObserverStub());
+    GameTestable          game(1, board, *player, *observer);
 
     for(int i = 0; i < 100; ++i)
     {
@@ -23,11 +23,11 @@ TEST(GameTest, GenerateRandomNumber)
 
 TEST(GameTest, PlaceNumberAfterStart)
 {
-    auto              board = new BoardTestable(4, 4);
-    Board::Movable    b(board);
-    Player::Movable   player(new PlayerSpy());
-    Observer::Movable observer(new ObserverStub());
-    GameTestable      game(1, b, *player, *observer);
+    auto                  board = new BoardTestable(4, 4);
+    Board::Movable        b(board);
+    PlayerSpy::Movable    player(new PlayerSpy());
+    ObserverStub::Movable observer(new ObserverStub());
+    GameTestable          game(1, b, *player, *observer);
 
     game.start();
 
@@ -44,12 +44,12 @@ TEST(GameTest, QueryPlayerSlideAfterStart)
         { 0, 0, 0, 0 },
         { 0, 0, 0, 0 }
     });
-    Board::Movable    b(board);
-    auto              player = new PlayerSpy();
+    Board::Movable        b(board);
+    auto                  player = new PlayerSpy();
     player->chooseDirection_out = Direction::left;
-    Player::Movable   p(player);
-    Observer::Movable observer(new ObserverStub());
-    GameTestable      game(16, b, *p, *observer);
+    PlayerSpy::Movable    p(player);
+    ObserverStub::Movable observer(new ObserverStub());
+    GameTestable          game(16, b, *p, *observer);
 
     game.start();
 
@@ -66,12 +66,12 @@ TEST(GameTest, GameEndWhenWin)
         { 1024, 1024, 0, 0 },
         {    0,    0, 0, 0 }
     });
-    auto              player = new PlayerSpy();
+    auto                  player = new PlayerSpy();
     player->chooseDirection_out = Direction::left;
-    Board::Movable    b(board);
-    Player::Movable   p(player);
-    Observer::Movable observer(new ObserverStub());
-    GameTestable      game(2048, b, *p, *observer);
+    Board::Movable        b(board);
+    PlayerSpy::Movable    p(player);
+    ObserverStub::Movable observer(new ObserverStub());
+    GameTestable          game(2048, b, *p, *observer);
 
     game.turn();
 
@@ -90,12 +90,12 @@ TEST(GameTest, GameEndWhenLose)
         { 16, 32, 16, 32 },
         {  0, 32, 16, 32 }
     });
-    auto              player = new PlayerSpy();
+    auto                  player = new PlayerSpy();
     player->chooseDirection_out = Direction::left;
-    Board::Movable    b(board);
-    Player::Movable   p(player);
-    Observer::Movable observer(new ObserverStub());
-    GameTestable      game(2048, b, *p, *observer);
+    Board::Movable        b(board);
+    PlayerSpy::Movable    p(player);
+    ObserverStub::Movable observer(new ObserverStub());
+    GameTestable          game(2048, b, *p, *observer);
 
     game.turn();
 
@@ -106,11 +106,11 @@ TEST(GameTest, GameEndWhenLose)
 
 TEST(GameTest, NotifyStart)
 {
-    auto              board = Board::make(4, 4);
-    Player::Movable   player(new PlayerSpy());
-    auto              observer = new ObserverSpy;
-    Observer::Movable o(observer);
-    GameTestable      game(1, board, *player, *o);
+    auto                  board = Board::make(4, 4);
+    PlayerSpy::Movable    player(new PlayerSpy());
+    auto                  observer = new ObserverSpy;
+    ObserverStub::Movable o(observer);
+    GameTestable          game(1, board, *player, *o);
 
     game.start();
 
@@ -127,11 +127,11 @@ TEST(GameTest, NotifyStart)
 
 TEST(GameTest, NotifyPlaceNumber)
 {
-    auto              board = Board::make(4, 4);
-    Player::Movable   player(new PlayerSpy());
-    auto              observer = new ObserverSpy;
-    Observer::Movable o(observer);
-    GameTestable      game(1, board, *player, *o);
+    auto                  board = Board::make(4, 4);
+    PlayerSpy::Movable    player(new PlayerSpy());
+    auto                  observer = new ObserverSpy;
+    ObserverStub::Movable o(observer);
+    GameTestable          game(1, board, *player, *o);
 
     game.start();
 
@@ -148,13 +148,13 @@ TEST(GameTest, NotifySlide)
         { 1024, 1024, 0, 0 },
         {    0,    0, 0, 0 }
     });
-    auto              player = new PlayerSpy();
+    auto                  player = new PlayerSpy();
     player->chooseDirection_out = Direction::left;
-    Board::Movable    b(board);
-    Player::Movable   p(player);
-    auto              observer = new ObserverSpy;
-    Observer::Movable o(observer);
-    GameTestable      game(2048, b, *p, *o);
+    Board::Movable        b(board);
+    PlayerSpy::Movable    p(player);
+    auto                  observer = new ObserverSpy;
+    ObserverStub::Movable o(observer);
+    GameTestable          game(2048, b, *p, *o);
 
     game.start();
 
@@ -163,11 +163,11 @@ TEST(GameTest, NotifySlide)
 
 TEST(GameTest, NotifyEnd)
 {
-    auto              board = Board::make(4, 4);
-    Player::Movable   player(new PlayerSpy());
-    auto              observer = new ObserverSpy;
-    Observer::Movable o(observer);
-    GameTestable      game(1, board, *player, *o);
+    auto                  board = Board::make(4, 4);
+    PlayerSpy::Movable    player(new PlayerSpy());
+    auto                  observer = new ObserverSpy;
+    ObserverStub::Movable o(observer);
+    GameTestable          game(1, board, *player, *o);
 
     game.start();
 

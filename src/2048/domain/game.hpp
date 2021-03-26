@@ -13,6 +13,7 @@ class Game : MoveOnly
 {
 public:
     using Movable = std::unique_ptr<Game>;
+
     static Movable make(
         Score      &     _win_score,
         Board::Movable & _board,

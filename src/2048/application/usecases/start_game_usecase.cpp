@@ -12,6 +12,10 @@ StartGameUsecase::StartGameUsecase(
 {
 }
 
+StartGameUsecase::~StartGameUsecase()
+{
+}
+
 void StartGameUsecase::execute(int _score, int _rows, int _cols)
 {
     auto board = Board::make(_rows, _cols);
