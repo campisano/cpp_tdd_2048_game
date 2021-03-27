@@ -1,14 +1,20 @@
 #include "start_game_usecase.hpp"
 
-StartGameUsecase::Movable StartGameUsecase::make(GameRepository & _grp,
-        Player & _ply, Observer & _obs)
+#include "../../domain/board.hpp"
+
+StartGameUsecase::Movable StartGameUsecase::make(
+    GameRepositoryPort & _game_repo,
+    PlayerRepositoryPort & _player_repo,
+    Observer & _observer)
 {
-    return Movable(new StartGameUsecase(_grp, _ply, _obs));
+    return Movable(new StartGameUsecase(_game_repo, _player_repo, _observer));
 }
 
 StartGameUsecase::StartGameUsecase(
-    GameRepository & _grp, Player & _ply, Observer & _obs):
-    m_grp(_grp), m_ply(_ply), m_obs(_obs)
+    GameRepositoryPort & _game_repo,
+    PlayerRepositoryPort & _player_repo,
+    Observer & _observer)
+    : m_game_repo(_game_repo), m_player_repo(_player_repo), m_observer(_observer)
 {
 }
 
@@ -18,8 +24,18 @@ StartGameUsecase::~StartGameUsecase()
 
 void StartGameUsecase::execute(int _score, int _rows, int _cols)
 {
-    auto board = Board::make(_rows, _cols);
-    auto game  = m_grp.create(_score, board, m_ply, m_obs);
+    {
+        auto player = HumanPlayer::make();
+        m_player_repo.saveCurrent(player);
+    }
 
-    game->start();
+    {
+        auto & player = m_player_repo.getCurrent();
+        auto board    = Board::make(_rows, _cols);
+        auto game     = SpawnGame::make(_score, board, player, m_observer);
+        m_game_repo.saveCurrent(game);
+    }
+
+    auto & game = m_game_repo.getCurrent();
+    game.spawn();
 }

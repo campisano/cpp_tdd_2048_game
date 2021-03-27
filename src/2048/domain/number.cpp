@@ -1,4 +1,5 @@
 #include "number.hpp"
+
 #include <stdexcept>
 
 namespace

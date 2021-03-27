@@ -55,3 +55,5 @@ Game description in https://en.wikipedia.org/wiki/2048_(video_game)#Gameplay
     - the game notifies the start with winning score and board size;
     - the game places a number;
     - the game notifies the number value and position.
+
+2) The playar make a slide:

@@ -1,4 +1,5 @@
 #include "game.hpp"
+
 #include <random>
 #include <stdexcept>
 

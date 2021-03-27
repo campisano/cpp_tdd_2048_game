@@ -1,6 +1,7 @@
 #ifndef GAME__HPP__
 #define GAME__HPP__
 
+#include <memory>
 #include "../../common/move_only.hpp"
 #include "board.hpp"
 #include "direction.hpp"

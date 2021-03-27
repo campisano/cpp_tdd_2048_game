@@ -3,7 +3,8 @@
 #include "../domain/doubles/game_testable.hpp"
 #include "../domain/doubles/player_spy.hpp"
 #include "../domain/doubles/observer_spy.hpp"
-#include "../../2048/application/game_repository.hpp"
+#include "../../2048/adapters/game_repository.hpp"
+#include "../../2048/adapters/player_repository.hpp"
 #include "../../2048/application/usecases/start_game_usecase.hpp"
 
 TEST_GROUP(StartGameUsecaseTest) {};
@@ -13,11 +14,15 @@ TEST(StartGameUsecaseTest, seila)
     PlayerSpy::Movable   player(new PlayerSpy());
     auto obs_spy = new ObserverSpy();
     ObserverSpy::Movable observer(obs_spy);
+    PlayerRepository     player_repository;
     GameRepository       game_repository;
-    auto                 usecase = StartGameUsecase::make(game_repository, * player,
-                                   * observer);
+    auto                 usecase = StartGameUsecase::make(
+                                       game_repository,
+                                       player_repository,
+                                       * observer);
 
     usecase->execute(1, 4, 5);
+    game_repository.getCurrent().join();
 
     CHECK_EQUAL(4, obs_spy->notifyStart_in2);
     CHECK_EQUAL(5, obs_spy->notifyStart_in3);
