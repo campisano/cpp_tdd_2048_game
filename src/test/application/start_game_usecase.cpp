@@ -12,23 +12,22 @@ TEST_GROUP(StartGameUsecaseTest) {};
 
 TEST(StartGameUsecaseTest, execute)
 {
-    PlayerSpy::Movable   player(new PlayerSpy());
-    auto obs_spy = new ObserverSpy();
-    ObserverSpy::Movable observer(obs_spy);
-    PlayerRepository     player_repository;
-    GameRepository       game_repository;
-    auto                 usecase = StartGameUsecase::make(
-                                       game_repository,
-                                       player_repository,
-                                       * observer);
+    PlayerSpy        player;
+    ObserverSpy      observer;
+    PlayerRepository player_repository;
+    GameRepository   game_repository;
+    auto             usecase = StartGameUsecase::make(
+                                   game_repository,
+                                   player_repository,
+                                   observer);
 
     usecase->execute(1, 4, 5);
     game_repository.getCurrent().join(); // TODO really strange stuff to be placed here
 
-    CHECK_EQUAL(4, obs_spy->notifyStart_in2);
-    CHECK_EQUAL(5, obs_spy->notifyStart_in3);
-    CHECK_EQUAL(1, obs_spy->notifyNumberPlaced_calls);
+    CHECK_EQUAL(4, observer.notifyStart_in2);
+    CHECK_EQUAL(5, observer.notifyStart_in3);
+    CHECK_EQUAL(1, observer.notifyNumberPlaced_calls);
     CHECK_TRUE(
-        2 == obs_spy->notifyNumberPlaced_in1 ||
-        4 == obs_spy->notifyNumberPlaced_in1);
+        2 == observer.notifyNumberPlaced_in1 ||
+        4 == observer.notifyNumberPlaced_in1);
 }

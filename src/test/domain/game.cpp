@@ -9,10 +9,10 @@ TEST_GROUP(GameTest) {};
 
 TEST(GameTest, GenerateRandomNumber)
 {
-    auto                 board = Board::make(4, 4);
-    PlayerSpy::Movable   player(new PlayerSpy());
-    ObserverSpy::Movable observer(new ObserverSpy());
-    GameTestable         game(1, board, *player, *observer);
+    auto         mov_board = Board::make(4, 4);
+    PlayerSpy    player;
+    ObserverSpy  observer;
+    GameTestable game(1, mov_board, player, observer);
 
     for(int i = 0; i < 100; ++i)
     {
@@ -23,11 +23,11 @@ TEST(GameTest, GenerateRandomNumber)
 
 TEST(GameTest, PlaceNumberAfterStart)
 {
-    auto                 board = new BoardTestable(4, 4);
-    Board::Movable       b(board);
-    PlayerSpy::Movable   player(new PlayerSpy());
-    ObserverSpy::Movable observer(new ObserverSpy());
-    GameTestable         game(1, b, *player, *observer);
+    auto           board = new BoardTestable(4, 4);
+    Board::Movable mov_board(board);
+    PlayerSpy      player;
+    ObserverSpy    observer;
+    GameTestable   game(1, mov_board, player, observer);
 
     game.start();
 
@@ -44,16 +44,15 @@ TEST(GameTest, QueryPlayerSlideAfterStart)
         { 0, 0, 0, 0 },
         { 0, 0, 0, 0 }
     });
-    Board::Movable       b(board);
-    auto                 player = new PlayerSpy();
-    player->chooseDirection_out = Direction::left;
-    PlayerSpy::Movable   p(player);
-    ObserverSpy::Movable observer(new ObserverSpy());
-    GameTestable         game(16, b, *p, *observer);
+    Board::Movable mov_board(board);
+    PlayerSpy      player;
+    player.chooseDirection_out = Direction::left;
+    ObserverSpy    observer;
+    GameTestable   game(16, mov_board, player, observer);
 
     game.start();
 
-    CHECK_EQUAL(1, player->chooseDirection_calls);
+    CHECK_EQUAL(1, player.chooseDirection_calls);
 }
 
 TEST(GameTest, GameEndWhenWin)
@@ -66,18 +65,17 @@ TEST(GameTest, GameEndWhenWin)
         { 1024, 1024, 0, 0 },
         {    0,    0, 0, 0 }
     });
-    auto                 player = new PlayerSpy();
-    player->chooseDirection_out = Direction::left;
-    Board::Movable       b(board);
-    PlayerSpy::Movable   p(player);
-    ObserverSpy::Movable observer(new ObserverSpy());
-    GameTestable         game(2048, b, *p, *observer);
+    PlayerSpy      player;
+    player.chooseDirection_out = Direction::left;
+    Board::Movable mov_board(board);
+    ObserverSpy    observer;
+    GameTestable   game(2048, mov_board, player, observer);
 
     game.turn();
 
     CHECK_EQUAL(true,  game.playerWin());
     CHECK_EQUAL(false, game.playerLose());
-    CHECK_EQUAL(1, player->chooseDirection_calls);
+    CHECK_EQUAL(1, player.chooseDirection_calls);
 }
 
 TEST(GameTest, GameEndWhenLose)
@@ -90,31 +88,29 @@ TEST(GameTest, GameEndWhenLose)
         { 16, 32, 16, 32 },
         {  0, 32, 16, 32 }
     });
-    auto                 player = new PlayerSpy();
-    player->chooseDirection_out = Direction::left;
-    Board::Movable       b(board);
-    PlayerSpy::Movable   p(player);
-    ObserverSpy::Movable observer(new ObserverSpy());
-    GameTestable         game(2048, b, *p, *observer);
+    PlayerSpy      player;
+    player.chooseDirection_out = Direction::left;
+    Board::Movable mov_board(board);
+    ObserverSpy    observer;
+    GameTestable   game(2048, mov_board, player, observer);
 
     game.turn();
 
     CHECK_EQUAL(true,  game.playerLose());
     CHECK_EQUAL(false, game.playerWin());
-    CHECK_EQUAL(1, player->chooseDirection_calls);
+    CHECK_EQUAL(1, player.chooseDirection_calls);
 }
 
 TEST(GameTest, NotifyStart)
 {
-    auto                 board = Board::make(4, 4);
-    PlayerSpy::Movable   player(new PlayerSpy());
-    auto                 observer = new ObserverSpy;
-    ObserverSpy::Movable o(observer);
-    GameTestable         game(1, board, *player, *o);
+    auto         mov_board = Board::make(4, 4);
+    PlayerSpy    player;
+    ObserverSpy  observer;
+    GameTestable game(1, mov_board, player, observer);
 
     game.start();
 
-    CHECK_EQUAL(1, observer->notifyStart_calls);
+    CHECK_EQUAL(1, observer.notifyStart_calls);
     CHECK_TRUE(
         std::vector<std::vector<Number::Value>>(
     {
@@ -122,20 +118,19 @@ TEST(GameTest, NotifyStart)
         { 0, 0, 0, 0 },
         { 0, 0, 0, 0 },
         { 0, 0, 0, 0 }
-    }) == observer->notifyStart_in4)
+    }) == observer.notifyStart_in4)
 }
 
 TEST(GameTest, NotifyPlaceNumber)
 {
-    auto                 board = Board::make(4, 4);
-    PlayerSpy::Movable   player(new PlayerSpy());
-    auto                 observer = new ObserverSpy;
-    ObserverSpy::Movable o(observer);
-    GameTestable         game(1, board, *player, *o);
+    auto         mov_board = Board::make(4, 4);
+    PlayerSpy    player;
+    ObserverSpy  observer;
+    GameTestable game(1, mov_board, player, observer);
 
     game.start();
 
-    CHECK_EQUAL(1, observer->notifyNumberPlaced_calls);
+    CHECK_EQUAL(1, observer.notifyNumberPlaced_calls);
 }
 
 TEST(GameTest, NotifySlide)
@@ -148,28 +143,25 @@ TEST(GameTest, NotifySlide)
         { 1024, 1024, 0, 0 },
         {    0,    0, 0, 0 }
     });
-    auto                 player = new PlayerSpy();
-    player->chooseDirection_out = Direction::left;
-    Board::Movable       b(board);
-    PlayerSpy::Movable   p(player);
-    auto                 observer = new ObserverSpy;
-    ObserverSpy::Movable o(observer);
-    GameTestable         game(2048, b, *p, *o);
+    PlayerSpy      player;
+    player.chooseDirection_out = Direction::left;
+    Board::Movable mov_board(board);
+    ObserverSpy    observer;
+    GameTestable   game(2048, mov_board, player, observer);
 
     game.start();
 
-    CHECK_EQUAL(1, observer->notifySlide_calls);
+    CHECK_EQUAL(1, observer.notifySlide_calls);
 }
 
 TEST(GameTest, NotifyEnd)
 {
-    auto                 board = Board::make(4, 4);
-    PlayerSpy::Movable   player(new PlayerSpy());
-    auto                 observer = new ObserverSpy;
-    ObserverSpy::Movable o(observer);
-    GameTestable         game(1, board, *player, *o);
+    auto         mov_board = Board::make(4, 4);
+    PlayerSpy    player;
+    ObserverSpy  observer;
+    GameTestable game(1, mov_board, player, observer);
 
     game.start();
 
-    CHECK_EQUAL(1, observer->notifyEnd_calls);
+    CHECK_EQUAL(1, observer.notifyEnd_calls);
 }

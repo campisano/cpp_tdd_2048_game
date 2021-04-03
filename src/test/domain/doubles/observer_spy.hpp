@@ -1,14 +1,11 @@
 #ifndef OBSERVER_SPY__HPP__
 #define OBSERVER_SPY__HPP__
 
-#include <memory>
 #include "../../../2048/domain/observer.hpp"
 
 class ObserverSpy : public Observer
 {
 public:
-    using Movable = std::unique_ptr<Observer>;
-
     int          notifyStart_calls = 0;
     Score        notifyStart_in1;
     Board::Size  notifyStart_in2;
@@ -32,13 +29,13 @@ public:
         notifyNumberPlaced_in1 = _in1;
     }
 
-    int  notifySlide_calls = 0;
+    int notifySlide_calls = 0;
     void notifySlide(Direction, Board::Array)
     {
         ++notifySlide_calls;
     }
 
-    int  notifyEnd_calls = 0;
+    int notifyEnd_calls = 0;
     void notifyEnd(bool, Score)
     {
         ++notifyEnd_calls;
