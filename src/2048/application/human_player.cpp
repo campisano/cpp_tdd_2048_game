@@ -29,7 +29,7 @@ Direction HumanPlayer::chooseDirection()
 void HumanPlayer::setNextMove(Direction & _direction)
 {
     {
-	// block where lock_guard lives
+        // block where lock_guard lives
         std::lock_guard<std::mutex> lock(m_mutex);
         m_direction = new Direction();
         *m_direction = _direction;
