@@ -3,6 +3,9 @@
 /external/cpputest/*
 !/external/cpputest/CMakeLists.txt
 
+/external/doctest/*
+!/external/doctest/CMakeLists.txt
+
 /.cquery_cached_index
 
 /.ccls-cache
