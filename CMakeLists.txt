@@ -7,9 +7,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_SKIP_RPATH ON)
 
 # project dependencies
-add_subdirectory(${PROJECT_SOURCE_DIR}/external/cpputest)
-include_directories(${cpputest_INCLUDE_DIRS})
-link_directories(${cpputest_LIBRARY_DIRS})
+add_subdirectory(${PROJECT_SOURCE_DIR}/external/doctest)
+include_directories(${doctest_INCLUDE_DIRS})
 
 # project sources
 file(GLOB_RECURSE VAR_APP_SOURCES ${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}/*.cpp)
@@ -24,7 +23,7 @@ target_link_libraries(${PROJECT_NAME}_exec PUBLIC stdc++ pthread)
 
 add_executable(${PROJECT_NAME}_test $<TARGET_OBJECTS:${PROJECT_NAME}_common> ${VAR_TEST_SOURCES})
 target_link_libraries(${PROJECT_NAME}_test PUBLIC stdc++ pthread
-    cpputest)
+    doctest)
 
 # project outputs specific properties
 set_target_properties(${PROJECT_NAME}_common ${PROJECT_NAME}_exec ${PROJECT_NAME}_test PROPERTIES

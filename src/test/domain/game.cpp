@@ -5,9 +5,9 @@
 #include "doubles/player_spy.hpp"
 #include "doubles/observer_spy.hpp"
 
-TEST_GROUP(GameTest) {};
+TEST_GROUP_BEGIN(GameTest);
 
-TEST(GameTest, GenerateRandomNumber)
+TEST(GenerateRandomNumber)
 {
     auto         mov_board = Board::make(4, 4);
     PlayerSpy    player;
@@ -21,7 +21,7 @@ TEST(GameTest, GenerateRandomNumber)
     }
 }
 
-TEST(GameTest, PlaceNumberAfterStart)
+TEST(PlaceNumberAfterStart)
 {
     auto           board = new BoardTestable(4, 4);
     Board::Movable mov_board(board);
@@ -34,7 +34,7 @@ TEST(GameTest, PlaceNumberAfterStart)
     CHECK_EQUAL(1, board->count());
 }
 
-TEST(GameTest, QueryPlayerSlideAfterStart)
+TEST(QueryPlayerSlideAfterStart)
 {
     auto board = new BoardTestable(4, 4);
     board->fill(
@@ -55,7 +55,7 @@ TEST(GameTest, QueryPlayerSlideAfterStart)
     CHECK_EQUAL(1, player.chooseDirection_calls);
 }
 
-TEST(GameTest, GameEndWhenWin)
+TEST(GameEndWhenWin)
 {
     auto board = new BoardTestable(4, 4);
     board->fill(
@@ -78,7 +78,7 @@ TEST(GameTest, GameEndWhenWin)
     CHECK_EQUAL(1, player.chooseDirection_calls);
 }
 
-TEST(GameTest, GameEndWhenLose)
+TEST(GameEndWhenLose)
 {
     auto board = new BoardTestable(4, 4);
     board->fill(
@@ -101,7 +101,7 @@ TEST(GameTest, GameEndWhenLose)
     CHECK_EQUAL(1, player.chooseDirection_calls);
 }
 
-TEST(GameTest, NotifyStart)
+TEST(NotifyStart)
 {
     auto         mov_board = Board::make(4, 4);
     PlayerSpy    player;
@@ -118,10 +118,10 @@ TEST(GameTest, NotifyStart)
         { 0, 0, 0, 0 },
         { 0, 0, 0, 0 },
         { 0, 0, 0, 0 }
-    }) == observer.notifyStart_in4)
+    }) == observer.notifyStart_in4);
 }
 
-TEST(GameTest, NotifyPlaceNumber)
+TEST(NotifyPlaceNumber)
 {
     auto         mov_board = Board::make(4, 4);
     PlayerSpy    player;
@@ -133,7 +133,7 @@ TEST(GameTest, NotifyPlaceNumber)
     CHECK_EQUAL(1, observer.notifyNumberPlaced_calls);
 }
 
-TEST(GameTest, NotifySlide)
+TEST(NotifySlide)
 {
     auto board = new BoardTestable(4, 4);
     board->fill(
@@ -154,7 +154,7 @@ TEST(GameTest, NotifySlide)
     CHECK_EQUAL(1, observer.notifySlide_calls);
 }
 
-TEST(GameTest, NotifyEnd)
+TEST(NotifyEnd)
 {
     auto         mov_board = Board::make(4, 4);
     PlayerSpy    player;
@@ -165,3 +165,5 @@ TEST(GameTest, NotifyEnd)
 
     CHECK_EQUAL(1, observer.notifyEnd_calls);
 }
+
+TEST_GROUP_END();

@@ -1,3 +1,3 @@
 clang
 %cpp -std=c++11 -pipe -fexceptions -pedantic -Wall -Wextra -Wshadow -Wnon-virtual-dtor
--Iexternal/cpputest/install/include/
+-Iexternal/doctest/install/include/

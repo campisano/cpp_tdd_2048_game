@@ -7,9 +7,9 @@ namespace
 const Number::Value ARBITRARY_VALUE = 8;
 }
 
-TEST_GROUP(PositionTest) {};
+TEST_GROUP_BEGIN(PositionTest);
 
-TEST(PositionTest, Creation)
+TEST(Creation)
 {
     Position position;
 
@@ -20,7 +20,7 @@ TEST(PositionTest, Creation)
     CHECK_FALSE(position.hasDown());
 }
 
-TEST(PositionTest, PlacingNumber)
+TEST(PlacingNumber)
 {
     auto     number  = Number::make(ARBITRARY_VALUE);
     auto     num_ptr = number.get();
@@ -33,7 +33,7 @@ TEST(PositionTest, PlacingNumber)
     CHECK_EQUAL(num_ptr, position.number().get());
 }
 
-TEST(PositionTest, ThrowsOnPlacingNumberTwice)
+TEST(ThrowsOnPlacingNumberTwice)
 {
     auto n1 = Number::make(ARBITRARY_VALUE);
     auto n2 = Number::make(ARBITRARY_VALUE);
@@ -46,7 +46,7 @@ TEST(PositionTest, ThrowsOnPlacingNumberTwice)
         position.place(n2));
 }
 
-TEST(PositionTest, HasLeft)
+TEST(HasLeft)
 {
     Position position;
     Position left;
@@ -57,7 +57,7 @@ TEST(PositionTest, HasLeft)
     CHECK_EQUAL(&left, &position.left());
 }
 
-TEST(PositionTest, ThrowsOnGetEmptyLeft)
+TEST(ThrowsOnGetEmptyLeft)
 {
     Position position;
 
@@ -65,7 +65,7 @@ TEST(PositionTest, ThrowsOnGetEmptyLeft)
         std::runtime_error, "there is no left position", position.left());
 }
 
-TEST(PositionTest, HasRight)
+TEST(HasRight)
 {
     Position position;
     Position right;
@@ -76,7 +76,7 @@ TEST(PositionTest, HasRight)
     CHECK_EQUAL(&right, &position.right());
 }
 
-TEST(PositionTest, ThrowsOnGetEmptyRight)
+TEST(ThrowsOnGetEmptyRight)
 {
     Position position;
 
@@ -84,7 +84,7 @@ TEST(PositionTest, ThrowsOnGetEmptyRight)
         std::runtime_error, "there is no right position", position.right());
 }
 
-TEST(PositionTest, HasUp)
+TEST(HasUp)
 {
     Position position;
     Position up;
@@ -95,7 +95,7 @@ TEST(PositionTest, HasUp)
     CHECK_EQUAL(&up, &position.up());
 }
 
-TEST(PositionTest, ThrowsOnGetEmptyUp)
+TEST(ThrowsOnGetEmptyUp)
 {
     Position position;
 
@@ -103,7 +103,7 @@ TEST(PositionTest, ThrowsOnGetEmptyUp)
         std::runtime_error, "there is no up position", position.up());
 }
 
-TEST(PositionTest, HasDown)
+TEST(HasDown)
 {
     Position position;
     Position down;
@@ -114,7 +114,7 @@ TEST(PositionTest, HasDown)
     CHECK_EQUAL(&down, &position.down());
 }
 
-TEST(PositionTest, ThrowsOnGetEmptyDown)
+TEST(ThrowsOnGetEmptyDown)
 {
     Position position;
 
@@ -122,7 +122,7 @@ TEST(PositionTest, ThrowsOnGetEmptyDown)
         std::runtime_error, "there is no down position", position.down());
 }
 
-TEST(PositionTest, TransferToEmptyImplyPlaceThere)
+TEST(TransferToEmptyImplyPlaceThere)
 {
     auto     number  = Number::make(ARBITRARY_VALUE);
     auto     num_ptr = number.get();
@@ -137,7 +137,7 @@ TEST(PositionTest, TransferToEmptyImplyPlaceThere)
     CHECK_EQUAL(num_ptr, pos_end.number().get());
 }
 
-TEST(PositionTest, TransferToNotEmptyImplyMergeThere)
+TEST(TransferToNotEmptyImplyMergeThere)
 {
     auto     num_start = Number::make(ARBITRARY_VALUE);
     auto     num_end   = Number::make(ARBITRARY_VALUE);
@@ -152,3 +152,5 @@ TEST(PositionTest, TransferToNotEmptyImplyMergeThere)
     CHECK_TRUE(pos_end.hasNumber());
     CHECK_EQUAL(2 * ARBITRARY_VALUE, pos_end.number()->value());
 }
+
+TEST_GROUP_END();

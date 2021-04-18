@@ -8,9 +8,9 @@
 #include "../domain/doubles/player_spy.hpp"
 #include "../domain/doubles/observer_spy.hpp"
 
-TEST_GROUP(StartGameUsecaseTest) {};
+TEST_GROUP_BEGIN(StartGameUsecaseTest);
 
-TEST(StartGameUsecaseTest, execute)
+TEST(execute)
 {
     PlayerSpy        player;
     ObserverSpy      observer;
@@ -31,3 +31,5 @@ TEST(StartGameUsecaseTest, execute)
         2 == observer.notifyNumberPlaced_in1 ||
         4 == observer.notifyNumberPlaced_in1);
 }
+
+TEST_GROUP_END();
