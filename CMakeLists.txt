@@ -1,10 +1,10 @@
-cmake_minimum_required(VERSION 3.3.2)
+cmake_minimum_required(VERSION 3.3.2 FATAL_ERROR)
 
 project(2048 LANGUAGES CXX)
 
 # global properties
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_SKIP_RPATH ON)
+set(CMAKE_CXX_EXTENSIONS FALSE)
+set(CMAKE_SKIP_RPATH TRUE)
 
 # project dependencies
 add_subdirectory(${PROJECT_SOURCE_DIR}/external/doctest)
@@ -27,8 +27,8 @@ target_link_libraries(${PROJECT_NAME}_test PUBLIC stdc++ pthread
 
 # project outputs specific properties
 set_target_properties(${PROJECT_NAME}_common ${PROJECT_NAME}_exec ${PROJECT_NAME}_test PROPERTIES
-    CMAKE_CXX_STANDARD 11
-    CMAKE_CXX_STANDARD_REQUIRED ON)
+    CXX_STANDARD 11
+    CXX_STANDARD_REQUIRED TRUE)
 
 # GNU compiler specific flags
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
