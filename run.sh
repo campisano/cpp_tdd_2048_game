@@ -2,7 +2,8 @@
 
 TARGET="$1"
 MODE="$2"
-APP_PATH="./build/${TARGET}/2048"
+APP_PATH_PREFIX="./build/${TARGET}/2048"
+APP_OPT=""
 
 if test -z "${TARGET}"
 then
@@ -12,10 +13,9 @@ fi
 
 if test "${MODE}" = "test"
 then
-   APP_PATH="${APP_PATH}_test"
-   APP_OPT="-v"
+   APP_PATH="${APP_PATH_PREFIX}_test"
 else
-   APP_PATH="${APP_PATH}_exec"
+   APP_PATH="${APP_PATH_PREFIX}_exec"
 fi
 
 if test ! -x "${APP_PATH}"
