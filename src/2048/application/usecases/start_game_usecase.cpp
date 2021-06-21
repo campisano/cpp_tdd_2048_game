@@ -1,5 +1,6 @@
 #include "start_game_usecase.hpp"
 
+#include "../spawn_game.hpp"
 #include "../../domain/board.hpp"
 
 StartGameUsecase::Movable StartGameUsecase::make(
@@ -35,7 +36,4 @@ void StartGameUsecase::execute(int _score, int _rows, int _cols)
         auto game     = SpawnGame::make(_score, board, player, m_observer);
         m_game_repo.saveCurrent(game);
     }
-
-    auto & game = m_game_repo.getCurrent();
-    game.spawn();
 }

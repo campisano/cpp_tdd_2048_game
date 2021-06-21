@@ -21,10 +21,6 @@ int main(int, char **)
 
         ConsoleController c(*start_usecase, *move_usecase);
         c.start();
-
-        // TODO to move inside controller... but how? console does not know current game or repository...
-        // who should know that the game is spawn and should wait for it ends?
-        game_repo.getCurrent().join();
     }
     catch(std::exception const & _ex)
     {

@@ -1,6 +1,8 @@
 #ifndef OBSERVER_SPY__HPP__
 #define OBSERVER_SPY__HPP__
 
+#include <condition_variable>
+#include <mutex>
 #include "../../../2048/domain/observer.hpp"
 
 class ObserverSpy : public Observer
@@ -38,8 +40,22 @@ public:
     int notifyEnd_calls = 0;
     void notifyEnd(bool, Score)
     {
-        ++notifyEnd_calls;
+        {
+            std::lock_guard<std::mutex> lock(m_mutex);
+            ++notifyEnd_calls;
+        }
+        m_condition.notify_one();
     }
+
+    void waitUtilNotifyEnd()
+    {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        m_condition.wait(lock, [this] { return notifyEnd_calls != 0; });
+    }
+
+private:
+    std::mutex              m_mutex;
+    std::condition_variable m_condition;
 };
 
 #endif

@@ -1,11 +1,11 @@
 #include "game_repository.hpp"
 
-void GameRepository::saveCurrent(SpawnGame::Movable & _game)
+void GameRepository::saveCurrent(Game::Movable & _game)
 {
     m_game = std::move(_game);
 }
 
-SpawnGame & GameRepository::getCurrent()
+Game & GameRepository::getCurrent()
 {
     return * m_game;
 }
