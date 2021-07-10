@@ -2,7 +2,6 @@
 [![Sonar Coverage](https://sonarcloud.io/api/project_badges/measure?project=cpp_tdd_2048_game&metric=coverage "Sonar Coverage")](https://sonarcloud.io/dashboard?id=cpp_tdd_2048_game)
 [![Sonar Maintainability](https://sonarcloud.io/api/project_badges/measure?project=cpp_tdd_2048_game&metric=sqale_rating "Sonar Maintainability")](https://sonarcloud.io/dashboard?id=cpp_tdd_2048_game)
 [![Docker Image](https://img.shields.io/docker/image-size/riccardocampisano/public/cpp_tdd_2048_game-latest?label=cpp_tdd_2048_game-latest&logo=docker "Docker Image")](https://hub.docker.com/r/riccardocampisano/public/tags?name=cpp_tdd_2048_game)
-[![Docker Hub](https://img.shields.io/docker/image-size/riccardocampisano/public/cpp_tdd_2048_game-latest?label=cpp_tdd_2048_game-latest&logo=docker)](https://hub.docker.com/r/riccardocampisano/public/tags?name=cpp_tdd_2048_game)
 
 # 2048 Game
 
