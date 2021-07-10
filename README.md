@@ -1,9 +1,7 @@
-[![Build Status](https://travis-ci.org/campisano/cpp_tdd_2048_game.svg?branch=master "Build Status")](https://travis-ci.org/campisano/cpp_tdd_2048_game)
-[![Test Coverage](https://codecov.io/gh/campisano/cpp_tdd_2048_game/branch/master/graph/badge.svg "Test Coverage")](https://codecov.io/gh/campisano/cpp_tdd_2048_game)
-[![Code Quality](https://img.shields.io/lgtm/grade/cpp/g/campisano/cpp_tdd_2048_game.svg "Code Quality")](https://lgtm.com/projects/g/campisano/cpp_tdd_2048_game/context:cpp)
-[![Sonar Coverage](https://sonarcloud.io/api/project_badges/measure?project=campisano/cpp_tdd_2048_game&metric=coverage)](https://sonarcloud.io/dashboard?id=campisano/cpp_tdd_2048_game)
-[![Sonar Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=campisano/cpp_tdd_2048_game&metric=alert_status)](https://sonarcloud.io/dashboard?id=campisano/cpp_tdd_2048_game)
-
+[![Build Status](https://gitlab.com/campisano/cpp_tdd_2048_game/badges/master/pipeline.svg "Build Status")](https://gitlab.com/campisano/cpp_tdd_2048_game/-/pipelines)
+[![Sonar Coverage](https://sonarcloud.io/api/project_badges/measure?project=cpp_tdd_2048_game&metric=coverage "Sonar Coverage")](https://sonarcloud.io/dashboard?id=cpp_tdd_2048_game)
+[![Sonar Maintainability](https://sonarcloud.io/api/project_badges/measure?project=cpp_tdd_2048_game&metric=sqale_rating "Sonar Maintainability")](https://sonarcloud.io/dashboard?id=cpp_tdd_2048_game)
+[![Docker Image](https://img.shields.io/docker/image-size/riccardocampisano/public/cpp_tdd_2048_game-latest?label=cpp_tdd_2048_game-latest&logo=docker "Docker Image")](https://hub.docker.com/r/riccardocampisano/public/tags?name=cpp_tdd_2048_game)
 [![Docker Hub](https://img.shields.io/docker/image-size/riccardocampisano/public/cpp_tdd_2048_game-latest?label=cpp_tdd_2048_game-latest&logo=docker)](https://hub.docker.com/r/riccardocampisano/public/tags?name=cpp_tdd_2048_game)
 
 # 2048 Game
