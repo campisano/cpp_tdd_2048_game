@@ -1,6 +1,7 @@
 #include "../testutils.hpp"
 
 #include "../../2048/domain/position.hpp"
+#include <stdexcept>
 
 namespace
 {
@@ -42,7 +43,7 @@ TEST(ThrowsOnPlacingNumberTwice)
     position.place(n1);
 
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "position already contain a number",
+        std::out_of_range, "position already contain a number",
         position.place(n2));
 }
 
@@ -62,7 +63,7 @@ TEST(ThrowsOnGetEmptyLeft)
     Position position;
 
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "there is no left position", position.left());
+        std::out_of_range, "there is no left position", position.left());
 }
 
 TEST(HasRight)
@@ -81,7 +82,7 @@ TEST(ThrowsOnGetEmptyRight)
     Position position;
 
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "there is no right position", position.right());
+        std::out_of_range, "there is no right position", position.right());
 }
 
 TEST(HasUp)
@@ -100,7 +101,7 @@ TEST(ThrowsOnGetEmptyUp)
     Position position;
 
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "there is no up position", position.up());
+        std::out_of_range, "there is no up position", position.up());
 }
 
 TEST(HasDown)
@@ -119,7 +120,7 @@ TEST(ThrowsOnGetEmptyDown)
     Position position;
 
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "there is no down position", position.down());
+        std::out_of_range, "there is no down position", position.down());
 }
 
 TEST(TransferToEmptyImplyPlaceThere)

@@ -15,7 +15,7 @@ Game::Game(
 {
     if(m_win_score <= 0)
     {
-        throw std::runtime_error("win_score must be positive");
+        throw std::invalid_argument("win_score must be positive");
     }
 }
 

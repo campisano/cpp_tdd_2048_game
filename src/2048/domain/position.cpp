@@ -29,7 +29,7 @@ void Position::place(Number::Movable & _number)
 {
     if(m_number)
     {
-        throw std::runtime_error("position already contain a number");
+        throw std::out_of_range("position already contain a number");
     }
 
     m_number = std::move(_number);
@@ -44,7 +44,7 @@ Position & Position::left() const
 {
     if(! hasLeft())
     {
-        throw std::runtime_error("there is no left position");
+        throw std::out_of_range("there is no left position");
     }
 
     return * m_left;
@@ -64,7 +64,7 @@ Position & Position::right() const
 {
     if(! hasRight())
     {
-        throw std::runtime_error("there is no right position");
+        throw std::out_of_range("there is no right position");
     }
 
     return * m_right;
@@ -84,7 +84,7 @@ Position & Position::up() const
 {
     if(! hasUp())
     {
-        throw std::runtime_error("there is no up position");
+        throw std::out_of_range("there is no up position");
     }
 
     return * m_up;
@@ -104,7 +104,7 @@ Position & Position::down() const
 {
     if(! hasDown())
     {
-        throw std::runtime_error("there is no down position");
+        throw std::out_of_range("there is no down position");
     }
 
     return * m_down;

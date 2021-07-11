@@ -1,6 +1,7 @@
 #include "../testutils.hpp"
 
 #include "doubles/board_testable.hpp"
+#include <stdexcept>
 
 namespace
 {
@@ -31,7 +32,7 @@ TEST(ThrowsOnAtUpOutside)
     BoardTestable board(4, 4);
 
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "out of board boundaries", board.at(-1, 0));
+        std::out_of_range, "out of board boundaries", board.at(-1, 0));
 }
 
 TEST(ThrowsOnAtDownOutside)
@@ -39,7 +40,7 @@ TEST(ThrowsOnAtDownOutside)
     BoardTestable board(4, 4);
 
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "out of board boundaries", board.at(4, 0));
+        std::out_of_range, "out of board boundaries", board.at(4, 0));
 }
 
 TEST(ThrowsOnAtLeftOutside)
@@ -47,7 +48,7 @@ TEST(ThrowsOnAtLeftOutside)
     BoardTestable board(4, 4);
 
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "out of board boundaries", board.at(0, -1));
+        std::out_of_range, "out of board boundaries", board.at(0, -1));
 }
 
 TEST(ThrowsOnAtRightOutside)
@@ -55,7 +56,7 @@ TEST(ThrowsOnAtRightOutside)
     BoardTestable board(4, 4);
 
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "out of board boundaries", board.at(0, 4));
+        std::out_of_range, "out of board boundaries", board.at(0, 4));
 }
 
 TEST(AtEdgeUpLeft)
@@ -364,7 +365,7 @@ TEST(PlaceNumberRandomlyOutOfSpace)
     auto number = Number::make(ARBITRARY_VALUE);
 
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "no space left on board",
+        std::out_of_range, "no space left on board",
         board.placeNumberRandomly(number));
 }
 

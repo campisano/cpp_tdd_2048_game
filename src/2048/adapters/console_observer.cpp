@@ -80,8 +80,8 @@ std::ostream & operator<<(std::ostream & _out, const Direction _direction)
         return _out << "up";
     case Direction::down:
         return _out << "down";
+    default:
+        throw std::invalid_argument("direction unknown");
     }
-
-    throw std::runtime_error("algorithm fault");
 }
 }

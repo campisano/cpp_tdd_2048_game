@@ -2,6 +2,7 @@
 
 #include "../../2048/domain/number.hpp"
 #include "doubles/number_testable.hpp"
+#include <stdexcept>
 
 namespace
 {
@@ -28,25 +29,25 @@ TEST(CreationByMake)
 TEST(ThrowsOnCreationWithValueNegative)
 {
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "value cannot be less than 2", Number::make(-1));
+        std::invalid_argument, "value cannot be less than 2", Number::make(-1));
 }
 
 TEST(ThrowsOnCreationWithValueLessThanTwo)
 {
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "value cannot be less than 2", Number::make(1));
+        std::invalid_argument, "value cannot be less than 2", Number::make(1));
 }
 
 TEST(ThrowsOnCreationWithValue3NotPowerOf2)
 {
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "value must be power of 2", Number::make(3));
+        std::invalid_argument, "value must be power of 2", Number::make(3));
 }
 
 TEST(ThrowsOnCreationWithValue6NotPowerOf2)
 {
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error, "value must be power of 2", Number::make(6));
+        std::invalid_argument, "value must be power of 2", Number::make(6));
 }
 
 TEST(MergeDoubleValue)
@@ -86,7 +87,7 @@ TEST(ThrowsOnMergeBadValues)
     auto number_2 = Number::make(2 * ARBITRARY_VALUE);
 
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error,
+        std::invalid_argument,
         "merging numbers must have the same value"
         " and must have not been merged",
         number_1->merge(number_2));
@@ -100,7 +101,7 @@ TEST(ThrowsOnMergeAlreadyMerged)
     number_1->merge(number_2);
 
     CHECK_THROWS_STDEXCEPT(
-        std::runtime_error,
+        std::invalid_argument,
         "merging numbers must have the same value"
         " and must have not been merged",
         number_1->merge(number_3));

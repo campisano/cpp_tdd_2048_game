@@ -44,7 +44,7 @@ Direction convert(MoveUsecase::Direction & _direction)
     case MoveUsecase::Direction::down:
         return Direction::down;
     default:
-        throw std::runtime_error("unknown direction");
+        throw std::invalid_argument("direction unknown");
     }
 }
 }

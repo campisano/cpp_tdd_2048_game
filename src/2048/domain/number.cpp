@@ -11,12 +11,12 @@ Number::Number(Value _value) : m_value(_value), m_merged(false)
 {
     if(m_value < 2)
     {
-        throw std::runtime_error("value cannot be less than 2");
+        throw std::invalid_argument("value cannot be less than 2");
     }
 
     if(! isPowerOfTwo(m_value))
     {
-        throw std::runtime_error("value must be power of 2");
+        throw std::invalid_argument("value must be power of 2");
     }
 }
 
@@ -43,7 +43,7 @@ void Number::merge(Movable & _number)
 {
     if(! canMerge(* _number))
     {
-        throw std::runtime_error(
+        throw std::invalid_argument(
             "merging numbers must have the same value"
             " and must have not been merged");
     }

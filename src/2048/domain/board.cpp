@@ -17,12 +17,12 @@ Board::Board(Size _rows, Size _cols) : m_rows(_rows), m_cols(_cols)
 {
     if(m_rows < 1)
     {
-        throw std::runtime_error("rows cannot be less than 1");
+        throw std::invalid_argument("rows cannot be less than 1");
     }
 
     if(m_cols < 1)
     {
-        throw std::runtime_error("cols cannot be less than 1");
+        throw std::invalid_argument("cols cannot be less than 1");
     }
 
 
@@ -76,25 +76,22 @@ bool Board::slide(Direction _direction)
 {
     bool valid_move;
 
-    if(_direction == Direction::left)
+    switch(_direction)
     {
+    case Direction::left:
         valid_move = slideLeft();
-    }
-    else if(_direction == Direction::right)
-    {
+        break;
+    case Direction::right:
         valid_move = slideRight();
-    }
-    else if(_direction == Direction::up)
-    {
+        break;
+    case Direction::up:
         valid_move = slideUp();
-    }
-    else if(_direction == Direction::down)
-    {
+        break;
+    case Direction::down:
         valid_move = slideDown();
-    }
-    else
-    {
-        throw std::runtime_error("algorithm fault");
+        break;
+    default:
+        throw std::invalid_argument("direction unknown");
     }
 
     clearMergeState();
@@ -216,7 +213,7 @@ void Board::placeNumberRandomly(Number::Movable & _number)
 
     if(free_pos == 0)
     {
-        throw std::runtime_error("no space left on board");
+        throw std::out_of_range("no space left on board");
     }
 
     Size rand_pos = generateRandomPlace(free_pos - 1);
@@ -240,7 +237,7 @@ void Board::placeNumberRandomly(Number::Movable & _number)
         }
     }
 
-    throw std::runtime_error("algorithm fault");
+    throw std::out_of_range("algorithm fault");
 }
 
 Board::Size Board::rows() const
@@ -264,7 +261,7 @@ Position & Board::at(Size _row, Size _col)
         _row < 0 || _col < 0 ||
         _row >= m_rows || _col >= m_cols)
     {
-        throw std::runtime_error("out of board boundaries");
+        throw std::out_of_range("out of board boundaries");
     }
 
     return m_positions[_row][_col];
