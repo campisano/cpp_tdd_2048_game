@@ -2,7 +2,8 @@
 
 #include <stdexcept>
 
-Position::Position() : m_left(NULL), m_right(NULL), m_up(NULL), m_down(NULL)
+Position::Position() : m_left(nullptr), m_right(nullptr), m_up(nullptr),
+    m_down(nullptr)
 {
 }
 
@@ -37,7 +38,7 @@ void Position::place(Number::Movable & _number)
 
 bool Position::hasLeft() const
 {
-    return m_left != NULL;
+    return m_left != nullptr;
 }
 
 Position & Position::left() const
@@ -57,7 +58,7 @@ void Position::left(Position & _left)
 
 bool Position::hasRight() const
 {
-    return m_right != NULL;
+    return m_right != nullptr;
 }
 
 Position & Position::right() const
@@ -77,7 +78,7 @@ void Position::right(Position & _right)
 
 bool Position::hasUp() const
 {
-    return m_up != NULL;
+    return m_up != nullptr;
 }
 
 Position & Position::up() const
@@ -97,7 +98,7 @@ void Position::up(Position & _up)
 
 bool Position::hasDown() const
 {
-    return m_down != NULL;
+    return m_down != nullptr;
 }
 
 Position & Position::down() const

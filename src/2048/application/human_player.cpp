@@ -6,7 +6,7 @@ HumanPlayer::Movable HumanPlayer::make()
 }
 
 HumanPlayer::HumanPlayer()
-    : m_direction(NULL)
+    : m_direction(nullptr)
 {
 }
 
@@ -17,11 +17,11 @@ HumanPlayer::~HumanPlayer()
 Direction HumanPlayer::chooseDirection()
 {
     std::unique_lock<std::mutex> lock(m_mutex);
-    m_condition.wait(lock, [this] { return m_direction != NULL; });
+    m_condition.wait(lock, [this] { return m_direction != nullptr; });
 
     Direction direction = * m_direction;
     delete m_direction;
-    m_direction = NULL;
+    m_direction = nullptr;
 
     return direction;
 }
