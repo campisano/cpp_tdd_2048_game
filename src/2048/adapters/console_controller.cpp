@@ -32,7 +32,7 @@ void ConsoleController::start()
         tcsetattr(STDIN_FILENO, TCSANOW, &t);
 
         // Once the buffering is turned off, the rest is simple.
-        std::cout << "make your move: ";
+        std::cout << std::endl << "make your move: ";
         std::cout.flush();
         char c, d, e;
         std::cin >> c;
@@ -40,7 +40,7 @@ void ConsoleController::start()
         std::cin >> e;
 
         // Using 3 char type, Cause up down right left consist with 3 character
-        if((c == 27) && (d = 91))
+        if((c == 27) && (d == 91))
         {
             MoveUsecasePort::Direction direction;
 
