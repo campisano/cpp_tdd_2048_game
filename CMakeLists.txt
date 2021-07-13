@@ -11,7 +11,7 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/external/doctest)
 include_directories(${doctest_INCLUDE_DIRS})
 
 # project sources
-file(GLOB_RECURSE VAR_APP_SOURCES ${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}/*.cpp)
+file(GLOB_RECURSE VAR_APP_SOURCES ${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}/*.cpp ${PROJECT_SOURCE_DIR}/src/common/*.cpp)
 file(GLOB_RECURSE VAR_TEST_SOURCES ${PROJECT_SOURCE_DIR}/src/test/*.cpp)
 
 # project outputs

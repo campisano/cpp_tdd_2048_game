@@ -1,7 +1,7 @@
 #include "game.hpp"
 
-#include <random>
 #include <stdexcept>
+#include "../../common/random_generator.hpp"
 
 Game::Game(
     Score            _win_score,
@@ -115,11 +115,10 @@ void Game::notifyEnd()
 
 Number::Movable Game::generateRandomNumber() const
 {
-    std::random_device                 r;
-    std::default_random_engine         e(r());
-    std::uniform_int_distribution<int> dist(0, 5);
+    std::mt19937 & engine = RandomGenerator::instance().get();
+    std::uniform_int_distribution<int> distribution(0, 5);
 
-    if(dist(e) < 4)
+    if(distribution(engine) < 4)
     {
         return Number::make(2);
     }

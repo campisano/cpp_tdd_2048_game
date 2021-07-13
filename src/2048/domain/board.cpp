@@ -1,7 +1,7 @@
 #include "board.hpp"
 
-#include <random>
 #include <stdexcept>
+#include "../../common/random_generator.hpp"
 
 namespace
 {
@@ -429,10 +429,9 @@ bool slideFromPositionToDirection(
 
 Board::Size generateRandomPlace(Board::Size _limit)
 {
-    std::random_device                 r;
-    std::default_random_engine         e(r());
-    std::uniform_int_distribution<int> dist(0, _limit);
+    std::mt19937 & engine = RandomGenerator::instance().get();
+    std::uniform_int_distribution<int> distribution(0, _limit);
 
-    return dist(e);
+    return distribution(engine);
 }
 }
