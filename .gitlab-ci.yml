@@ -1,4 +1,4 @@
-image: docker:stable
+image: riccardocampisano/public:docker_buildx_master
 
 services:
   - docker:stable-dind
