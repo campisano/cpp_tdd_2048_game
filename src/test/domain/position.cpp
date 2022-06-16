@@ -1,7 +1,7 @@
 #include "../testutils.hpp"
 
-#include "../../2048/domain/position.hpp"
 #include <stdexcept>
+#include "../../2048/domain/position.hpp"
 
 namespace
 {

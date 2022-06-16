@@ -1,8 +1,8 @@
 #include "../testutils.hpp"
 
+#include <stdexcept>
 #include "../../2048/domain/number.hpp"
 #include "doubles/number_testable.hpp"
-#include <stdexcept>
 
 namespace
 {
